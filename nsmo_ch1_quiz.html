@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>اختبار نسمو - الفصل الأول: مبادئ أولية</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a5276;
+  --primary-light: #2471a3;
+  --primary-dark: #0e3a55;
+  --accent: #e67e22;
+  --accent-light: #f5a623;
+  --correct: #1b9e4b;
+  --correct-bg: #e8f8ef;
+  --wrong: #d93025;
+  --wrong-bg: #fde8e7;
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --text: #1a2c3d;
+  --text-light: #5a7088;
+  --border: #cdd8e3;
+  --shadow: 0 4px 24px rgba(26,82,118,0.10);
+  --radius: 16px;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body { font-family:'Tajawal',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
+
+.splash { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px 24px 70px; background:linear-gradient(135deg,#0e3a55 0%,#1a5276 40%,#2471a3 100%); position:relative; overflow:hidden; }
+.splash::before { content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%; background:radial-gradient(circle at 30% 70%,rgba(230,126,34,0.08) 0%,transparent 50%),radial-gradient(circle at 70% 30%,rgba(255,255,255,0.04) 0%,transparent 50%); animation:floatBg 20s ease-in-out infinite; }
+@keyframes floatBg { 0%,100%{transform:translate(0,0) rotate(0deg);} 50%{transform:translate(-2%,2%) rotate(3deg);} }
+.splash-content { position:relative; z-index:1; text-align:center; max-width:400px; }
+.nsmo-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.12); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.15); padding:8px 20px; border-radius:50px; color:rgba(255,255,255,0.9); font-size:13px; font-weight:500; margin-bottom:28px; letter-spacing:0.5px; }
+.nsmo-badge .dot { width:6px; height:6px; background:var(--accent); border-radius:50%; animation:pulse 2s ease infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.5;transform:scale(1.5);} }
+.splash h1 { font-family:'Cairo',sans-serif; font-size:30px; font-weight:900; color:#fff; margin-bottom:10px; line-height:1.3; }
+.splash h1 .highlight { color:var(--accent); }
+.splash p { color:rgba(255,255,255,0.75); font-size:15px; line-height:1.7; margin-bottom:32px; }
+.splash-stats { display:flex; gap:16px; justify-content:center; margin-bottom:36px; }
+.stat-item { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px 18px; text-align:center; min-width:90px; }
+.stat-item .num { font-family:'Cairo',sans-serif; font-size:24px; font-weight:800; color:var(--accent); }
+.stat-item .label { font-size:11px; color:rgba(255,255,255,0.6); margin-top:2px; }
+.btn-start { display:inline-flex; align-items:center; gap:10px; background:var(--accent); color:#fff; font-family:'Cairo',sans-serif; font-size:18px; font-weight:700; padding:16px 48px; border:none; border-radius:60px; cursor:pointer; transition:all 0.3s ease; box-shadow:0 6px 30px rgba(230,126,34,0.35); }
+.btn-start:hover { transform:translateY(-2px); box-shadow:0 8px 36px rgba(230,126,34,0.45); }
+.btn-start svg { width:20px; height:20px; }
+
+.section-picker { min-height:100vh; padding:24px 24px 70px; display:none; flex-direction:column; align-items:center; }
+.section-picker.active { display:flex; }
+.section-header { text-align:center; margin:32px 0 8px; }
+.section-header h2 { font-family:'Cairo',sans-serif; font-size:24px; font-weight:800; color:var(--primary-dark); }
+.section-header p { color:var(--text-light); font-size:14px; margin-top:6px; }
+.section-cards { display:flex; flex-direction:column; gap:16px; width:100%; max-width:400px; margin-top:28px; }
+.section-card { background:var(--card); border:2px solid var(--border); border-radius:var(--radius); padding:24px; cursor:pointer; transition:all 0.3s ease; position:relative; overflow:hidden; }
+.section-card::before { content:''; position:absolute; top:0; right:0; width:4px; height:100%; background:var(--primary); border-radius:0 4px 4px 0; transform:scaleY(0); transition:transform 0.3s ease; }
+.section-card:hover { border-color:var(--primary); box-shadow:var(--shadow); }
+.section-card:hover::before { transform:scaleY(1); }
+.section-card .icon { width:48px; height:48px; background:linear-gradient(135deg,var(--primary),var(--primary-light)); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:14px; }
+.section-card h3 { font-family:'Cairo',sans-serif; font-size:18px; font-weight:700; margin-bottom:6px; }
+.section-card .desc { font-size:13px; color:var(--text-light); line-height:1.6; }
+.section-card .meta { display:flex; gap:16px; margin-top:12px; font-size:12px; color:var(--text-light); }
+.section-card .meta span { display:flex; align-items:center; gap:4px; }
+
+.quiz-container { min-height:100vh; padding:0; display:none; flex-direction:column; }
+.quiz-container.active { display:flex; }
+.top-bar { background:var(--card); padding:14px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+.top-bar .title { font-family:'Cairo',sans-serif; font-size:15px; font-weight:700; color:var(--primary-dark); }
+.top-bar .timer-box { display:flex; align-items:center; gap:6px; background:#fff3d6; padding:6px 14px; border-radius:8px; font-family:'Cairo',sans-serif; font-weight:700; font-size:15px; color:#b07800; }
+.top-bar .timer-box.warning { background:#fde8e7; color:var(--wrong); animation:timerPulse 0.5s ease infinite; }
+@keyframes timerPulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.03);} }
+.top-bar .timer-box svg { width:16px; height:16px; }
+.progress-wrap { padding:12px 20px; background:var(--card); }
+.progress-info { display:flex; justify-content:space-between; font-size:12px; color:var(--text-light); margin-bottom:8px; }
+.progress-bar { height:6px; background:#e0e7ee; border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; background:linear-gradient(90deg,var(--primary),var(--accent)); border-radius:10px; transition:width 0.5s ease; width:0%; }
+
+.question-area { flex:1; padding:20px 20px 70px; display:flex; flex-direction:column; }
+.q-card { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; margin-bottom:16px; animation:slideUp 0.4s ease; }
+@keyframes slideUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+.q-number { font-size:12px; color:var(--primary); font-weight:700; margin-bottom:8px; }
+.q-number .badge { background:rgba(26,82,118,0.1); padding:2px 10px; border-radius:6px; }
+.q-text { font-size:16px; font-weight:600; line-height:1.8; margin-bottom:6px; }
+.q-equation { direction:ltr; text-align:center; font-size:17px; font-weight:700; color:var(--primary-dark); background:#eef4fa; padding:12px 16px; border-radius:10px; margin:12px 0; font-family:'Courier New',monospace; letter-spacing:1px; }
+.options { display:flex; flex-direction:column; gap:10px; margin-top:8px; }
+.option-btn { display:flex; align-items:center; gap:12px; background:var(--card); border:2px solid var(--border); border-radius:12px; padding:14px 16px; cursor:pointer; transition:all 0.25s ease; font-family:'Tajawal',sans-serif; font-size:15px; font-weight:500; color:var(--text); text-align:right; width:100%; }
+.option-btn:hover:not(.locked) { border-color:var(--primary); background:#eef4fa; }
+.option-btn .letter { min-width:32px; height:32px; display:flex; align-items:center; justify-content:center; background:#eef2f6; border-radius:8px; font-family:'Cairo',sans-serif; font-weight:700; font-size:14px; color:var(--primary); flex-shrink:0; }
+.option-btn.correct { border-color:var(--correct); background:var(--correct-bg); }
+.option-btn.correct .letter { background:var(--correct); color:#fff; }
+.option-btn.wrong { border-color:var(--wrong); background:var(--wrong-bg); }
+.option-btn.wrong .letter { background:var(--wrong); color:#fff; }
+.option-btn.locked { cursor:default; opacity:0.65; }
+.option-btn.correct.locked,.option-btn.wrong.locked { opacity:1; }
+.explanation { margin-top:12px; padding:14px 16px; border-radius:10px; font-size:13px; line-height:1.7; display:none; animation:fadeIn 0.3s ease; }
+@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+.explanation.correct-exp { background:var(--correct-bg); border-right:4px solid var(--correct); color:#0d6e30; display:block; }
+.explanation.wrong-exp { background:var(--wrong-bg); border-right:4px solid var(--wrong); color:#a82020; display:block; }
+.btn-next { margin-top:auto; padding:15px; background:var(--primary); color:#fff; border:none; border-radius:12px; font-family:'Cairo',sans-serif; font-size:16px; font-weight:700; cursor:pointer; transition:all 0.3s ease; display:none; }
+.btn-next.show { display:block; }
+.btn-next:hover { background:var(--primary-dark); }
+
+.results { min-height:100vh; padding:24px 24px 70px; display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+.results.active { display:flex; }
+.result-circle { width:160px; height:160px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; margin:0 auto 24px; position:relative; }
+.result-circle svg { position:absolute; top:0; left:0; width:160px; height:160px; transform:rotate(-90deg); }
+.result-circle .score-num { font-family:'Cairo',sans-serif; font-size:42px; font-weight:900; color:var(--primary-dark); z-index:1; }
+.result-circle .score-label { font-size:13px; color:var(--text-light); z-index:1; }
+.result-msg { font-family:'Cairo',sans-serif; font-size:22px; font-weight:800; margin-bottom:8px; }
+.result-sub { font-size:14px; color:var(--text-light); margin-bottom:28px; line-height:1.7; }
+.result-stats { display:flex; gap:12px; margin-bottom:32px; width:100%; max-width:360px; }
+.result-stat { flex:1; background:var(--card); border-radius:12px; padding:16px 8px; box-shadow:0 2px 12px rgba(0,0,0,0.05); }
+.result-stat .val { font-family:'Cairo',sans-serif; font-size:24px; font-weight:800; }
+.result-stat .lbl { font-size:11px; color:var(--text-light); margin-top:4px; }
+.result-stat.good .val { color:var(--correct); }
+.result-stat.bad .val { color:var(--wrong); }
+.result-stat.time .val { color:var(--accent); }
+.btn-group { display:flex; flex-direction:column; gap:10px; width:100%; max-width:320px; }
+.btn-retry { padding:14px; background:var(--primary); color:#fff; border:none; border-radius:12px; font-family:'Cairo',sans-serif; font-size:16px; font-weight:700; cursor:pointer; }
+.btn-back { padding:14px; background:transparent; color:var(--primary); border:2px solid var(--border); border-radius:12px; font-family:'Cairo',sans-serif; font-size:16px; font-weight:700; cursor:pointer; }
+
+.site-footer { position:fixed; bottom:0; left:0; right:0; z-index:999; background:linear-gradient(135deg,var(--primary-dark) 0%,var(--primary) 100%); padding:10px 20px; display:flex; align-items:center; justify-content:center; gap:12px; border-top:2px solid rgba(230,126,34,0.3); box-shadow:0 -4px 20px rgba(0,0,0,0.15); }
+.site-footer .footer-line { width:30px; height:2px; background:var(--accent); border-radius:2px; opacity:0.6; }
+.site-footer .footer-text { font-family:'Cairo',sans-serif; font-size:13px; font-weight:700; color:rgba(255,255,255,0.92); letter-spacing:0.5px; display:flex; align-items:center; gap:8px; }
+.site-footer .footer-text .sep { color:var(--accent); font-size:16px; }
+.site-footer .footer-text .nsmo-tag { font-size:11px; font-weight:600; background:rgba(230,126,34,0.15); border:1px solid rgba(230,126,34,0.3); padding:2px 10px; border-radius:20px; color:var(--accent-light); }
+
+@media (min-width:480px) { .splash h1{font-size:36px;} .q-text{font-size:17px;} }
+::-webkit-scrollbar { width:0; }
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div class="splash" id="splash">
+  <div class="splash-content">
+    <div class="nsmo-badge"><span class="dot"></span>أولمبياد العلوم والرياضيات الوطني</div>
+    <h1>الفصل الأول<br><span class="highlight">مبادئ أولية</span></h1>
+    <p>اختبري معرفتك في التحويل بين الوحدات والبادئات، والأرقام المعنوية والتقريب</p>
+    <div class="splash-stats">
+      <div class="stat-item"><div class="num">2</div><div class="label">قسم</div></div>
+      <div class="stat-item"><div class="num">16</div><div class="label">سؤال</div></div>
+      <div class="stat-item"><div class="num">⏱</div><div class="label">مؤقت</div></div>
+    </div>
+    <button class="btn-start" onclick="showSections()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 3l14 9-14 9V3z"/></svg>
+      ابدأي الاختبار
+    </button>
+  </div>
+</div>
+
+<!-- SECTION PICKER -->
+<div class="section-picker" id="sectionPicker">
+  <div class="section-header">
+    <h2>اختاري القسم</h2>
+    <p>اختاري القسم الذي تريدين التدرب عليه</p>
+  </div>
+  <div class="section-cards">
+    <div class="section-card" onclick="startQuiz('convert')">
+      <div class="icon">🔄</div>
+      <h3>التحويل بين الوحدات والبادئات</h3>
+      <div class="desc">حوّلي بين وحدات SI باستخدام البادئات (كيلو، ميلي، مايكرو، نانو...) والتحويلات المركّبة</div>
+      <div class="meta"><span>📝 8 أسئلة</span><span>⏱ 45 ثانية/سؤال</span></div>
+    </div>
+    <div class="section-card" onclick="startQuiz('sigfig')">
+      <div class="icon">🔢</div>
+      <h3>الأرقام المعنوية والتقريب</h3>
+      <div class="desc">حددي عدد الأرقام المعنوية وقرّبي الأعداد وطبّقي قواعد العمليات الحسابية</div>
+      <div class="meta"><span>📝 8 أسئلة</span><span>⏱ 40 ثانية/سؤال</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="quiz-container" id="quizContainer">
+  <div class="top-bar">
+    <div class="title" id="quizTitle">التحويل والبادئات</div>
+    <div class="timer-box" id="timerBox">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      <span id="timerDisplay">00:45</span>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-info">
+      <span id="qCounter">السؤال 1 من 8</span>
+      <span id="scoreDisplay">الدرجة: 0</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+  <div class="question-area" id="questionArea"></div>
+</div>
+
+<!-- RESULTS -->
+<div class="results" id="results">
+  <div class="result-circle">
+    <svg viewBox="0 0 160 160">
+      <circle cx="80" cy="80" r="72" fill="none" stroke="#e0e7ee" stroke-width="10"/>
+      <circle id="scoreArc" cx="80" cy="80" r="72" fill="none" stroke="var(--primary)" stroke-width="10" stroke-linecap="round" stroke-dasharray="452.39" stroke-dashoffset="452.39"/>
+    </svg>
+    <div class="score-num" id="finalScore">0%</div>
+    <div class="score-label">النسبة</div>
+  </div>
+  <div class="result-msg" id="resultMsg">أحسنتِ!</div>
+  <div class="result-sub" id="resultSub">استمري</div>
+  <div class="result-stats">
+    <div class="result-stat good"><div class="val" id="correctCount">0</div><div class="lbl">صحيحة</div></div>
+    <div class="result-stat bad"><div class="val" id="wrongCount">0</div><div class="lbl">خاطئة</div></div>
+    <div class="result-stat time"><div class="val" id="totalTime">0</div><div class="lbl">ثانية</div></div>
+  </div>
+  <div class="btn-group">
+    <button class="btn-retry" onclick="retryQuiz()">إعادة المحاولة</button>
+    <button class="btn-back" onclick="goBack()">العودة للأقسام</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <span class="footer-line"></span>
+  <div class="footer-text">المدربة: دانية العلويط <span class="sep">|</span> <span class="nsmo-tag">NSMO 2026</span></div>
+  <span class="footer-line"></span>
+</footer>
+
+<script>
+// ===== DATA =====
+const convertQuestions = [
+  {
+    text: "حوّلي 2.3 cm³ إلى m³",
+    options: ["2.3 × 10⁻⁴ m³", "2.3 × 10⁻⁶ m³", "2.3 × 10⁻² m³", "2.3 × 10⁻³ m³"],
+    correct: 1,
+    explanation: "1 cm = 10⁻² m ، إذاً 1 cm³ = (10⁻²)³ = 10⁻⁶ m³ ، فتكون 2.3 cm³ = 2.3 × 10⁻⁶ m³"
+  },
+  {
+    text: "حوّلي 5000 μs⁻¹ إلى s⁻¹",
+    options: ["5 × 10⁶ s⁻¹", "5 × 10⁹ s⁻¹", "5 × 10³ s⁻¹", "5 × 10⁻³ s⁻¹"],
+    correct: 1,
+    explanation: "1 μs = 10⁻⁶ s ، فإن μs⁻¹ = (10⁻⁶)⁻¹ = 10⁶ ، إذاً 5000 μs⁻¹ = 5000 × 10⁶ = 5 × 10⁹ s⁻¹"
+  },
+  {
+    text: "سرعة الصوت 330 m/s ، ما قيمتها بوحدة km/h ؟",
+    options: ["1188 km/h", "330 km/h", "1980 km/h", "33 km/h"],
+    correct: 0,
+    explanation: "330 m/s × (1 km / 1000 m) × (3600 s / 1 h) = 330 × 3.6 = 1188 km/h"
+  },
+  {
+    text: "ما قيمة البادئة nano (نانو) ؟",
+    options: ["10⁻¹²", "10⁻⁹", "10⁻⁶", "10⁻³"],
+    correct: 1,
+    explanation: "البادئة nano (n) تعني 10⁻⁹ ، أي واحد على مليار."
+  },
+  {
+    text: "حوّلي 13.6 g/cm³ إلى Mg/mm³",
+    options: ["13.6 × 10⁻⁹ Mg/mm³", "13.6 × 10⁻⁶ Mg/mm³", "13.6 × 10⁻³ Mg/mm³", "13.6 × 10⁻¹² Mg/mm³"],
+    correct: 0,
+    explanation: "1 Mg = 10⁶ g ، 1 cm³ = 10³ mm³ ، إذاً 13.6 g/cm³ = 13.6 × (1/10⁶) / (1/10³) = 13.6 × 10⁻³ / 1 = 13.6 × 10⁻⁹ Mg/mm³"
+  },
+  {
+    text: "ما قيمة البادئة mega (ميجا) ؟",
+    options: ["10³", "10⁶", "10⁹", "10¹²"],
+    correct: 1,
+    explanation: "البادئة mega (M) تعني 10⁶ ، أي مليون."
+  },
+  {
+    text: "حوّلي 0.025 km إلى mm",
+    options: ["2500 mm", "25000 mm", "250 mm", "25 mm"],
+    correct: 1,
+    explanation: "0.025 km = 0.025 × 10³ m = 25 m = 25 × 10³ mm = 25000 mm"
+  },
+  {
+    text: "حوّلي 500 mL إلى L",
+    options: ["5 L", "0.5 L", "50 L", "0.05 L"],
+    correct: 1,
+    explanation: "1 mL = 10⁻³ L ، إذاً 500 mL = 500 × 10⁻³ = 0.5 L"
+  }
+];
+
+const sigfigQuestions = [
+  {
+    text: "كم عدد الأرقام المعنوية في العدد 0.003068 ؟",
+    options: ["3", "4", "7", "6"],
+    correct: 1,
+    explanation: "الأصفار البادئة (0.00) ليست معنوية. الأرقام المعنوية هي: 3, 0, 6, 8 = 4 أرقام معنوية. (الصفر بين 3 و 6 معنوي)"
+  },
+  {
+    text: "كم عدد الأرقام المعنوية في العدد 2300 ؟",
+    options: ["4", "3", "2", "1"],
+    correct: 2,
+    explanation: "الأصفار الزائدة في نهاية العدد بدون علامة عشرية لا تكون معنوية. إذاً 2300 فيه رقمان معنويان فقط (2 و 3)."
+  },
+  {
+    text: "كم عدد الأرقام المعنوية في العدد 130.00 ؟",
+    options: ["3", "4", "5", "2"],
+    correct: 2,
+    explanation: "وجود العلامة العشرية يجعل الأصفار الزائدة معنوية. إذاً 130.00 فيه 5 أرقام معنوية: 1, 3, 0, 0, 0"
+  },
+  {
+    text: "قرّبي العدد 5.6501 إلى رقمين معنويين:",
+    options: ["5.6", "5.7", "5.65", "6.0"],
+    correct: 1,
+    explanation: "الرقم بعد آخر رقم معنوي هو 5 وبعده أرقام إضافية (01)، لذا نزيد الرقم الأخير بمقدار واحد: 5.7"
+  },
+  {
+    text: "قرّبي العدد 3.682417 إلى أربعة أرقام معنوية:",
+    options: ["3.682", "3.683", "3.68", "3.6824"],
+    correct: 0,
+    explanation: "الأرقام الأربعة المعنوية هي 3.682 ، والرقم التالي هو 4 (أقل من 5) فنحذف ما بعده: 3.682"
+  },
+  {
+    text: "ما ناتج 2400 × 3.45 بالأرقام المعنوية الصحيحة؟",
+    options: ["8280", "8300", "8.3 × 10³", "8280.0"],
+    correct: 2,
+    explanation: "العدد 2400 فيه رقمان معنويان فقط (الأقل)، فالناتج يجب أن يحتوي رقمين معنويين: 8280 ≈ 8.3 × 10³"
+  },
+  {
+    text: "ما ناتج 504.09 − 246.8 بالأرقام المعنوية الصحيحة؟",
+    options: ["257.29", "257.3", "257", "260"],
+    correct: 1,
+    explanation: "في الطرح نأخذ أقل عدد منازل عشرية: 246.8 فيه منزلة عشرية واحدة. الناتج: 257.29 ≈ 257.3"
+  },
+  {
+    text: "عبّري عن العدد 0.000000000000211 بالتدوين العلمي:",
+    options: ["2.11 × 10⁻¹³", "2.11 × 10⁻¹²", "21.1 × 10⁻¹⁴", "0.211 × 10⁻¹²"],
+    correct: 0,
+    explanation: "ننقل العلامة العشرية 13 منزلة لليمين: 0.000000000000211 = 2.11 × 10⁻¹³"
+  }
+];
+
+// ===== STATE =====
+let currentMode='', currentQuestions=[], currentIndex=0, score=0, answered=false, timer=null, timeLeft=0, totalTimeUsed=0, timePerQ=45;
+
+function showSections() {
+  document.getElementById('splash').style.display='none';
+  document.getElementById('sectionPicker').classList.add('active');
+}
+
+function startQuiz(mode) {
+  currentMode=mode; currentIndex=0; score=0; totalTimeUsed=0; answered=false;
+  if(mode==='convert') { currentQuestions=shuffleArray([...convertQuestions]); timePerQ=45; document.getElementById('quizTitle').textContent='التحويل والبادئات'; }
+  else { currentQuestions=shuffleArray([...sigfigQuestions]); timePerQ=40; document.getElementById('quizTitle').textContent='الأرقام المعنوية والتقريب'; }
+  document.getElementById('sectionPicker').classList.remove('active');
+  document.getElementById('quizContainer').classList.add('active');
+  document.getElementById('results').classList.remove('active');
+  renderQuestion();
+}
+
+function goBack() { document.getElementById('results').classList.remove('active'); document.getElementById('quizContainer').classList.remove('active'); document.getElementById('sectionPicker').classList.add('active'); }
+function retryQuiz() { startQuiz(currentMode); }
+
+function startTimer() {
+  clearInterval(timer); timeLeft=timePerQ; updateTimerDisplay();
+  document.getElementById('timerBox').classList.remove('warning');
+  timer=setInterval(()=>{
+    timeLeft--;updateTimerDisplay();
+    if(timeLeft<=10) document.getElementById('timerBox').classList.add('warning');
+    if(timeLeft<=0){clearInterval(timer);timeUp();}
+  },1000);
+}
+
+function updateTimerDisplay() {
+  const m=Math.floor(timeLeft/60),s=timeLeft%60;
+  document.getElementById('timerDisplay').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+
+function timeUp() { answered=true; totalTimeUsed+=timePerQ; lockOptions(-1); }
+
+function renderQuestion() {
+  answered=false;
+  const q=currentQuestions[currentIndex], total=currentQuestions.length;
+  document.getElementById('qCounter').textContent=`السؤال ${currentIndex+1} من ${total}`;
+  document.getElementById('scoreDisplay').textContent=`الدرجة: ${score}`;
+  document.getElementById('progressFill').style.width=((currentIndex)/total*100)+'%';
+  const letters=['أ','ب','ج','د'];
+  document.getElementById('questionArea').innerHTML=`
+    <div class="q-card">
+      <div class="q-number"><span class="badge">سؤال ${currentIndex+1}</span></div>
+      <div class="q-text">${q.text}</div>
+      <div class="options" id="optionsWrap">
+        ${q.options.map((opt,i)=>`
+          <button class="option-btn" onclick="selectOption(${i})" id="opt${i}">
+            <span class="letter">${letters[i]}</span>
+            <span style="direction:ltr;text-align:left;">${opt}</span>
+          </button>`).join('')}
+      </div>
+      <div class="explanation" id="explanation"></div>
+    </div>
+    <button class="btn-next" id="btnNext" onclick="nextQuestion()">السؤال التالي ←</button>`;
+  startTimer();
+}
+
+function selectOption(idx) {
+  if(answered) return;
+  answered=true; clearInterval(timer); totalTimeUsed+=(timePerQ-timeLeft);
+  const q=currentQuestions[currentIndex];
+  if(idx===q.correct) score++;
+  lockOptions(idx);
+}
+
+function lockOptions(selected) {
+  const q=currentQuestions[currentIndex];
+  document.querySelectorAll('.option-btn').forEach((btn,i)=>{
+    btn.classList.add('locked'); btn.onclick=null;
+    if(i===q.correct) btn.classList.add('correct');
+    if(i===selected && selected!==q.correct) btn.classList.add('wrong');
+  });
+  const exp=document.getElementById('explanation');
+  if(selected===q.correct) { exp.className='explanation correct-exp'; exp.textContent='✅ '+q.explanation; }
+  else { exp.className='explanation wrong-exp'; exp.textContent='❌ الإجابة الصحيحة: '+q.options[q.correct]+' — '+q.explanation; }
+  document.getElementById('scoreDisplay').textContent=`الدرجة: ${score}`;
+  document.getElementById('btnNext').classList.add('show');
+}
+
+function nextQuestion() {
+  currentIndex++;
+  if(currentIndex>=currentQuestions.length) showResults();
+  else renderQuestion();
+}
+
+function showResults() {
+  clearInterval(timer);
+  document.getElementById('quizContainer').classList.remove('active');
+  document.getElementById('results').classList.add('active');
+  const total=currentQuestions.length, pct=Math.round((score/total)*100);
+  document.getElementById('finalScore').textContent=pct+'%';
+  document.getElementById('correctCount').textContent=score;
+  document.getElementById('wrongCount').textContent=total-score;
+  document.getElementById('totalTime').textContent=totalTimeUsed;
+  const arc=document.getElementById('scoreArc'), circ=2*Math.PI*72, offset=circ-(pct/100)*circ;
+  setTimeout(()=>{arc.style.transition='stroke-dashoffset 1.2s ease';arc.style.strokeDashoffset=offset;},100);
+  document.getElementById('progressFill').style.width='100%';
+  if(pct>=90){document.getElementById('resultMsg').textContent='🌟 ممتازة!';document.getElementById('resultSub').textContent='أداء رائع! أنتِ مستعدة للأولمبياد!';}
+  else if(pct>=70){document.getElementById('resultMsg').textContent='👏 أحسنتِ!';document.getElementById('resultSub').textContent='أداء جيد جداً، استمري في التدرب!';}
+  else if(pct>=50){document.getElementById('resultMsg').textContent='💪 جيد';document.getElementById('resultSub').textContent='راجعي الأخطاء وأعيدي المحاولة.';}
+  else{document.getElementById('resultMsg').textContent='📚 تحتاجين مراجعة';document.getElementById('resultSub').textContent='راجعي الفصل الأول وأعيدي الاختبار.';}
+}
+
+function shuffleArray(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+</script>
+</body>
+</html>
