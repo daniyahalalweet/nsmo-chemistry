@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>تدريب الإحلال والمعادلات الأيونية - نسمو</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Cairo:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--pri:#1a5276;--pri-l:#2471a3;--pri-d:#0e3a55;--acc:#e67e22;--ok:#1b9e4b;--ok-bg:#e8f8ef;--no:#d93025;--no-bg:#fde8e7;--bg:#f0f4f8;--card:#fff;--txt:#1a2c3d;--txt2:#5a7088;--bdr:#cdd8e3;--sh:0 4px 24px rgba(26,82,118,.1);--r:16px}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden}
+.splash{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 24px 70px;background:linear-gradient(135deg,#8e244d,#c0395e 40%,#e84f7a);position:relative;overflow:hidden}
+.splash::before{content:'';position:absolute;inset:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 70%,rgba(230,126,34,.08),transparent 50%);animation:fl 20s ease-in-out infinite}
+@keyframes fl{0%,100%{transform:translate(0,0)}50%{transform:translate(-2%,2%)}}
+.sp-c{position:relative;z-index:1;text-align:center;max-width:420px}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.15);padding:8px 20px;border-radius:50px;color:rgba(255,255,255,.9);font-size:13px;font-weight:500;margin-bottom:28px}
+.badge .dot{width:6px;height:6px;background:var(--acc);border-radius:50%;animation:pu 2s ease infinite}
+@keyframes pu{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}
+.splash h1{font-family:'Cairo',sans-serif;font-size:28px;font-weight:900;color:#fff;margin-bottom:10px;line-height:1.3}
+.splash h1 span{color:var(--acc)}
+.splash p{color:rgba(255,255,255,.75);font-size:14px;line-height:1.7;margin-bottom:32px}
+.stats{display:flex;gap:16px;justify-content:center;margin-bottom:36px}
+.st{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 18px;text-align:center;min-width:90px}
+.st .n{font-family:'Cairo',sans-serif;font-size:24px;font-weight:800;color:var(--acc)}
+.st .l{font-size:11px;color:rgba(255,255,255,.6);margin-top:2px}
+.btn-s{display:inline-flex;align-items:center;gap:10px;background:var(--acc);color:#fff;font-family:'Cairo',sans-serif;font-size:18px;font-weight:700;padding:16px 48px;border:none;border-radius:60px;cursor:pointer;box-shadow:0 6px 30px rgba(230,126,34,.35)}
+
+.quiz{min-height:100vh;display:none;flex-direction:column}.quiz.active{display:flex}
+.top{background:var(--card);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--bdr);position:sticky;top:0;z-index:100}
+.top .t{font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;color:var(--pri-d)}
+.tmr{display:flex;align-items:center;gap:6px;background:#fff3d6;padding:6px 14px;border-radius:8px;font-family:'Cairo',sans-serif;font-weight:700;font-size:15px;color:#b07800}
+.tmr.w{background:var(--no-bg);color:var(--no);animation:tp .5s ease infinite}
+@keyframes tp{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+.tmr svg{width:16px;height:16px}
+.pw{padding:12px 20px;background:var(--card)}
+.pi{display:flex;justify-content:space-between;font-size:12px;color:var(--txt2);margin-bottom:8px}
+.pb{height:6px;background:#e0e7ee;border-radius:10px;overflow:hidden}
+.pf{height:100%;background:linear-gradient(90deg,var(--pri),var(--acc));border-radius:10px;transition:width .5s;width:0%}
+.qa{flex:1;padding:20px 20px 70px;display:flex;flex-direction:column}
+.qc{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:24px;margin-bottom:16px;animation:su .4s ease}
+@keyframes su{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.qn{font-size:12px;color:var(--pri);font-weight:700;margin-bottom:8px}
+.qn .bg{background:rgba(26,82,118,.1);padding:2px 10px;border-radius:6px}
+.qt{font-size:15px;font-weight:600;line-height:1.8;margin-bottom:6px}
+.qe{direction:ltr;text-align:center;font-size:16px;font-weight:700;color:var(--pri-d);background:#eef4fa;padding:12px 16px;border-radius:10px;margin:12px 0;font-family:'Courier New',monospace;letter-spacing:1px}
+.opts{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.ob{display:flex;align-items:center;gap:12px;background:var(--card);border:2px solid var(--bdr);border-radius:12px;padding:14px 16px;cursor:pointer;transition:all .25s;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:500;color:var(--txt);text-align:right;width:100%}
+.ob:hover:not(.lk){border-color:var(--pri);background:#eef4fa}
+.ob .le{min-width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:#eef2f6;border-radius:8px;font-family:'Cairo',sans-serif;font-weight:700;font-size:14px;color:var(--pri);flex-shrink:0}
+.ob.ok{border-color:var(--ok);background:var(--ok-bg)}.ob.ok .le{background:var(--ok);color:#fff}
+.ob.no{border-color:var(--no);background:var(--no-bg)}.ob.no .le{background:var(--no);color:#fff}
+.ob.lk{cursor:default;opacity:.65}.ob.ok.lk,.ob.no.lk{opacity:1}
+.exp{margin-top:12px;padding:14px 16px;border-radius:10px;font-size:13px;line-height:1.8;display:none;animation:fi .3s ease;direction:ltr;text-align:left}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.exp.ce{background:var(--ok-bg);border-left:4px solid var(--ok);color:#0d6e30;display:block}
+.exp.we{background:var(--no-bg);border-left:4px solid var(--no);color:#a82020;display:block}
+.bn{margin-top:auto;padding:15px;background:var(--pri);color:#fff;border:none;border-radius:12px;font-family:'Cairo',sans-serif;font-size:16px;font-weight:700;cursor:pointer;display:none}
+.bn.show{display:block}
+
+.res{min-height:100vh;padding:24px 24px 70px;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center}.res.active{display:flex}
+.rc{width:160px;height:160px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 24px;position:relative}
+.rc svg{position:absolute;top:0;left:0;width:160px;height:160px;transform:rotate(-90deg)}
+.rc .sn{font-family:'Cairo',sans-serif;font-size:42px;font-weight:900;color:var(--pri-d);z-index:1}
+.rc .sl{font-size:13px;color:var(--txt2);z-index:1}
+.rm{font-family:'Cairo',sans-serif;font-size:22px;font-weight:800;margin-bottom:8px}
+.rs{font-size:14px;color:var(--txt2);margin-bottom:28px;line-height:1.7}
+.rsts{display:flex;gap:12px;margin-bottom:32px;width:100%;max-width:360px}
+.rst{flex:1;background:var(--card);border-radius:12px;padding:16px 8px;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.rst .v{font-family:'Cairo',sans-serif;font-size:24px;font-weight:800}
+.rst .lb{font-size:11px;color:var(--txt2);margin-top:4px}
+.rst.g .v{color:var(--ok)}.rst.b .v{color:var(--no)}.rst.ti .v{color:var(--acc)}
+.bg2{display:flex;flex-direction:column;gap:10px;width:100%;max-width:320px}
+.br{padding:14px;background:var(--pri);color:#fff;border:none;border-radius:12px;font-family:'Cairo',sans-serif;font-size:16px;font-weight:700;cursor:pointer}
+.bb{padding:14px;background:transparent;color:var(--pri);border:2px solid var(--bdr);border-radius:12px;font-family:'Cairo',sans-serif;font-size:16px;font-weight:700;cursor:pointer}
+
+.ft{position:fixed;bottom:0;left:0;right:0;z-index:999;background:linear-gradient(135deg,#8e244d,#c0395e);padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:12px;border-top:2px solid rgba(230,126,34,.3);box-shadow:0 -4px 20px rgba(0,0,0,.15)}
+.ft .fl{width:30px;height:2px;background:var(--acc);border-radius:2px;opacity:.6}
+.ft .ftx{font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,.92);display:flex;align-items:center;gap:8px}
+.ft .ftx .sep{color:var(--acc);font-size:16px}
+.ft .ftx .tag{font-size:11px;font-weight:600;background:rgba(230,126,34,.15);border:1px solid rgba(230,126,34,.3);padding:2px 10px;border-radius:20px;color:#f5a623}
+::-webkit-scrollbar{width:0}
+</style>
+</head>
+<body>
+<div class="splash" id="splash">
+  <div class="sp-c">
+    <div class="badge"><span class="dot"></span>أولمبياد العلوم والرياضيات الوطني</div>
+    <h1>تدريب<br><span>الإحلال والمعادلات الأيونية</span></h1>
+    <p>تدرّبي على الإحلال البسيط والمزدوج: هل ينتج راسب أم ماء أم غاز؟ وما المعادلة الأيونية النهائية؟</p>
+    <div class="stats">
+      <div class="st"><div class="n">10</div><div class="l">سؤال</div></div>
+      <div class="st"><div class="n">50</div><div class="l">ثانية/سؤال</div></div>
+    </div>
+    <button class="btn-s" onclick="start()">ابدأي التدريب ⚗️</button>
+  </div>
+</div>
+
+<div class="quiz" id="quiz">
+  <div class="top"><div class="t">الإحلال والمعادلات الأيونية</div><div class="tmr" id="tmr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span id="td">00:50</span></div></div>
+  <div class="pw"><div class="pi"><span id="qc">السؤال 1 من 10</span><span id="sd">الدرجة: 0</span></div><div class="pb"><div class="pf" id="pf"></div></div></div>
+  <div class="qa" id="qa"></div>
+</div>
+
+<div class="res" id="res">
+  <div class="rc"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="72" fill="none" stroke="#e0e7ee" stroke-width="10"/><circle id="sa" cx="80" cy="80" r="72" fill="none" stroke="var(--pri)" stroke-width="10" stroke-linecap="round" stroke-dasharray="452.39" stroke-dashoffset="452.39"/></svg><div class="sn" id="fs">0%</div><div class="sl">النسبة</div></div>
+  <div class="rm" id="rmsg"></div><div class="rs" id="rsub"></div>
+  <div class="rsts"><div class="rst g"><div class="v" id="cc">0</div><div class="lb">صحيحة</div></div><div class="rst b"><div class="v" id="wc">0</div><div class="lb">خاطئة</div></div><div class="rst ti"><div class="v" id="tt">0</div><div class="lb">ثانية</div></div></div>
+  <div class="bg2"><button class="br" onclick="start()">إعادة المحاولة</button><button class="bb" onclick="location.reload()">تحديث الصفحة</button></div>
+</div>
+
+<footer class="ft"><span class="fl"></span><div class="ftx">المدربة: دانية العلويط <span class="sep">|</span><span class="tag">NSMO 2026</span></div><span class="fl"></span></footer>
+
+<script>
+const Q=[
+  // === الإحلال البسيط وسلسلة النشاط ===
+  {t:"هل يحدث التفاعل التالي؟ ولماذا؟",eq:"Fe(s) + CuSO₄(aq) → ?",o:["نعم، لأن الحديد أنشط من النحاس","لا، لأن النحاس أنشط من الحديد","نعم، لأن النحاس أنشط من الحديد","لا تفاعل لأنهما بنفس النشاط"],c:0,x:"✅ Fe + CuSO₄ → FeSO₄ + Cu\nالحديد أعلى من النحاس في سلسلة النشاط فيزيحه من محلوله."},
+
+  {t:"هل يحدث التفاعل التالي؟",eq:"Cu(s) + FeSO₄(aq) → ?",o:["نعم، ينتج CuSO₄ + Fe","لا تفاعل (NR)","نعم، ينتج CuFe + SO₄","نعم، ينتج Cu₂SO₄ + Fe"],c:1,x:"❌ لا تفاعل (NR)\nالنحاس أقل نشاطاً من الحديد في سلسلة النشاط فلا يزيحه."},
+
+  {t:"ما نوع التفاعل التالي؟",eq:"Mg(s) + ZnCl₂(aq) → MgCl₂(aq) + Zn(s)",o:["إحلال مزدوج","إحلال بسيط","تفكك","تكوين"],c:1,x:"إحلال بسيط: Mg (الأنشط) حلّ محل Zn في المركب.\nA + BC → AC + B"},
+
+  // === الإحلال المزدوج - ترسيب ===
+  {t:"ما نوع الناتج في تفاعل الإحلال المزدوج التالي؟",eq:"AgNO₃(aq) + NaCl(aq) → AgCl(s) + NaNO₃(aq)",o:["تكوّن غاز","تكوّن راسب (↓)","تكوّن ماء","لا تفاعل"],c:1,x:"تفاعل ترسيب: AgCl راسب أبيض غير ذائب يترسب من المحلول.\nالمعادلة الأيونية النهائية:\nAg⁺(aq) + Cl⁻(aq) → AgCl(s)"},
+
+  {t:"ما المعادلة الأيونية النهائية للتفاعل التالي؟",eq:"2NaOH(aq) + CuCl₂(aq) → 2NaCl(aq) + Cu(OH)₂(s)",o:["Na⁺ + Cl⁻ → NaCl","Cu²⁺(aq) + 2OH⁻(aq) → Cu(OH)₂(s)","2Na⁺ + Cu²⁺ → 2NaCl + Cu","CuCl₂ → Cu²⁺ + 2Cl⁻"],c:1,x:"تفاعل ترسيب: Cu(OH)₂ راسب أزرق.\nنحذف الأيونات المتفرجة (Na⁺ و Cl⁻):\nCu²⁺(aq) + 2OH⁻(aq) → Cu(OH)₂(s)"},
+
+  // === الإحلال المزدوج - تعادل (ماء) ===
+  {t:"ما نوع الناتج في التفاعل التالي؟",eq:"HCl(aq) + NaOH(aq) → NaCl(aq) + H₂O(l)",o:["تكوّن راسب","تكوّن غاز","تكوّن ماء (تعادل)","لا تفاعل"],c:2,x:"تفاعل تعادل: حمض + قاعدة → ملح + ماء\nالمعادلة الأيونية النهائية:\nH⁺(aq) + OH⁻(aq) → H₂O(l)"},
+
+  {t:"ما المعادلة الأيونية النهائية لتفاعل التعادل التالي؟",eq:"HBr(aq) + NaOH(aq) → NaBr(aq) + H₂O(l)",o:["H⁺(aq) + OH⁻(aq) → H₂O(l)","Br⁻ + Na⁺ → NaBr","HBr → H⁺ + Br⁻","Na⁺ + OH⁻ → NaOH"],c:0,x:"في جميع تفاعلات التعادل (حمض قوي + قاعدة قوية) المعادلة الأيونية النهائية واحدة:\nH⁺(aq) + OH⁻(aq) → H₂O(l)"},
+
+  // === الإحلال المزدوج - تكوين غاز ===
+  {t:"ما نوع الناتج في التفاعل التالي؟",eq:"NaHCO₃(aq) + HCl(aq) → NaCl(aq) + H₂O(l) + CO₂(g)",o:["تكوّن راسب فقط","تكوّن ماء فقط","تكوّن غاز (↑) وماء","لا تفاعل"],c:2,x:"تكوّن غاز CO₂ المتصاعد + ماء.\nالتفاعل يمر بمرحلتين: يتكون H₂CO₃ أولاً ثم يتحلل.\nالمعادلة الأيونية النهائية:\nHCO₃⁻(aq) + H⁺(aq) → H₂O(l) + CO₂(g)"},
+
+  {t:"ما المعادلة الأيونية النهائية للتفاعل التالي؟",eq:"NaHCO₃(aq) + HCl(aq) → NaCl(aq) + H₂O(l) + CO₂(g)",o:["Na⁺ + Cl⁻ → NaCl","H⁺ + OH⁻ → H₂O","HCO₃⁻(aq) + H⁺(aq) → H₂O(l) + CO₂(g)","NaHCO₃ → Na⁺ + HCO₃⁻"],c:2,x:"نحذف الأيونات المتفرجة (Na⁺ و Cl⁻):\nHCO₃⁻(aq) + H⁺(aq) → H₂O(l) + CO₂(g)"},
+
+  // === شامل ===
+  {t:"في تفاعلات الإحلال المزدوج، متى يكتمل التفاعل؟",eq:"AX + BY → AY + BX",o:["دائماً يكتمل","فقط إذا تكوّن راسب أو ماء أو غاز","فقط إذا كانت المواد أيونية","فقط في وجود حرارة"],c:1,x:"يحدث تفاعل الإحلال المزدوج ويُعتبر مكتملاً فقط إذا تم سحب بعض الأيونات من المحلول لتكوين: راسب (مادة غير ذائبة) أو ماء (تعادل) أو غاز (يغادر المحلول)."}
+];
+
+let ci=0,sc=0,ans=false,tmr=null,tl=0,tu=0,qs=[];
+function shuf(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function start(){ci=0;sc=0;tu=0;ans=false;qs=shuf([...Q]);
+document.getElementById('splash').style.display='none';document.getElementById('res').classList.remove('active');document.getElementById('quiz').classList.add('active');render();}
+
+function startT(){clearInterval(tmr);tl=50;updT();document.getElementById('tmr').classList.remove('w');
+tmr=setInterval(()=>{tl--;updT();if(tl<=10)document.getElementById('tmr').classList.add('w');if(tl<=0){clearInterval(tmr);ans=true;tu+=50;lock(-1);}},1000);}
+function updT(){const m=Math.floor(tl/60),s=tl%60;document.getElementById('td').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');}
+
+function render(){ans=false;const q=qs[ci],n=qs.length,le=['أ','ب','ج','د'];
+document.getElementById('qc').textContent=`السؤال ${ci+1} من ${n}`;
+document.getElementById('sd').textContent=`الدرجة: ${sc}`;
+document.getElementById('pf').style.width=(ci/n*100)+'%';
+document.getElementById('qa').innerHTML=`<div class="qc"><div class="qn"><span class="bg">سؤال ${ci+1}</span></div><div class="qt">${q.t}</div><div class="qe">${q.eq}</div><div class="opts">${q.o.map((o,i)=>`<button class="ob" onclick="sel(${i})" id="o${i}"><span class="le">${le[i]}</span><span>${o}</span></button>`).join('')}</div><div class="exp" id="exp"></div></div><button class="bn" id="nx" onclick="next()">السؤال التالي ←</button>`;
+startT();}
+
+function sel(i){if(ans)return;ans=true;clearInterval(tmr);tu+=(50-tl);if(i===qs[ci].c)sc++;lock(i);}
+
+function lock(s){const q=qs[ci];
+document.querySelectorAll('.ob').forEach((b,i)=>{b.classList.add('lk');b.onclick=null;if(i===q.c)b.classList.add('ok');if(i===s&&s!==q.c)b.classList.add('no');});
+const e=document.getElementById('exp');
+if(s===q.c){e.className='exp ce';e.innerHTML='✅ '+q.x.replace(/\n/g,'<br>');}
+else{e.className='exp we';e.innerHTML='❌ الإجابة الصحيحة: '+q.o[q.c]+'<br>'+q.x.replace(/\n/g,'<br>');}
+document.getElementById('sd').textContent=`الدرجة: ${sc}`;document.getElementById('nx').classList.add('show');}
+
+function next(){ci++;if(ci>=qs.length)results();else render();}
+
+function results(){clearInterval(tmr);document.getElementById('quiz').classList.remove('active');document.getElementById('res').classList.add('active');
+const n=qs.length,p=Math.round(sc/n*100);
+document.getElementById('fs').textContent=p+'%';document.getElementById('cc').textContent=sc;document.getElementById('wc').textContent=n-sc;document.getElementById('tt').textContent=tu;
+const a=document.getElementById('sa'),c=2*Math.PI*72,o=c-(p/100)*c;setTimeout(()=>{a.style.transition='stroke-dashoffset 1.2s ease';a.style.strokeDashoffset=o;},100);
+if(p>=90){document.getElementById('rmsg').textContent='🌟 ممتازة!';document.getElementById('rsub').textContent='أداء رائع!';}
+else if(p>=70){document.getElementById('rmsg').textContent='👏 أحسنتِ!';document.getElementById('rsub').textContent='أداء جيد!';}
+else if(p>=50){document.getElementById('rmsg').textContent='💪 جيد';document.getElementById('rsub').textContent='راجعي وأعيدي.';}
+else{document.getElementById('rmsg').textContent='📚 تحتاجين مراجعة';document.getElementById('rsub').textContent='راجعي التفاعلات في المحاليل المائية.';}}
+</script>
+</body>
+</html>
