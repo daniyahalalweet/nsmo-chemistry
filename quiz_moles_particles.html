@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta property="og:title" content="NSMO 2026 - اختبار المولات والجسيمات">
+<title>اختبار: المولات والجسيمات والكتلة</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(180deg,#ECFDF5 0%,#F5F5F0 100%);color:#1A2744;padding:12px;line-height:1.7}
+
+.header{background:linear-gradient(135deg,#065F46 0%,#0D7377 50%,#10B981 100%);color:#fff;padding:22px 16px;border-radius:16px;text-align:center;margin-bottom:16px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-25px;right:-15px;width:90px;height:90px;background:rgba(255,255,255,.06);border-radius:50%}
+.header::after{content:'';position:absolute;bottom:-20px;left:-10px;width:70px;height:70px;background:rgba(255,255,255,.04);border-radius:50%}
+.header h1{font-size:22px;margin-bottom:4px;position:relative;z-index:1}
+.header p{font-size:13px;color:#6EE7B7;position:relative;z-index:1}
+.brand{font-size:11px;color:#FCD34D;margin-top:8px;position:relative;z-index:1}
+
+.card{background:#fff;border-radius:14px;padding:18px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,.06);border:1px solid #E5E7EB}
+
+.quiz{background:#F8FAFC;border-radius:12px;padding:16px;margin-bottom:6px}
+.quiz-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.quiz-num{display:inline-flex;width:32px;height:32px;background:linear-gradient(135deg,#0D7377,#10B981);color:#fff;border-radius:10px;align-items:center;justify-content:center;font-size:15px;font-weight:bold;flex-shrink:0}
+.quiz-q{font-size:15px;font-weight:bold;color:#1A2744;line-height:1.8}
+
+.quiz input[type="radio"]{display:none}
+.quiz label{display:block;padding:12px 16px;background:#fff;border:2px solid #E5E7EB;border-radius:10px;cursor:pointer;font-size:14px;margin-bottom:8px;transition:all .15s}
+.quiz label:active{transform:scale(.98)}
+
+input.correct:checked+label{background:#ECFDF5;border-color:#10B981;color:#065F46;font-weight:bold}
+input.correct:checked+label::after{content:' ✓ أحسنتِ!';color:#10B981;font-weight:bold}
+input.wrong:checked+label{background:#FEF2F2;border-color:#EF4444;color:#991B1B}
+input.wrong:checked+label::after{content:' ✗ حاولي مرة ثانية';color:#EF4444;font-weight:bold}
+input.wrong:checked~input.correct+label{background:#ECFDF5;border-color:#10B981}
+
+details{margin-top:10px;background:linear-gradient(135deg,#FEF3C7,#FFFBEB);border-radius:10px;padding:12px 14px;border:1px solid #FDE68A}
+details summary{cursor:pointer;font-size:14px;font-weight:bold;color:#92400E;list-style:none}
+details summary::before{content:'💡 '}
+details[open] summary{margin-bottom:8px}
+details .sol{font-size:13px;color:#78350F;line-height:2.0}
+
+.footer{text-align:center;padding:18px;font-size:11px;color:#6B7280;border-top:2px solid #E5E7EB;margin-top:20px}
+.footer strong{color:#F59E0B}
+
+/* Score bar */
+.score-bar{position:sticky;top:0;z-index:99;background:linear-gradient(135deg,#1A2744,#0D7377);color:#fff;padding:12px 16px;border-radius:12px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 15px rgba(0,0,0,.15)}
+.score-bar .score-label{font-size:13px;color:#6EE7B7}
+.score-bar .score-value{font-size:28px;font-weight:bold;color:#fff}
+.score-bar .score-out{font-size:14px;color:#6EE7B7;margin-right:4px}
+.score-bar .progress-wrap{flex:1;margin:0 16px;background:rgba(255,255,255,.15);border-radius:8px;height:10px;overflow:hidden}
+.score-bar .progress-fill{height:100%;background:linear-gradient(90deg,#10B981,#6EE7B7);border-radius:8px;transition:width .4s ease;width:0%}
+.score-msg{text-align:center;font-size:13px;color:#6EE7B7;margin-top:4px;display:none}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>اختبار سريع</h1>
+  <p>المولات — الجسيمات — الكتلة</p>
+  <div class="brand">إعداد المدربة: دانية العلويط | NSMO 2026</div>
+</div>
+
+<!-- Score Bar -->
+<div class="score-bar" id="scoreBar">
+  <div>
+    <div class="score-label">الدرجة</div>
+    <div><span class="score-value" id="scoreNum">٠</span><span class="score-out"> / ١٠</span></div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <div>
+    <div class="score-label">الإجابات</div>
+    <div><span class="score-value" id="answeredNum">٠</span><span class="score-out"> / ٥</span></div>
+  </div>
+</div>
+<div class="score-msg" id="scoreMsg"></div>
+
+<!-- سؤال ١ -->
+<div class="card">
+  <div class="quiz">
+    <div class="quiz-header">
+      <span class="quiz-num">١</span>
+      <div class="quiz-q">كم عدد الجزيئات في 0.25 mol من غاز النيتروجين N₂؟</div>
+    </div>
+    <input type="radio" name="q1" id="q1a" class="wrong"><label for="q1a">a) 6.02 × 10²³</label>
+    <input type="radio" name="q1" id="q1b" class="wrong"><label for="q1b">b) 3.01 × 10²³</label>
+    <input type="radio" name="q1" id="q1c" class="correct"><label for="q1c">c) 1.505 × 10²³</label>
+    <input type="radio" name="q1" id="q1d" class="wrong"><label for="q1d">d) 1.204 × 10²⁴</label>
+    <details>
+      <summary>الحل</summary>
+      <div class="sol">
+        N = n × Nₐ<br>
+        N = 0.25 × 6.02×10²³<br>
+        <strong>N = 1.505 × 10²³ جزيء</strong>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- سؤال ٢ -->
+<div class="card">
+  <div class="quiz">
+    <div class="quiz-header">
+      <span class="quiz-num">٢</span>
+      <div class="quiz-q">عينة كتلتها 5.4 g من الألومنيوم Al. كم مول تحتوي؟<br>(M = 27.0 g/mol)</div>
+    </div>
+    <input type="radio" name="q2" id="q2a" class="correct"><label for="q2a">a) 0.20 mol</label>
+    <input type="radio" name="q2" id="q2b" class="wrong"><label for="q2b">b) 0.54 mol</label>
+    <input type="radio" name="q2" id="q2c" class="wrong"><label for="q2c">c) 2.0 mol</label>
+    <input type="radio" name="q2" id="q2d" class="wrong"><label for="q2d">d) 0.10 mol</label>
+    <details>
+      <summary>الحل</summary>
+      <div class="sol">
+        n = m / M<br>
+        n = 5.4 / 27.0<br>
+        <strong>n = 0.20 mol</strong>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- سؤال ٣ -->
+<div class="card">
+  <div class="quiz">
+    <div class="quiz-header">
+      <span class="quiz-num">٣</span>
+      <div class="quiz-q">ما عدد ذرات الهيدروجين الكلي في 2.0 mol من الميثان CH₄؟</div>
+    </div>
+    <input type="radio" name="q3" id="q3a" class="wrong"><label for="q3a">a) 6.02 × 10²³</label>
+    <input type="radio" name="q3" id="q3b" class="wrong"><label for="q3b">b) 1.204 × 10²⁴</label>
+    <input type="radio" name="q3" id="q3c" class="correct"><label for="q3c">c) 4.816 × 10²⁴</label>
+    <input type="radio" name="q3" id="q3d" class="wrong"><label for="q3d">d) 2.408 × 10²⁴</label>
+    <details>
+      <summary>الحل</summary>
+      <div class="sol">
+        1 جزيء CH₄ فيه 4 ذرات H<br>
+        2.0 mol CH₄ → 2.0 × 4 = 8.0 mol ذرات H<br>
+        عدد ذرات H = 8.0 × 6.02×10²³<br>
+        <strong>= 4.816 × 10²⁴ ذرة</strong>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- سؤال ٤ -->
+<div class="card">
+  <div class="quiz">
+    <div class="quiz-header">
+      <span class="quiz-num">٤</span>
+      <div class="quiz-q">ما كتلة 3.01 × 10²³ جزيء من الماء H₂O؟<br>(M = 18.0 g/mol)</div>
+    </div>
+    <input type="radio" name="q4" id="q4a" class="wrong"><label for="q4a">a) 18.0 g</label>
+    <input type="radio" name="q4" id="q4b" class="correct"><label for="q4b">b) 9.0 g</label>
+    <input type="radio" name="q4" id="q4c" class="wrong"><label for="q4c">c) 36.0 g</label>
+    <input type="radio" name="q4" id="q4d" class="wrong"><label for="q4d">d) 4.5 g</label>
+    <details>
+      <summary>الحل</summary>
+      <div class="sol">
+        n = N / Nₐ = 3.01×10²³ / 6.02×10²³ = 0.5 mol<br>
+        m = n × M = 0.5 × 18.0<br>
+        <strong>m = 9.0 g</strong>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- سؤال ٥ -->
+<div class="card">
+  <div class="quiz">
+    <div class="quiz-header">
+      <span class="quiz-num">٥</span>
+      <div class="quiz-q">أي العينات التالية تحتوي على أكبر عدد من الذرات؟</div>
+    </div>
+    <input type="radio" name="q5" id="q5a" class="wrong"><label for="q5a">a) 1.0 mol Ne (ذرات)</label>
+    <input type="radio" name="q5" id="q5b" class="wrong"><label for="q5b">b) 1.0 mol O₂ (جزيئات)</label>
+    <input type="radio" name="q5" id="q5c" class="wrong"><label for="q5c">c) 1.0 mol H₂O (جزيئات)</label>
+    <input type="radio" name="q5" id="q5d" class="correct"><label for="q5d">d) 1.0 mol C₃H₈ (جزيئات)</label>
+    <details>
+      <summary>الحل</summary>
+      <div class="sol">
+        a) Ne → 1 ذرة × 1 mol = <strong>1 mol ذرات</strong><br>
+        b) O₂ → 2 ذرة × 1 mol = <strong>2 mol ذرات</strong><br>
+        c) H₂O → 3 ذرات × 1 mol = <strong>3 mol ذرات</strong><br>
+        d) C₃H₈ → 11 ذرة × 1 mol = <strong>11 mol ذرات ✓</strong><br><br>
+        C₃H₈ فيه أكبر عدد ذرات لكل جزيء (3+8=11)
+      </div>
+    </details>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>إعداد المدربة: دانية العلويط</strong><br>
+  NSMO 2026 | أولمبياد العلوم والرياضيات الوطني
+</div>
+
+<script>
+var toAr = function(n) {
+  return n.toString().replace(/[0-9]/g, function(d) {
+    return '٠١٢٣٤٥٦٧٨٩'[d];
+  });
+};
+
+var answered = {};
+var total = 5;
+var perQ = 2;
+
+document.addEventListener('change', function(e) {
+  if (e.target.type !== 'radio') return;
+  var name = e.target.name;
+  if (answered[name]) return;
+  answered[name] = e.target.classList.contains('correct') ? perQ : 0;
+  
+  var score = 0;
+  var count = 0;
+  for (var k in answered) {
+    score += answered[k];
+    count++;
+  }
+  
+  document.getElementById('scoreNum').textContent = toAr(score);
+  document.getElementById('answeredNum').textContent = toAr(count);
+  document.getElementById('progressFill').style.width = (score / (total * perQ) * 100) + '%';
+  
+  if (count === total) {
+    var msg = document.getElementById('scoreMsg');
+    msg.style.display = 'block';
+    if (score === 10) {
+      msg.textContent = '🌟 ممتازة! درجة كاملة!';
+      msg.style.color = '#10B981';
+    } else if (score >= 8) {
+      msg.textContent = '👏 أحسنتِ! أداء رائع';
+      msg.style.color = '#0D7377';
+    } else if (score >= 6) {
+      msg.textContent = '💪 جيد! راجعي الأسئلة الخاطئة';
+      msg.style.color = '#F59E0B';
+    } else {
+      msg.textContent = '📖 تحتاجين مراجعة — حاولي مرة ثانية';
+      msg.style.color = '#EF4444';
+    }
+  }
+});
+</script>
+
+</body>
+</html>
