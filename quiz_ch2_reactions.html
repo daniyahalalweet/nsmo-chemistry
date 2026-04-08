@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>اختبار شامل — الفصل الثاني: التفاعلات الكيميائية</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(180deg,#FFF7ED 0%,#F5F5F0 100%);color:#1A2744;padding:12px;line-height:1.7}
+.header{background:linear-gradient(135deg,#7C2D12,#C2410C,#F97316);color:#fff;padding:22px 16px;border-radius:16px;text-align:center;margin-bottom:16px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-25px;right:-15px;width:90px;height:90px;background:rgba(255,255,255,.06);border-radius:50%}
+.header h1{font-size:22px;margin-bottom:4px;position:relative;z-index:1}
+.header p{font-size:13px;color:#FED7AA;position:relative;z-index:1}
+.brand{font-size:11px;color:#FCD34D;margin-top:8px;position:relative;z-index:1}
+.score-bar{position:sticky;top:0;z-index:99;background:linear-gradient(135deg,#7C2D12,#C2410C);color:#fff;padding:12px 16px;border-radius:12px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 15px rgba(0,0,0,.15)}
+.score-bar .score-label{font-size:12px;color:#FED7AA}
+.score-bar .score-value{font-size:26px;font-weight:bold}
+.score-bar .score-out{font-size:13px;color:#FED7AA;margin-right:4px}
+.score-bar .progress-wrap{flex:1;margin:0 14px;background:rgba(255,255,255,.15);border-radius:8px;height:10px;overflow:hidden}
+.score-bar .progress-fill{height:100%;background:linear-gradient(90deg,#F97316,#FCD34D);border-radius:8px;transition:width .4s;width:0%}
+.score-msg{text-align:center;font-size:14px;margin-top:6px;margin-bottom:10px;font-weight:bold;display:none}
+.card{background:#fff;border-radius:14px;padding:18px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,.06);border:1px solid #E5E7EB}
+.quiz{background:#FFFBF5;border-radius:12px;padding:16px}
+.quiz-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.quiz-num{display:inline-flex;width:32px;height:32px;background:linear-gradient(135deg,#C2410C,#F97316);color:#fff;border-radius:10px;align-items:center;justify-content:center;font-size:15px;font-weight:bold;flex-shrink:0}
+.quiz-tag{display:inline-block;background:#FEF3C7;color:#92400E;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:bold;margin-bottom:8px}
+.quiz-q{font-size:14px;font-weight:bold;color:#1A2744;margin-bottom:12px;line-height:1.9}
+.quiz input[type="radio"]{display:none}
+.quiz label{display:block;padding:12px 16px;background:#fff;border:2px solid #E5E7EB;border-radius:10px;cursor:pointer;font-size:14px;margin-bottom:8px;transition:all .15s}
+.quiz label:active{transform:scale(.98)}
+input.correct:checked+label{background:#ECFDF5;border-color:#10B981;color:#065F46;font-weight:bold}
+input.correct:checked+label::after{content:' ✓';color:#10B981;font-weight:bold}
+input.wrong:checked+label{background:#FEF2F2;border-color:#EF4444;color:#991B1B}
+input.wrong:checked+label::after{content:' ✗';color:#EF4444;font-weight:bold}
+input.wrong:checked~input.correct+label{background:#ECFDF5;border-color:#10B981}
+details{margin-top:10px;background:linear-gradient(135deg,#FEF3C7,#FFFBEB);border-radius:10px;padding:12px 14px;border:1px solid #FDE68A;display:none}
+.quiz input[type="radio"]:checked~details{display:block}
+details summary{cursor:pointer;font-size:14px;font-weight:bold;color:#92400E;list-style:none}
+details summary::before{content:'💡 '}
+details[open] summary{margin-bottom:8px}
+details .sol{font-size:13px;color:#78350F;line-height:2.0}
+.footer{text-align:center;padding:18px;font-size:11px;color:#6B7280;border-top:2px solid #E5E7EB;margin-top:20px}
+.footer strong{color:#F59E0B}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>اختبار شامل — الفصل الثاني</h1>
+  <p>التفاعلات الكيميائية | 10 أسئلة إثرائية</p>
+  <div class="brand">إعداد المدربة: دانية العلويط | NSMO 2026</div>
+</div>
+
+<div class="score-bar">
+  <div><div class="score-label">الدرجة</div><div><span class="score-value" id="scoreNum">٠</span><span class="score-out"> / ٢٠</span></div></div>
+  <div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+  <div><div class="score-label">الإجابات</div><div><span class="score-value" id="answeredNum">٠</span><span class="score-out"> / ١٠</span></div></div>
+</div>
+<div class="score-msg" id="scoreMsg"></div>
+
+<!-- ① وزن معادلة جديدة -->
+<div class="card"><div class="quiz">
+  <div class="quiz-header"><span class="quiz-num">١</span><div class="quiz-q"><span class="quiz-tag">وزن المعادلات</span><br>عند وزن المعادلة:<br>Fe₂O₃ + CO → Fe + CO₂<br>ما المعاملات الصحيحة بالترتيب؟</div></div>
+  <input type="radio" name="q1" id="q1a" class="wrong"><label for="q1a">a) 1, 3, 2, 2</label>
+  <input type="radio" name="q1" id="q1b" class="correct"><label for="q1b">b) 1, 3, 2, 3</label>
+  <input type="radio" name="q1" id="q1c" class="wrong"><label for="q1c">c) 2, 3, 4, 3</label>
+  <input type="radio" name="q1" id="q1d" class="wrong"><label for="q1d">d) 1, 2, 2, 2</label>
+  <details><summary>الحل</summary><div class="sol">
+    Fe₂O₃ + 3CO → 2Fe + 3CO₂<br>
+    Fe: 2=2 ✓ | O: 3+3=6, 6 ✓ | C: 3=3 ✓
+  </div></details>
+</div></div>
+
+<!-- ② تصنيف تفاعل غير مباشر -->
+<div class="card"><div class="quiz">
+  <div class="quiz-header"><span class="quiz-num">٢</span><div class="quiz-q"><span class="quiz-tag">أنواع التفاعلات</span><br>التفاعل: CaO + H₂O → Ca(OH)₂ يُصنف كتفاعل:</div></div>
+  <input type="radio" name="q2" id="q2a" class="correct"><label for="q2a">a) تكوين</label>
+  <input type="radio" name="q2" id="q2b" class="wrong"><label for="q2b">b) تفكك</label>
+  <input type="radio" name="q2" id="q2c" class="wrong"><label for="q2c">c) إحلال بسيط</label>
+  <input type="radio" name="q2" id="q2d" class="wrong"><label for="q2d">d) إحلال مزدوج</label>
+  <details><summary>الحل</summary><div class="sol">
+    مركبان (CaO + H₂O) اتحدا لتكوين مركب واحد Ca(OH)₂<br>
+    <strong>A + B → AB = تكوين</strong><br>
+    تذكّري: التكوين ممكن يكون بين عنصرين أو عنصر ومركب أو مركبين
+  </div></details>
+</div></div>
+
+<!-- ③ سلسلة النشاط - سؤال تطبيقي -->
+<div class="card"><div class="quiz">
+  <div class="quiz-header"><span class="quiz-num">٣</span><div class="quiz-q"><span class="quiz-tag">سلسلة النشاط</span><br>وُضع مسمار حديد في محلول كبريتات النحاس الأزرق. بعد فترة لاحظنا تغيّر لون المحلول وترسّب مادة على المسمار. ما العنصر المترسّب؟</div></div>
+  <input type="radio" name="q3" id="q3a" class="wrong"><label for="q3a">a) الحديد</label>
+  <input type="radio" name="q3" id="q3b" class="correct"><label for="q3b">b) النحاس</label>
+  <input type="radio" name="q3" id="q3c" class="wrong"><label for="q3c">c) الكبريت</label>
+  <input type="radio" name="q3" id="q3d" class="wrong"><label for="q3d">d) لا يحدث تفاعل</label>
+  <details><summary>الحل</summary><div class="sol">
+    Fe أنشط من Cu → يحل محله:<br>
+    Fe + CuSO₄ → FeSO₄ + <strong>Cu ↓ (يترسّب)</strong><br>
+    النحاس يترسّب بلون بني محمر على المسمار والمحلول يتحول من أزرق إلى أخضر
+  </div></details>
+</div></div>
+
+<!-- ④ تفاعل هالوجينات -->
+<div class="card"><div class="quiz">
+  <div class="quiz-header"><span class="quiz-num">٤</span><div class="quiz-q"><span class="quiz-tag">سلسلة النشاط</span><br>أُضيف غاز البروم Br₂ إلى محلول يوديد البوتاسيوم KI. ماذا يحدث؟</div></div>
+  <input type="radio" name="q4" id="q4a" class="wrong"><label for="q4a">a) لا يحدث تفاعل</label>
+  <input type="radio" name="q4" id="q4b" class="wrong"><label for="q4b">b) يتكون غاز البروم</label>
+  <input type="radio" name="q4" id="q4c" class="correct"><label for="q4c">c) يتكون اليود ويتحول اللون للبني</label>
+  <input type="radio" name="q4" id="q4d" class="wrong"><label for="q4d">d) يتكون بروميد البوتاسيوم فقط بدون تغيّر</label>
+  <details><summary>الحل</summary><div class="sol">
+    Br₂ أنشط من I₂ في سلسلة الهالوجينات (F₂ > Cl₂ > Br₂ > I₂)<br>
+    Br₂ + 2KI → 2KBr + <strong>I₂</strong><br>
+    اليود المتكوّن يعطي <strong>لوناً بنياً</strong> للمحلول
+  </div></details>
+</div></div>
+
+<!-- ⑤ تحديد نوع تفاعل من الوصف -->
+<div class="card"><div class="quiz">
+  <div class="quiz-header"><span class="quiz-num">٥</span><div class="quiz-q"><span class="quiz-tag">أنواع التفاعلات</span><br>عند خلط محلول نترات الرصاص مع محلول يوديد البوتاسيوم تكوّن راسب أصفر. هذا التفاعل يُصنف كـ:</div></div>
+  <input type="radio" name="q5" id="q5a" class="wrong"><label for="q5a">a) إحلال بسيط</label>
+  <input type="radio" name="q5" id="q5b" class="correct"><label for="q5b">b) إحلال مزدوج (ترسيب)</label>
+  <input type="radio" name="q5" id="q5c" class="wrong"><label for="q5c">c) تكوين</label>
+  <input type="radio" name="q5" id="q5d" class="wrong"><label for="q5d">d) تفكك</label>
+  <details><summary>الحل</summary><div class="sol">
+    Pb(NO₃)₂ + 2KI → PbI₂↓ + 2KNO₃<br>
+    محلولان تبادلا الأيونات → <strong>إحلال مزدوج</strong><br>
+    الراسب الأصفر = PbI₂ (يوديد الرصاص)
+  </div></details>
+</div></div>
+
+<!-- ⑥ إلكتروليتات - تطبيقي -->
+<div class="card"><div class="quiz">
+  <div class="quiz-header"><span class="quiz-num">٦</span><div class="quiz-q"><span class="quiz-tag">الإلكتروليتات</span><br>عند إذابة السكر C₁₂H₂₂O₁₁ في الماء، المحلول الناتج:</div></div>
+  <input type="radio" name="q6" id="q6a" class="wrong"><label for="q6a">a) يوصل التيار الكهربائي بقوة</label>
+  <input type="radio" name="q6" id="q6b" class="wrong"><label for="q6b">b) يوصل التيار الكهربائي بشكل ضعيف</label>
+  <input type="radio" name="q6" id="q6c" class="correct"><label for="q6c">c) لا يوصل التيار الكهربائي</label>
+  <input type="radio" name="q6" id="q6d" class="wrong"><label for="q6d">d) يوصل فقط عند التسخين</label>
+  <details><summary>الحل</summary><div class="sol">
+    السكر مركب جزيئي يذوب في الماء <strong>بدون تأين</strong><br>
+    لا ينتج أيونات → لا يوصل الكهرباء<br>
+    <strong>السكر = لا إلكتروليت (non-electrolyte)</strong>
+  </div></details>
+</div></div>
+
+<!-- ⑦ أيونات متفرجة -->
+<div class="card"><div class="quiz">
+  <div class="quiz-header"><span class="quiz-num">٧</span><div class="quiz-q"><span class="quiz-tag">المعادلات الأيونية</span><br>في التفاعل:<br>2NaOH(aq) + CuCl₂(aq) → 2NaCl(aq) + Cu(OH)₂(s)<br>ما الأيونات المتفرجة؟</div></div>
+  <input type="radio" name="q7" id="q7a" class="wrong"><label for="q7a">a) Cu²⁺ و OH⁻</label>
+  <input type="radio" name="q7" id="q7b" class="correct"><label for="q7b">b) Na⁺ و Cl⁻</label>
+  <input type="radio" name="q7" id="q7c" class="wrong"><label for="q7c">c) Na⁺ و OH⁻</label>
+  <input type="radio" name="q7" id="q7d" class="wrong"><label for="q7d">d) Cu²⁺ و Cl⁻</label>
+  <details><summary>الحل</summary><div class="sol">
+    المعادلة الأيونية الكاملة:<br>
+    2Na⁺ + 2OH⁻ + Cu²⁺ + 2Cl⁻ → 2Na⁺ + 2Cl⁻ + Cu(OH)₂↓<br>
+    <strong>Na⁺ و Cl⁻</strong> موجودة في الطرفين بدون تغيّر = متفرجة<br>
+    الصافية: Cu²⁺ + 2OH⁻ → Cu(OH)₂↓
+  </div></details>
+</div></div>
+
+<!-- ⑧ وزن معادلة احتراق -->
+<div class="card"><div class="quiz">
+  <div class="quiz-header"><span class="quiz-num">٨</span><div class="quiz-q"><span class="quiz-tag">وزن المعادلات</span><br>عند الاحتراق التام للإيثانول:<br>C₂H₅OH + O₂ → CO₂ + H₂O<br>كم معامل O₂ بعد الوزن؟</div></div>
+  <input type="radio" name="q8" id="q8a" class="correct"><label for="q8a">a) 3</label>
+  <input type="radio" name="q8" id="q8b" class="wrong"><label for="q8b">b) 2</label>
+  <input type="radio" name="q8" id="q8c" class="wrong"><label for="q8c">c) 4</label>
+  <input type="radio" name="q8" id="q8d" class="wrong"><label for="q8d">d) 5</label>
+  <details><summary>الحل</summary><div class="sol">
+    C₂H₅OH + 3O₂ → 2CO₂ + 3H₂O<br>
+    C: 2=2 ✓ | H: 6=6 ✓<br>
+    O: يسار 1+6=7، يمين 4+3=7 ✓<br>
+    <strong>معامل O₂ = 3</strong>
+  </div></details>
+</div></div>
+
+<!-- ⑨ تجربة عملية -->
+<div class="card"><div class="quiz">
+  <div class="quiz-header"><span class="quiz-num">٩</span><div class="quiz-q"><span class="quiz-tag">دلائل التفاعل</span><br>عند إضافة حمض الهيدروكلوريك إلى قطعة رخام (CaCO₃) لاحظنا فوراناً. الغاز المتصاعد هو:</div></div>
+  <input type="radio" name="q9" id="q9a" class="wrong"><label for="q9a">a) H₂</label>
+  <input type="radio" name="q9" id="q9b" class="wrong"><label for="q9b">b) O₂</label>
+  <input type="radio" name="q9" id="q9c" class="correct"><label for="q9c">c) CO₂</label>
+  <input type="radio" name="q9" id="q9d" class="wrong"><label for="q9d">d) Cl₂</label>
+  <details><summary>الحل</summary><div class="sol">
+    CaCO₃ + 2HCl → CaCl₂ + H₂O + <strong>CO₂↑</strong><br>
+    الفوران سببه تصاعد غاز CO₂<br>
+    يمكن الكشف عنه بتمريره في ماء الجير Ca(OH)₂ → يتعكّر
+  </div></details>
+</div></div>
+
+<!-- ⑩ سؤال شامل -->
+<div class="card"><div class="quiz">
+  <div class="quiz-header"><span class="quiz-num">١٠</span><div class="quiz-q"><span class="quiz-tag">سؤال شامل</span><br>أي العبارات التالية خاطئة عن المعادلات الأيونية؟</div></div>
+  <input type="radio" name="q10" id="q10a" class="wrong"><label for="q10a">a) الإلكتروليتات القوية تُكتب كأيونات منفصلة</label>
+  <input type="radio" name="q10" id="q10b" class="wrong"><label for="q10b">b) الراسب يُكتب بصيغته الجزيئية</label>
+  <input type="radio" name="q10" id="q10c" class="wrong"><label for="q10c">c) الأيونات المتفرجة تُحذف في المعادلة الصافية</label>
+  <input type="radio" name="q10" id="q10d" class="correct"><label for="q10d">d) المجموعات متعددة الذرات (مثل SO₄²⁻) تُفكك إلى ذرات منفصلة</label>
+  <details><summary>الحل</summary><div class="sol">
+    <strong>خطأ!</strong> المجموعات متعددة الذرات مثل SO₄²⁻, NO₃⁻, PO₄³⁻, OH⁻, CO₃²⁻<br>
+    <strong>لا تتفكك</strong> لأن الروابط داخلها تساهمية<br>
+    تبقى كوحدة واحدة في المعادلة الأيونية
+  </div></details>
+</div></div>
+
+<div class="footer">
+  <strong>إعداد المدربة: دانية العلويط</strong><br>
+  NSMO 2026 | أولمبياد العلوم والرياضيات الوطني
+</div>
+
+<script>
+var toAr=function(n){return n.toString().replace(/[0-9]/g,function(d){return'٠١٢٣٤٥٦٧٨٩'[d]})};
+var answered={},total=10,perQ=2;
+document.addEventListener('change',function(e){
+  if(e.target.type!=='radio')return;
+  var name=e.target.name;
+  if(answered[name])return;
+  answered[name]=e.target.classList.contains('correct')?perQ:0;
+  // Disable all options for this question
+  var radios=document.querySelectorAll('input[name="'+name+'"]');
+  for(var i=0;i<radios.length;i++){
+    radios[i].disabled=true;
+    radios[i].nextElementSibling.style.cursor='default';
+    radios[i].nextElementSibling.style.opacity='0.85';
+  }
+  var score=0,count=0;
+  for(var k in answered){score+=answered[k];count++}
+  document.getElementById('scoreNum').textContent=toAr(score);
+  document.getElementById('answeredNum').textContent=toAr(count);
+  document.getElementById('progressFill').style.width=(score/(total*perQ)*100)+'%';
+  if(count===total){
+    var msg=document.getElementById('scoreMsg');
+    msg.style.display='block';
+    if(score===20){msg.textContent='🌟 ممتازة! درجة كاملة!';msg.style.color='#10B981'}
+    else if(score>=16){msg.textContent='👏 أحسنتِ! أداء رائع';msg.style.color='#0D7377'}
+    else if(score>=12){msg.textContent='💪 جيد! راجعي الأسئلة الخاطئة';msg.style.color='#F59E0B'}
+    else{msg.textContent='📖 تحتاجين مراجعة — حاولي مرة ثانية';msg.style.color='#EF4444'}
+  }
+});
+</script>
+</body>
+</html>
