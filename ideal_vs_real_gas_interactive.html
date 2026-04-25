@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>الغاز المثالي vs الحقيقي — تفاعلي | NSMO 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --navy: #1E2761;
+  --navy-2: #2D3A7A;
+  --navy-light: #EAECF3;
+  --teal: #028090;
+  --teal-light: #E6F4F6;
+  --gold: #F9C746;
+  --gold-light: #FDF3DD;
+  --red: #C0392B;
+  --red-light: #FDEBE8;
+  --bg: #F7F9FC;
+  --text: #1A1A2E;
+  --muted: #5A6B7D;
+  --white: #FFFFFF;
+}
+
+html, body {
+  font-family: 'Noto Sans Arabic', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 100%;
+  padding: 14px;
+  padding-bottom: 80px;
+}
+
+/* ============ Header ============ */
+.header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+  color: white;
+  padding: 22px 18px;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -40px; left: -40px;
+  width: 140px; height: 140px;
+  background: var(--gold);
+  border-radius: 50%;
+  opacity: 0.18;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -30px; right: -30px;
+  width: 100px; height: 100px;
+  background: var(--teal);
+  border-radius: 50%;
+  opacity: 0.25;
+}
+.header-tag {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 10px;
+}
+.header h1 {
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 1;
+}
+.header .sub {
+  font-size: 13px;
+  color: var(--gold);
+  font-family: 'JetBrains Mono', monospace;
+  font-style: italic;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============ Card ============ */
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.card h2 {
+  font-size: 17px;
+  color: var(--navy);
+  margin-bottom: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card h2 .icon {
+  display: inline-flex;
+  width: 28px; height: 28px;
+  background: var(--gold);
+  color: var(--navy);
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* ============ Container Visualization ============ */
+.viz-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.gas-box {
+  border-radius: 12px;
+  padding: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.gas-box.ideal {
+  background: linear-gradient(180deg, var(--teal-light) 0%, white 100%);
+  border: 2px solid var(--teal);
+}
+.gas-box.real {
+  background: linear-gradient(180deg, var(--red-light) 0%, white 100%);
+  border: 2px solid var(--red);
+}
+
+.gas-label {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.gas-box.ideal .gas-label { color: var(--teal); }
+.gas-box.real .gas-label { color: var(--red); }
+
+.gas-label-en {
+  text-align: center;
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-style: italic;
+  margin-bottom: 8px;
+  color: var(--muted);
+}
+
+.canvas-wrap {
+  background: white;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1 / 1.1;
+  border: 1px solid #E0E4EA;
+}
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ============ Live Stats ============ */
+.live-stats {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  font-size: 11px;
+}
+.stat {
+  background: rgba(255,255,255,0.8);
+  border-radius: 6px;
+  padding: 4px 6px;
+  text-align: center;
+}
+.stat .lbl {
+  color: var(--muted);
+  font-size: 10px;
+  display: block;
+  margin-bottom: 1px;
+}
+.stat .val {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 12px;
+}
+.gas-box.ideal .stat .val { color: var(--teal); }
+.gas-box.real .stat .val { color: var(--red); }
+
+/* ============ Controls ============ */
+.controls .control-group {
+  margin-bottom: 14px;
+}
+.control-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+}
+.control-label .value {
+  background: var(--navy);
+  color: var(--gold);
+  padding: 3px 10px;
+  border-radius: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  min-width: 80px;
+  text-align: center;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(to right, var(--teal) 0%, var(--gold) 50%, var(--red) 100%);
+  border-radius: 4px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 26px;
+  height: 26px;
+  background: var(--navy);
+  border: 3px solid var(--gold);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  background: var(--navy);
+  border: 3px solid var(--gold);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+.scale-marks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 10px;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ============ PV/nRT Indicator ============ */
+.pvnrt-display {
+  background: var(--navy);
+  color: white;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+.pvnrt-label {
+  font-size: 12px;
+  color: var(--gold);
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 6px;
+}
+.pvnrt-bars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.pvnrt-bar {
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 10px;
+}
+.pvnrt-bar .name {
+  font-size: 11px;
+  margin-bottom: 4px;
+  opacity: 0.8;
+}
+.pvnrt-bar.ideal .name { color: var(--teal-light); }
+.pvnrt-bar.real .name { color: #FFCBC2; }
+.pvnrt-bar .number {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 22px;
+}
+.pvnrt-bar.ideal .number { color: var(--teal-light); }
+.pvnrt-bar.real .number { color: #FFCBC2; }
+.deviation {
+  margin-top: 10px;
+  padding: 8px;
+  background: rgba(249, 199, 70, 0.2);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* ============ Scenarios (Quick Buttons) ============ */
+.scenarios {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.scenario-btn {
+  background: white;
+  border: 2px solid #E0E4EA;
+  border-radius: 10px;
+  padding: 10px 8px;
+  font-family: 'Noto Sans Arabic', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--navy);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  line-height: 1.3;
+}
+.scenario-btn:active {
+  transform: scale(0.97);
+}
+.scenario-btn.active-ideal {
+  background: var(--teal);
+  color: white;
+  border-color: var(--teal);
+}
+.scenario-btn.active-deviate {
+  background: var(--red);
+  color: white;
+  border-color: var(--red);
+}
+.scenario-btn .icon-emoji {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 2px;
+}
+
+/* ============ Comparison Cards ============ */
+.compare-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+.compare-card {
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  gap: 10px;
+}
+.compare-card.ideal {
+  background: var(--teal-light);
+  border-right: 4px solid var(--teal);
+}
+.compare-card.real {
+  background: var(--red-light);
+  border-right: 4px solid var(--red);
+}
+.compare-card .feature {
+  flex: 0 0 100px;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--navy);
+}
+.compare-card .description {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text);
+}
+.compare-card.ideal .description strong { color: var(--teal); }
+.compare-card.real .description strong { color: var(--red); }
+
+/* ============ Insight Box ============ */
+.insight {
+  background: linear-gradient(135deg, var(--gold-light) 0%, white 100%);
+  border-right: 4px solid var(--gold);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 12px;
+}
+.insight-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #B08200;
+  margin-bottom: 4px;
+}
+.insight-body {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.6;
+}
+
+/* ============ Legend ============ */
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 10px;
+  font-size: 11px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+
+/* ============ Deviation Chart ============ */
+.chart-card {
+  background: white;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.chart-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.15 / 1;
+  margin: 8px 0 4px;
+}
+.chart-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.chart-legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 10px;
+  margin-top: 10px;
+  font-size: 12px;
+}
+.chart-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+}
+.chart-legend-line {
+  width: 22px;
+  height: 3px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.chart-legend-line.dashed {
+  background: repeating-linear-gradient(to right, #1E2761 0, #1E2761 4px, transparent 4px, transparent 7px);
+  height: 2px;
+}
+.chart-legend-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  color: #1A1A2E;
+}
+.chart-legend-desc {
+  color: #5A6B7D;
+  font-size: 11px;
+}
+.chart-pointer-info {
+  margin-top: 10px;
+  padding: 8px 10px;
+  background: #EAECF3;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #1E2761;
+  font-weight: 600;
+  text-align: center;
+}
+.chart-pointer-info span {
+  font-family: 'JetBrains Mono', monospace;
+  color: #028090;
+}
+.chart-zones {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 4px;
+  margin-top: 8px;
+  font-size: 10px;
+  text-align: center;
+}
+.chart-zone {
+  padding: 5px 4px;
+  border-radius: 6px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.chart-zone.below {
+  background: rgba(2, 128, 144, 0.15);
+  color: #028090;
+}
+.chart-zone.ideal {
+  background: rgba(249, 199, 70, 0.2);
+  color: #B08200;
+}
+.chart-zone.above {
+  background: rgba(192, 57, 43, 0.15);
+  color: #C0392B;
+}
+
+
+/* ============ Temperature Effect Chart ============ */
+.temp-chart-card {
+  background: linear-gradient(135deg, #FFF8E7 0%, #FFFFFF 100%);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  border: 2px solid var(--gold);
+}
+.temp-chart-card h2 {
+  font-size: 17px;
+  color: var(--navy);
+  margin-bottom: 8px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.temp-chart-card .subtitle {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.temp-control {
+  background: white;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+.temp-control-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+}
+.temp-badge {
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 13px;
+  color: white;
+  min-width: 80px;
+  text-align: center;
+}
+.temp-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 6px;
+}
+.temp-scale span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.temp-scale .emoji {
+  font-size: 14px;
+}
+
+#temp-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(to right, #2C5282 0%, #3182CE 25%, #F9C746 50%, #DD6B20 75%, #C0392B 100%);
+  border-radius: 5px;
+  outline: none;
+}
+#temp-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 28px;
+  height: 28px;
+  background: white;
+  border: 4px solid var(--navy);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+#temp-slider::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  background: white;
+  border: 4px solid var(--navy);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.temp-chart-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.1 / 1;
+  background: white;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.temp-chart-wrap svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Discovery Box - تتغير حسب الحرارة */
+.discovery {
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 13px;
+  line-height: 1.7;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.discovery::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 5px; height: 100%;
+}
+.discovery.cold {
+  background: linear-gradient(135deg, rgba(44, 82, 130, 0.08), white);
+  color: #2C5282;
+}
+.discovery.cold::before { background: #2C5282; }
+
+.discovery.cool {
+  background: linear-gradient(135deg, rgba(49, 130, 206, 0.08), white);
+  color: #3182CE;
+}
+.discovery.cool::before { background: #3182CE; }
+
+.discovery.moderate {
+  background: linear-gradient(135deg, var(--gold-light), white);
+  color: #B08200;
+}
+.discovery.moderate::before { background: var(--gold); }
+
+.discovery.warm {
+  background: linear-gradient(135deg, rgba(221, 107, 32, 0.08), white);
+  color: #DD6B20;
+}
+.discovery.warm::before { background: #DD6B20; }
+
+.discovery.hot {
+  background: linear-gradient(135deg, var(--teal-light), white);
+  color: var(--teal);
+}
+.discovery.hot::before { background: var(--teal); }
+
+.discovery-icon {
+  font-size: 22px;
+  margin-bottom: 4px;
+  display: block;
+}
+.discovery-title {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: var(--navy);
+}
+.discovery-body {
+  color: var(--text);
+  font-weight: 500;
+}
+.discovery-body strong {
+  font-weight: 700;
+}
+
+/* Discovery Indicator - شريط النتيجة */
+.gap-indicator {
+  background: white;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.gap-indicator-label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  text-align: center;
+}
+.gap-bar-wrap {
+  position: relative;
+  height: 14px;
+  background: #EAECF3;
+  border-radius: 7px;
+  overflow: hidden;
+}
+.gap-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--teal), var(--gold), var(--red));
+  transition: width 0.3s ease;
+}
+.gap-marker {
+  position: absolute;
+  top: -4px;
+  width: 4px;
+  height: 22px;
+  background: var(--navy);
+  border-radius: 2px;
+  transition: left 0.3s ease;
+}
+.gap-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 10px;
+  color: var(--muted);
+}
+.gap-current {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--navy);
+  margin-top: 8px;
+}
+
+/* Temperature presets */
+.temp-presets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.temp-preset-btn {
+  background: white;
+  border: 2px solid #E0E4EA;
+  border-radius: 8px;
+  padding: 8px 4px;
+  font-family: 'Noto Sans Arabic', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--navy);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  line-height: 1.2;
+}
+.temp-preset-btn:active { transform: scale(0.95); }
+.temp-preset-btn .em {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+.temp-preset-btn.active {
+  background: var(--navy);
+  color: white;
+  border-color: var(--navy);
+}
+
+/* ============ Footer ============ */
+.footer {
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  padding: 18px 0;
+  border-top: 1px solid #E0E4EA;
+  margin-top: 20px;
+}
+.footer .brand {
+  color: var(--navy);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+/* ============ Responsive (small phones) ============ */
+@media (max-width: 360px) {
+  .header h1 { font-size: 19px; }
+  .card h2 { font-size: 15px; }
+  .pvnrt-bar .number { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <span class="header-tag">الفصل الخامس · Chapter 5</span>
+    <h1>الغاز المثالي vs الحقيقي</h1>
+    <div class="sub">Ideal vs. Real Gas — Interactive</div>
+  </div>
+
+  <!-- Visualization -->
+  <div class="card">
+    <h2><span class="icon">01</span>المحاكاة المرئية</h2>
+    
+    <div class="viz-wrapper">
+      <div class="gas-box ideal">
+        <div class="gas-label">الغاز المثالي</div>
+        <div class="gas-label-en">Ideal Gas</div>
+        <div class="canvas-wrap">
+          <canvas id="ideal-canvas"></canvas>
+        </div>
+        <div class="live-stats">
+          <div class="stat"><span class="lbl">تصادمات/ث</span><span class="val" id="ideal-coll">0</span></div>
+          <div class="stat"><span class="lbl">قوى تجاذب</span><span class="val">0</span></div>
+        </div>
+      </div>
+
+      <div class="gas-box real">
+        <div class="gas-label">الغاز الحقيقي</div>
+        <div class="gas-label-en">Real Gas</div>
+        <div class="canvas-wrap">
+          <canvas id="real-canvas"></canvas>
+        </div>
+        <div class="live-stats">
+          <div class="stat"><span class="lbl">تصادمات/ث</span><span class="val" id="real-coll">0</span></div>
+          <div class="stat"><span class="lbl">تجمّعات</span><span class="val" id="real-clusters">0</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><span class="legend-dot" style="background:#028090"></span><span>جسيم بحجم مهمل</span></div>
+      <div class="legend-item"><span class="legend-dot" style="background:#C0392B"></span><span>جسيم بحجم حقيقي</span></div>
+    </div>
+  </div>
+
+  <!-- PV/nRT Display -->
+  <div class="pvnrt-display">
+    <div class="pvnrt-label">قيمة PV / nRT</div>
+    <div class="pvnrt-bars">
+      <div class="pvnrt-bar ideal">
+        <div class="name">الغاز المثالي</div>
+        <div class="number" id="ideal-pvnrt">1.000</div>
+      </div>
+      <div class="pvnrt-bar real">
+        <div class="name">الغاز الحقيقي</div>
+        <div class="number" id="real-pvnrt">1.000</div>
+      </div>
+    </div>
+    <div class="deviation" id="deviation-msg">انحراف: 0.0% · سلوك مثالي تقريباً ✓</div>
+  </div>
+
+  <!-- Deviation Chart -->
+  <div class="chart-card">
+    <h2 style="font-size:17px; color:var(--navy); margin-bottom:6px; font-weight:700; display:flex; align-items:center; gap:8px;">
+      <span class="icon" style="display:inline-flex; width:28px; height:28px; background:var(--gold); color:var(--navy); border-radius:8px; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:13px;">02</span>
+      مخطط الانحراف
+    </h2>
+    <div style="font-size:12px; color:var(--muted); margin-bottom:6px;">PV/nRT  مقابل  P  &middot; عند T = 273 K</div>
+
+    <div class="chart-wrap">
+      <svg class="chart-svg" id="deviation-chart" viewBox="0 0 400 350" preserveAspectRatio="xMidYMid meet">
+        <!-- المحتوى يُرسم بـ JS -->
+      </svg>
+    </div>
+
+    <div class="chart-pointer-info" id="chart-info">
+      حرّك شريط الضغط لرؤية موقعك على المنحنى
+    </div>
+
+    <div class="chart-zones">
+      <div class="chart-zone below">
+        تجاذب يطغى<br>PV/nRT &lt; 1
+      </div>
+      <div class="chart-zone ideal">
+        مثالي<br>PV/nRT = 1
+      </div>
+      <div class="chart-zone above">
+        حجم يطغى<br>PV/nRT &gt; 1
+      </div>
+    </div>
+
+    <div class="chart-legend">
+      <div class="chart-legend-item">
+        <span class="chart-legend-line dashed"></span>
+        <div>
+          <div class="chart-legend-name">Ideal</div>
+          <div class="chart-legend-desc">المثالي = 1</div>
+        </div>
+      </div>
+      <div class="chart-legend-item">
+        <span class="chart-legend-line" style="background:#028090"></span>
+        <div>
+          <div class="chart-legend-name">H&#8322;</div>
+          <div class="chart-legend-desc">جزيء صغير غير قطبي</div>
+        </div>
+      </div>
+      <div class="chart-legend-item">
+        <span class="chart-legend-line" style="background:#1E2761"></span>
+        <div>
+          <div class="chart-legend-name">N&#8322;</div>
+          <div class="chart-legend-desc">قريب من المثالية</div>
+        </div>
+      </div>
+      <div class="chart-legend-item">
+        <span class="chart-legend-line" style="background:#C0392B"></span>
+        <div>
+          <div class="chart-legend-name">CH&#8324;</div>
+          <div class="chart-legend-desc">تجاذب أقوى</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight" style="margin-top:12px;">
+      <div class="insight-title">&#128161; قراءة المخطط</div>
+      <div class="insight-body">
+        كل غاز يبدأ بقيمة قريبة من 1 عند الضغوط المنخفضة، ثم يهبط (بسبب التجاذب) ثم يصعد (بسبب الحجم) كلما زاد الضغط. الغاز الأقرب لخط المثالي = الأقل انحرافاً.
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Temperature Effect Discovery -->
+  <div class="temp-chart-card">
+    <h2>
+      <span class="icon" style="display:inline-flex; width:28px; height:28px; background:var(--gold); color:var(--navy); border-radius:8px; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:13px;">03</span>
+      اكتشف بنفسك: تأثير الحرارة
+    </h2>
+    <div class="subtitle">
+      حرّك شريط الحرارة ولاحظ كيف تتغير العلاقة بين الغاز الحقيقي (N&#8322;) والمثالي.
+    </div>
+
+    <!-- شريط الحرارة -->
+    <div class="temp-control">
+      <div class="temp-control-label">
+        <span>درجة الحرارة (T)</span>
+        <span class="temp-badge" id="temp-badge" style="background:var(--gold); color:var(--navy);">300 K</span>
+      </div>
+      <input type="range" id="temp-slider" min="80" max="800" value="300" step="10">
+      <div class="temp-scale">
+        <span><span class="emoji">&#10052;</span><span>80 K</span></span>
+        <span><span class="emoji">&#10052;</span><span>200 K</span></span>
+        <span><span class="emoji">&#127777;</span><span>400 K</span></span>
+        <span><span class="emoji">&#128293;</span><span>600 K</span></span>
+        <span><span class="emoji">&#128293;</span><span>800 K</span></span>
+      </div>
+    </div>
+
+    <!-- أزرار جاهزة -->
+    <div class="temp-presets">
+      <button class="temp-preset-btn" onclick="setTemp(80)">
+        <span class="em">&#10052;</span>تجمّد<br>80 K
+      </button>
+      <button class="temp-preset-btn" onclick="setTemp(200)">
+        <span class="em">&#10052;</span>برودة<br>200 K
+      </button>
+      <button class="temp-preset-btn" onclick="setTemp(400)">
+        <span class="em">&#127777;</span>دافئ<br>400 K
+      </button>
+      <button class="temp-preset-btn" onclick="setTemp(700)">
+        <span class="em">&#128293;</span>حار<br>700 K
+      </button>
+    </div>
+
+    <!-- المخطط الديناميكي -->
+    <div class="temp-chart-wrap">
+      <svg id="temp-chart" viewBox="0 0 400 350" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <!-- مؤشّر الفجوة بين الغازين -->
+    <div class="gap-indicator">
+      <div class="gap-indicator-label">حجم الانحراف عن المثالية</div>
+      <div class="gap-bar-wrap">
+        <div class="gap-bar-fill" id="gap-fill" style="width: 30%;"></div>
+        <div class="gap-marker" id="gap-marker" style="left: 30%;"></div>
+      </div>
+      <div class="gap-labels">
+        <span>&#10003; قريب من المثالي</span>
+        <span>&#9888; انحراف كبير</span>
+      </div>
+      <div class="gap-current" id="gap-current">انحراف أقصى: 0.0%</div>
+    </div>
+
+    <!-- صندوق الاكتشاف الديناميكي -->
+    <div class="discovery moderate" id="discovery">
+      <span class="discovery-icon" id="disc-icon">&#129504;</span>
+      <div class="discovery-title" id="disc-title">حرّك الشريط لتكتشف...</div>
+      <div class="discovery-body" id="disc-body">
+        راقب كيف يقترب أو يبتعد منحنى الغاز الحقيقي عن خط المثالي مع تغيّر درجة الحرارة.
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="card controls">
+    <h2><span class="icon">02</span>تحكّم في الظروف</h2>
+
+    <div class="control-group">
+      <div class="control-label">
+        <span>الضغط (P)</span>
+        <span class="value" id="p-display">1.0 atm</span>
+      </div>
+      <input type="range" id="pressure" min="1" max="500" value="10" step="1">
+      <div class="scale-marks">
+        <span>0.1 atm</span>
+        <span>50 atm</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="control-label">
+        <span>درجة الحرارة (T)</span>
+        <span class="value" id="t-display">300 K</span>
+      </div>
+      <input type="range" id="temperature" min="50" max="600" value="300" step="5">
+      <div class="scale-marks">
+        <span>50 K (بارد)</span>
+        <span>600 K (حار)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Scenarios -->
+  <div class="card">
+    <h2><span class="icon">03</span>سيناريوهات جاهزة</h2>
+    <div class="scenarios">
+      <button class="scenario-btn" onclick="applyScenario('ideal')">
+        <span class="icon-emoji">✅</span>ظروف مثالية<br><small>P منخفض · T عالٍ</small>
+      </button>
+      <button class="scenario-btn" onclick="applyScenario('high-p')">
+        <span class="icon-emoji">⬆</span>ضغط عالٍ<br><small>P = 30 atm</small>
+      </button>
+      <button class="scenario-btn" onclick="applyScenario('low-t')">
+        <span class="icon-emoji">❄</span>برودة شديدة<br><small>T = 100 K</small>
+      </button>
+      <button class="scenario-btn" onclick="applyScenario('extreme')">
+        <span class="icon-emoji">⚠</span>الحالة القصوى<br><small>تكاثف محتمل</small>
+      </button>
+    </div>
+  </div>
+
+  <!-- Comparison Cards -->
+  <div class="card">
+    <h2><span class="icon">04</span>المقارنة الجوهرية</h2>
+    <div class="compare-cards">
+      <div class="compare-card ideal">
+        <div class="feature">حجم الجسيمات</div>
+        <div class="description"><strong>مهمل ≈ صفر</strong> — الفراغات بين الجسيمات أكبر بكثير من حجمها</div>
+      </div>
+      <div class="compare-card real">
+        <div class="feature">حجم الجسيمات</div>
+        <div class="description"><strong>حقيقي وملموس</strong> — يصبح مهماً عند الضغط العالي</div>
+      </div>
+
+      <div class="compare-card ideal">
+        <div class="feature">قوى التجاذب</div>
+        <div class="description"><strong>معدومة</strong> — لا تجاذب ولا تنافر</div>
+      </div>
+      <div class="compare-card real">
+        <div class="feature">قوى التجاذب</div>
+        <div class="description"><strong>موجودة</strong> — تظهر بقوة عند البرودة الشديدة</div>
+      </div>
+
+      <div class="compare-card ideal">
+        <div class="feature">التصادمات</div>
+        <div class="description"><strong>مرنة 100%</strong> — لا فقدان للطاقة الحركية</div>
+      </div>
+      <div class="compare-card real">
+        <div class="feature">التصادمات</div>
+        <div class="description"><strong>شبه مرنة</strong> — قد تفقد الجسيمات بعض الطاقة</div>
+      </div>
+
+      <div class="compare-card ideal">
+        <div class="feature">PV = nRT</div>
+        <div class="description"><strong>تتحقق دائماً</strong> — في كل الظروف بلا استثناء</div>
+      </div>
+      <div class="compare-card real">
+        <div class="feature">PV = nRT</div>
+        <div class="description"><strong>تنحرف</strong> — عند الضغط العالي والحرارة المنخفضة</div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-title">💡 الفكرة الذهبية</div>
+      <div class="insight-body">
+        الغاز الحقيقي يقترب من المثالي عند <strong>ضغط منخفض + حرارة عالية</strong> — لأن الجسيمات تكون متباعدة وطاقتها الحركية تتغلب على قوى التجاذب.
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="brand">إعداد المدربة: دانية العلويط</div>
+    <div>NSMO 2026 · الفصل الخامس · الغازات</div>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// المحاكاة الفيزيائية للجسيمات
+// ============================================================
+class Particle {
+  constructor(canvas, isReal) {
+    this.canvas = canvas;
+    this.isReal = isReal;
+    this.radius = isReal ? 6 : 2.5;
+    this.color = isReal ? '#C0392B' : '#028090';
+    this.reset();
+  }
+  reset() {
+    const w = this.canvas.width;
+    const h = this.canvas.height;
+    this.x = this.radius + Math.random() * (w - 2 * this.radius);
+    this.y = this.radius + Math.random() * (h - 2 * this.radius);
+    const speed = 1 + Math.random() * 1.5;
+    const angle = Math.random() * Math.PI * 2;
+    this.vx = Math.cos(angle) * speed;
+    this.vy = Math.sin(angle) * speed;
+  }
+  setSpeed(factor) {
+    const cur = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+    const target = factor;
+    if (cur === 0) return;
+    this.vx = (this.vx / cur) * target;
+    this.vy = (this.vy / cur) * target;
+  }
+}
+
+class GasSimulation {
+  constructor(canvasId, isReal) {
+    this.canvas = document.getElementById(canvasId);
+    this.ctx = this.canvas.getContext('2d');
+    this.isReal = isReal;
+    this.particles = [];
+    this.collisions = 0;
+    this.collisionsThisSec = 0;
+    this.lastSec = Date.now();
+    this.clusters = 0;
+    this.resize();
+    this.init();
+  }
+  resize() {
+    const rect = this.canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    this.canvas.width = rect.width * dpr;
+    this.canvas.height = rect.height * dpr;
+    this.ctx.scale(dpr, dpr);
+    this.canvas.style.width = rect.width + 'px';
+    this.canvas.style.height = rect.height + 'px';
+  }
+  init() {
+    const count = this.isReal ? 28 : 28;
+    this.particles = [];
+    for (let i = 0; i < count; i++) {
+      this.particles.push(new Particle(this.canvas, this.isReal));
+    }
+  }
+  setConditions(pressure, temp) {
+    // الضغط يؤثر على الحجم (تقلص افتراضي للحاوية بصرياً عبر تجمع الجسيمات في وسط)
+    // الحرارة تؤثر على السرعة
+    const speedFactor = 0.3 + (temp / 600) * 2.5;
+    this.particles.forEach(p => p.setSpeed(speedFactor));
+    this.pressureFactor = Math.min(pressure / 50, 1);  // 0-1
+    this.tempFactor = temp / 600; // 0-1
+  }
+  step() {
+    const ctx = this.ctx;
+    const w = this.canvas.width / (window.devicePixelRatio || 1);
+    const h = this.canvas.height / (window.devicePixelRatio || 1);
+    
+    ctx.clearRect(0, 0, w, h);
+    
+    // ضغط عالٍ → حاوية أصغر بصرياً (إطار داخلي)
+    let bx = 0, by = 0, bw = w, bh = h;
+    if (this.pressureFactor > 0.3) {
+      const shrink = (this.pressureFactor - 0.3) * 30;
+      bx = shrink; by = shrink;
+      bw = w - 2 * shrink;
+      bh = h - 2 * shrink;
+    }
+    
+    // رسم إطار الحاوية
+    ctx.strokeStyle = this.isReal ? 'rgba(192, 57, 43, 0.3)' : 'rgba(2, 128, 144, 0.3)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([3, 3]);
+    ctx.strokeRect(bx, by, bw, bh);
+    ctx.setLineDash([]);
+    
+    // تحديث ورسم الجسيمات
+    this.collisionsThisSec = 0;
+    this.clusters = 0;
+    
+    for (let i = 0; i < this.particles.length; i++) {
+      const p = this.particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      
+      // تطبيق قوى التجاذب للغاز الحقيقي عند الحرارة المنخفضة
+      if (this.isReal && this.tempFactor < 0.4) {
+        const attractStrength = (0.4 - this.tempFactor) * 0.05;
+        for (let j = i + 1; j < this.particles.length; j++) {
+          const q = this.particles[j];
+          const dx = q.x - p.x;
+          const dy = q.y - p.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 50 && dist > p.radius * 2) {
+            const force = attractStrength / dist;
+            p.vx += dx * force;
+            p.vy += dy * force;
+            q.vx -= dx * force;
+            q.vy -= dy * force;
+          }
+          if (dist < p.radius * 3) this.clusters++;
+        }
+      }
+      
+      // الارتداد عن جدران الحاوية المضغوطة
+      if (p.x < bx + p.radius) { p.x = bx + p.radius; p.vx = Math.abs(p.vx); this.collisionsThisSec++; }
+      if (p.x > bx + bw - p.radius) { p.x = bx + bw - p.radius; p.vx = -Math.abs(p.vx); this.collisionsThisSec++; }
+      if (p.y < by + p.radius) { p.y = by + p.radius; p.vy = Math.abs(p.vy); this.collisionsThisSec++; }
+      if (p.y > by + bh - p.radius) { p.y = by + bh - p.radius; p.vy = -Math.abs(p.vy); this.collisionsThisSec++; }
+      
+      // تصادمات الجسيمات (للغاز الحقيقي فقط)
+      if (this.isReal) {
+        for (let j = i + 1; j < this.particles.length; j++) {
+          const q = this.particles[j];
+          const dx = q.x - p.x;
+          const dy = q.y - p.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const minDist = p.radius + q.radius;
+          if (dist < minDist && dist > 0) {
+            // فصل الجسيمات
+            const overlap = (minDist - dist) / 2;
+            const nx = dx / dist;
+            const ny = dy / dist;
+            p.x -= nx * overlap;
+            p.y -= ny * overlap;
+            q.x += nx * overlap;
+            q.y += ny * overlap;
+            // تبادل سرعات بسيط
+            const vdotn = (q.vx - p.vx) * nx + (q.vy - p.vy) * ny;
+            if (vdotn < 0) {
+              p.vx += vdotn * nx;
+              p.vy += vdotn * ny;
+              q.vx -= vdotn * nx;
+              q.vy -= vdotn * ny;
+            }
+          }
+        }
+      }
+      
+      // الرسم
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // هالة قوى التجاذب للجسيمات الحقيقية في الحرارة المنخفضة
+      if (this.isReal && this.tempFactor < 0.4) {
+        ctx.fillStyle = 'rgba(192, 57, 43, 0.08)';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius * 2.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    
+    this.collisions += this.collisionsThisSec;
+  }
+}
+
+// ============================================================
+// منطق الواجهة
+// ============================================================
+let pressure = 1;
+let temperature = 300;
+let idealSim, realSim;
+
+function init() {
+  idealSim = new GasSimulation('ideal-canvas', false);
+  realSim = new GasSimulation('real-canvas', true);
+  
+  document.getElementById('pressure').addEventListener('input', e => {
+    pressure = parseInt(e.target.value) / 10; // 1-500 → 0.1-50 atm
+    update();
+  });
+  document.getElementById('temperature').addEventListener('input', e => {
+    temperature = parseInt(e.target.value);
+    update();
+  });
+  
+  update();
+  
+  // حلقة الرسم
+  let lastTime = Date.now();
+  let collTimer = Date.now();
+  let idealCollCount = 0;
+  let realCollCount = 0;
+  
+  function loop() {
+    idealSim.step();
+    realSim.step();
+    idealCollCount += idealSim.collisionsThisSec;
+    realCollCount += realSim.collisionsThisSec;
+    
+    // تحديث العدادات كل ثانية
+    const now = Date.now();
+    if (now - collTimer >= 1000) {
+      document.getElementById('ideal-coll').textContent = idealCollCount;
+      document.getElementById('real-coll').textContent = realCollCount;
+      document.getElementById('real-clusters').textContent = Math.floor(realSim.clusters / 2);
+      idealCollCount = 0;
+      realCollCount = 0;
+      collTimer = now;
+    }
+    
+    requestAnimationFrame(loop);
+  }
+  loop();
+}
+
+function update() {
+  // عرض القيم
+  document.getElementById('p-display').textContent = pressure.toFixed(1) + ' atm';
+  document.getElementById('t-display').textContent = temperature + ' K';
+  
+  // تطبيق الظروف على المحاكاة
+  idealSim.setConditions(pressure, temperature);
+  realSim.setConditions(pressure, temperature);
+  
+  // حساب PV/nRT
+  // الغاز المثالي: دائماً = 1
+  const idealRatio = 1.000;
+  
+  // الغاز الحقيقي: نموذج فان دير فالس مبسّط
+  // PV/nRT = 1 + B(T) * P
+  // B(T) سالب عند T منخفض، ≈ 0 عند T عالٍ
+  // عند P عالٍ، يصبح موجباً (تنافر)
+  const tempEffect = 1 - 300 / temperature; // -ve عند T منخفض
+  const a = 0.05; // قوى التجاذب
+  const b = 0.008; // حجم الجسيمات
+  
+  let realRatio;
+  if (pressure < 5) {
+    // ضغط منخفض → سلوك مثالي
+    realRatio = 1 - a * tempEffect * (pressure / 10);
+  } else {
+    // ضغط مرتفع → الحجم الحقيقي يسود
+    const lowPpart = -a * tempEffect * (pressure / 10);
+    const highPpart = b * pressure;
+    realRatio = 1 + lowPpart + highPpart;
+  }
+  // قيد القيم
+  realRatio = Math.max(0.4, Math.min(2.5, realRatio));
+  
+  document.getElementById('ideal-pvnrt').textContent = idealRatio.toFixed(3);
+  document.getElementById('real-pvnrt').textContent = realRatio.toFixed(3);
+  
+  // رسالة الانحراف
+  const dev = Math.abs(realRatio - 1) * 100;
+  const msgEl = document.getElementById('deviation-msg');
+  if (dev < 3) {
+    msgEl.textContent = `انحراف: ${dev.toFixed(1)}% · سلوك مثالي تقريباً ✓`;
+    msgEl.style.background = 'rgba(2, 128, 144, 0.25)';
+    msgEl.style.color = '#A0E8F0';
+  } else if (dev < 15) {
+    msgEl.textContent = `انحراف: ${dev.toFixed(1)}% · انحراف ملحوظ`;
+    msgEl.style.background = 'rgba(249, 199, 70, 0.2)';
+    msgEl.style.color = '#F9C746';
+  } else {
+    msgEl.textContent = `انحراف: ${dev.toFixed(1)}% · انحراف كبير ⚠`;
+    msgEl.style.background = 'rgba(192, 57, 43, 0.25)';
+    msgEl.style.color = '#FFCBC2';
+  }
+  
+  // تلوين أزرار السيناريوهات
+  const isIdealCondition = (pressure < 3 && temperature > 350);
+  const isExtreme = (pressure > 25 || temperature < 150);
+  
+  document.querySelectorAll('.scenario-btn').forEach(b => {
+    b.classList.remove('active-ideal', 'active-deviate');
+  });
+  if (isIdealCondition) {
+    document.querySelectorAll('.scenario-btn')[0].classList.add('active-ideal');
+  }
+  
+  // تحديث مؤشّر المخطط
+  updateChartCursor();
+}
+
+function applyScenario(type) {
+  const pSlider = document.getElementById('pressure');
+  const tSlider = document.getElementById('temperature');
+  if (type === 'ideal') {
+    pSlider.value = 10;  // 1.0 atm
+    tSlider.value = 500;
+  } else if (type === 'high-p') {
+    pSlider.value = 300; // 30 atm
+    tSlider.value = 300;
+  } else if (type === 'low-t') {
+    pSlider.value = 50;  // 5 atm
+    tSlider.value = 100;
+  } else if (type === 'extreme') {
+    pSlider.value = 400; // 40 atm
+    tSlider.value = 80;
+  }
+  pressure = parseInt(pSlider.value) / 10;
+  temperature = parseInt(tSlider.value);
+  update();
+}
+
+
+// ============================================================
+// مخطط الانحراف PV/nRT vs P
+// ============================================================
+const CHART = {
+  svg: null,
+  width: 400,
+  height: 350,
+  margin: { top: 28, right: 25, bottom: 50, left: 55 },
+  pMin: 0,
+  pMax: 1000,  // atm
+  ratioMin: 0.4,
+  ratioMax: 2.0,
+};
+
+function chartXScale(p) {
+  const w = CHART.width - CHART.margin.left - CHART.margin.right;
+  return CHART.margin.left + ((p - CHART.pMin) / (CHART.pMax - CHART.pMin)) * w;
+}
+function chartYScale(r) {
+  const h = CHART.height - CHART.margin.top - CHART.margin.bottom;
+  return CHART.margin.top + (1 - (r - CHART.ratioMin) / (CHART.ratioMax - CHART.ratioMin)) * h;
+}
+
+// نماذج الغازات الحقيقية (تقريبية مبنية على ثوابت van der Waals عند T=273K)
+// PV/nRT للغاز ≈ 1 + (b - a/RT) * (P/RT) + ...
+// نستخدم تقريب مرئي قريب من السلوك الحقيقي
+function gasRatio(p, gas) {
+  // p بالـ atm
+  // المعاملات (a للتجاذب، b للحجم) — قيم نسبية للعرض
+  let a, b;
+  if (gas === 'H2')   { a = 0.0001; b = 0.00040; }   // قريب جدا للمثالي، ثم يصعد بسرعة
+  else if (gas === 'N2')   { a = 0.00045; b = 0.00038; }   // تجاذب قليل ثم حجم
+  else if (gas === 'CH4')  { a = 0.0011; b = 0.00043; }    // تجاذب أكبر
+  
+  const dipDepth = a;
+  const riseRate = b;
+  return 1 - dipDepth * p + riseRate * p * (p / 200);
+}
+
+function drawChart() {
+  const svg = document.getElementById('deviation-chart');
+  if (!svg) return;
+  CHART.svg = svg;
+  
+  // نظف
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  
+  const ns = 'http://www.w3.org/2000/svg';
+  const w = CHART.width, h = CHART.height;
+  const m = CHART.margin;
+  
+  // خلفية المخطط - مناطق ملوّنة
+  // منطقة <1 (تجاذب) - تيل فاتح
+  const yIdeal = chartYScale(1);
+  const bgBelow = document.createElementNS(ns, 'rect');
+  bgBelow.setAttribute('x', m.left);
+  bgBelow.setAttribute('y', yIdeal);
+  bgBelow.setAttribute('width', w - m.left - m.right);
+  bgBelow.setAttribute('height', h - m.bottom - yIdeal);
+  bgBelow.setAttribute('fill', 'rgba(2, 128, 144, 0.06)');
+  svg.appendChild(bgBelow);
+  
+  // منطقة >1 (حجم) - أحمر فاتح
+  const bgAbove = document.createElementNS(ns, 'rect');
+  bgAbove.setAttribute('x', m.left);
+  bgAbove.setAttribute('y', m.top);
+  bgAbove.setAttribute('width', w - m.left - m.right);
+  bgAbove.setAttribute('height', yIdeal - m.top);
+  bgAbove.setAttribute('fill', 'rgba(192, 57, 43, 0.05)');
+  svg.appendChild(bgAbove);
+  
+  // شبكة أفقية
+  const yTicks = [0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0];
+  yTicks.forEach(yt => {
+    const y = chartYScale(yt);
+    const line = document.createElementNS(ns, 'line');
+    line.setAttribute('x1', m.left);
+    line.setAttribute('y1', y);
+    line.setAttribute('x2', w - m.right);
+    line.setAttribute('y2', y);
+    line.setAttribute('stroke', '#E8EBF0');
+    line.setAttribute('stroke-width', yt === 1.0 ? '0' : '1');
+    svg.appendChild(line);
+    
+    const txt = document.createElementNS(ns, 'text');
+    txt.setAttribute('x', m.left - 6);
+    txt.setAttribute('y', y + 4);
+    txt.setAttribute('text-anchor', 'end');
+    txt.setAttribute('font-size', '10');
+    txt.setAttribute('font-family', "'JetBrains Mono', monospace");
+    txt.setAttribute('fill', '#5A6B7D');
+    txt.textContent = yt.toFixed(1);
+    svg.appendChild(txt);
+  });
+  
+  // شبكة عمودية
+  const xTicks = [0, 200, 400, 600, 800, 1000];
+  xTicks.forEach(xt => {
+    const x = chartXScale(xt);
+    const line = document.createElementNS(ns, 'line');
+    line.setAttribute('x1', x);
+    line.setAttribute('y1', m.top);
+    line.setAttribute('x2', x);
+    line.setAttribute('y2', h - m.bottom);
+    line.setAttribute('stroke', '#E8EBF0');
+    line.setAttribute('stroke-width', '1');
+    svg.appendChild(line);
+    
+    const txt = document.createElementNS(ns, 'text');
+    txt.setAttribute('x', x);
+    txt.setAttribute('y', h - m.bottom + 16);
+    txt.setAttribute('text-anchor', 'middle');
+    txt.setAttribute('font-size', '10');
+    txt.setAttribute('font-family', "'JetBrains Mono', monospace");
+    txt.setAttribute('fill', '#5A6B7D');
+    txt.textContent = xt;
+    svg.appendChild(txt);
+  });
+  
+  // محاور
+  const xAxis = document.createElementNS(ns, 'line');
+  xAxis.setAttribute('x1', m.left);
+  xAxis.setAttribute('y1', h - m.bottom);
+  xAxis.setAttribute('x2', w - m.right);
+  xAxis.setAttribute('y2', h - m.bottom);
+  xAxis.setAttribute('stroke', '#1A1A2E');
+  xAxis.setAttribute('stroke-width', '1.5');
+  svg.appendChild(xAxis);
+  
+  const yAxis = document.createElementNS(ns, 'line');
+  yAxis.setAttribute('x1', m.left);
+  yAxis.setAttribute('y1', m.top);
+  yAxis.setAttribute('x2', m.left);
+  yAxis.setAttribute('y2', h - m.bottom);
+  yAxis.setAttribute('stroke', '#1A1A2E');
+  yAxis.setAttribute('stroke-width', '1.5');
+  svg.appendChild(yAxis);
+  
+  // عناوين المحاور
+  const xLabel = document.createElementNS(ns, 'text');
+  xLabel.setAttribute('x', m.left + (w - m.left - m.right) / 2);
+  xLabel.setAttribute('y', h - 8);
+  xLabel.setAttribute('text-anchor', 'middle');
+  xLabel.setAttribute('font-size', '12');
+  xLabel.setAttribute('font-family', "'JetBrains Mono', monospace");
+  xLabel.setAttribute('font-weight', '700');
+  xLabel.setAttribute('fill', '#1E2761');
+  xLabel.textContent = 'P (atm)';
+  svg.appendChild(xLabel);
+  
+  const yLabel = document.createElementNS(ns, 'text');
+  yLabel.setAttribute('x', 14);
+  yLabel.setAttribute('y', m.top + (h - m.top - m.bottom) / 2);
+  yLabel.setAttribute('text-anchor', 'middle');
+  yLabel.setAttribute('font-size', '12');
+  yLabel.setAttribute('font-family', "'JetBrains Mono', monospace");
+  yLabel.setAttribute('font-weight', '700');
+  yLabel.setAttribute('fill', '#1E2761');
+  yLabel.setAttribute('transform', `rotate(-90, 14, ${m.top + (h - m.top - m.bottom) / 2})`);
+  yLabel.textContent = 'PV / nRT';
+  svg.appendChild(yLabel);
+  
+  // خط المثالي (متقطّع)
+  const idealLine = document.createElementNS(ns, 'line');
+  idealLine.setAttribute('x1', m.left);
+  idealLine.setAttribute('y1', yIdeal);
+  idealLine.setAttribute('x2', w - m.right);
+  idealLine.setAttribute('y2', yIdeal);
+  idealLine.setAttribute('stroke', '#1E2761');
+  idealLine.setAttribute('stroke-width', '2');
+  idealLine.setAttribute('stroke-dasharray', '6,4');
+  svg.appendChild(idealLine);
+  
+  // تسمية "Ideal" على الخط
+  const idealLabel = document.createElementNS(ns, 'text');
+  idealLabel.setAttribute('x', w - m.right - 6);
+  idealLabel.setAttribute('y', yIdeal - 5);
+  idealLabel.setAttribute('text-anchor', 'end');
+  idealLabel.setAttribute('font-size', '10');
+  idealLabel.setAttribute('font-family', "'JetBrains Mono', monospace");
+  idealLabel.setAttribute('font-weight', '700');
+  idealLabel.setAttribute('fill', '#1E2761');
+  idealLabel.textContent = 'Ideal';
+  svg.appendChild(idealLabel);
+  
+  // منحنيات الغازات الحقيقية
+  const gases = [
+    { name: 'H2', color: '#028090', yLabel: 'H\u2082' },
+    { name: 'N2', color: '#1E2761', yLabel: 'N\u2082' },
+    { name: 'CH4', color: '#C0392B', yLabel: 'CH\u2084' },
+  ];
+  
+  gases.forEach(gas => {
+    let pathD = '';
+    const steps = 60;
+    for (let i = 0; i <= steps; i++) {
+      const p = (i / steps) * CHART.pMax;
+      const r = Math.max(CHART.ratioMin + 0.02, Math.min(CHART.ratioMax - 0.02, gasRatio(p, gas.name)));
+      const x = chartXScale(p);
+      const y = chartYScale(r);
+      pathD += (i === 0 ? 'M' : 'L') + x + ',' + y + ' ';
+    }
+    const path = document.createElementNS(ns, 'path');
+    path.setAttribute('d', pathD);
+    path.setAttribute('stroke', gas.color);
+    path.setAttribute('stroke-width', '2.5');
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('stroke-linejoin', 'round');
+    svg.appendChild(path);
+    
+    // تسمية الغاز عند موقع مميز على المنحنى لتجنب التراكب
+    // H2 عند p=550, N2 عند p=720, CH4 عند p=880
+    const labelP = gas.name === 'H2' ? 550 : gas.name === 'N2' ? 720 : 880;
+    const labelR = Math.max(CHART.ratioMin + 0.02, Math.min(CHART.ratioMax - 0.02, gasRatio(labelP, gas.name)));
+    const labelX = chartXScale(labelP);
+    const labelY = chartYScale(labelR);
+    
+    // خلفية بيضاء صغيرة للتسمية
+    const lblText = gas.name === 'H2' ? 'H\u2082' : gas.name === 'N2' ? 'N\u2082' : 'CH\u2084';
+    const lblBg = document.createElementNS(ns, 'rect');
+    lblBg.setAttribute('x', labelX - 12);
+    lblBg.setAttribute('y', labelY - 16);
+    lblBg.setAttribute('width', 24);
+    lblBg.setAttribute('height', 14);
+    lblBg.setAttribute('rx', 3);
+    lblBg.setAttribute('fill', 'white');
+    lblBg.setAttribute('stroke', gas.color);
+    lblBg.setAttribute('stroke-width', '1.5');
+    svg.appendChild(lblBg);
+    
+    const lbl = document.createElementNS(ns, 'text');
+    lbl.setAttribute('x', labelX);
+    lbl.setAttribute('y', labelY - 5);
+    lbl.setAttribute('text-anchor', 'middle');
+    lbl.setAttribute('font-size', '11');
+    lbl.setAttribute('font-family', "'JetBrains Mono', monospace");
+    lbl.setAttribute('font-weight', '700');
+    lbl.setAttribute('fill', gas.color);
+    lbl.textContent = lblText;
+    svg.appendChild(lbl);
+  });
+  
+  // مؤشّر الموقع الحالي (يُحدّث ديناميكياً)
+  const cursor = document.createElementNS(ns, 'g');
+  cursor.setAttribute('id', 'chart-cursor');
+  svg.appendChild(cursor);
+  
+  updateChartCursor();
+}
+
+function updateChartCursor() {
+  const cursor = document.getElementById('chart-cursor');
+  if (!cursor) return;
+  while (cursor.firstChild) cursor.removeChild(cursor.firstChild);
+  
+  const ns = 'http://www.w3.org/2000/svg';
+  const m = CHART.margin;
+  const h = CHART.height;
+  
+  // pressure محصور بين 0.1-50 لكن المخطط 0-1000 — نعرض موقع P الحالي
+  // نضرب pressure في 20 لتغطية النطاق (تقريب مرئي)
+  const pOnChart = Math.min(pressure * 20, CHART.pMax);
+  const x = chartXScale(pOnChart);
+  
+  // خط عمودي
+  const vLine = document.createElementNS(ns, 'line');
+  vLine.setAttribute('x1', x);
+  vLine.setAttribute('y1', m.top);
+  vLine.setAttribute('x2', x);
+  vLine.setAttribute('y2', h - m.bottom);
+  vLine.setAttribute('stroke', '#F9C746');
+  vLine.setAttribute('stroke-width', '2');
+  vLine.setAttribute('stroke-dasharray', '3,3');
+  cursor.appendChild(vLine);
+  
+  // نقاط على المنحنيات
+  const gases = [
+    { name: 'H2', color: '#028090' },
+    { name: 'N2', color: '#1E2761' },
+    { name: 'CH4', color: '#C0392B' },
+  ];
+  gases.forEach(gas => {
+    const r = Math.max(CHART.ratioMin + 0.02, Math.min(CHART.ratioMax - 0.02, gasRatio(pOnChart, gas.name)));
+    const y = chartYScale(r);
+    const c = document.createElementNS(ns, 'circle');
+    c.setAttribute('cx', x);
+    c.setAttribute('cy', y);
+    c.setAttribute('r', '4.5');
+    c.setAttribute('fill', gas.color);
+    c.setAttribute('stroke', 'white');
+    c.setAttribute('stroke-width', '2');
+    cursor.appendChild(c);
+  });
+  
+  // نقطة على خط المثالي (ذهبية)
+  const dotIdeal = document.createElementNS(ns, 'circle');
+  dotIdeal.setAttribute('cx', x);
+  dotIdeal.setAttribute('cy', chartYScale(1));
+  dotIdeal.setAttribute('r', '5');
+  dotIdeal.setAttribute('fill', '#F9C746');
+  dotIdeal.setAttribute('stroke', '#1E2761');
+  dotIdeal.setAttribute('stroke-width', '2');
+  cursor.appendChild(dotIdeal);
+  
+  // قيمة P عند الأعلى - شارة ذهبية مميزة
+  const pBgW = 60, pBgH = 18;
+  // نحدّ x ليبقى داخل منطقة المخطط
+  const xClamped = Math.max(m.left + pBgW/2, Math.min(CHART.width - m.right - pBgW/2, x));
+  const pBg = document.createElementNS(ns, 'rect');
+  pBg.setAttribute('x', xClamped - pBgW/2);
+  pBg.setAttribute('y', m.top - pBgH - 2);
+  pBg.setAttribute('width', pBgW);
+  pBg.setAttribute('height', pBgH);
+  pBg.setAttribute('rx', 4);
+  pBg.setAttribute('fill', '#F9C746');
+  cursor.appendChild(pBg);
+  
+  const pLabel = document.createElementNS(ns, 'text');
+  pLabel.setAttribute('x', xClamped);
+  pLabel.setAttribute('y', m.top - 6);
+  pLabel.setAttribute('text-anchor', 'middle');
+  pLabel.setAttribute('font-size', '10');
+  pLabel.setAttribute('font-family', "'JetBrains Mono', monospace");
+  pLabel.setAttribute('font-weight', '700');
+  pLabel.setAttribute('fill', '#1E2761');
+  pLabel.textContent = pOnChart.toFixed(0) + ' atm';
+  cursor.appendChild(pLabel);
+  
+  // تحديث رسالة المؤشر
+  const info = document.getElementById('chart-info');
+  if (info) {
+    const rH2 = gasRatio(pOnChart, 'H2');
+    const rN2 = gasRatio(pOnChart, 'N2');
+    const rCH4 = gasRatio(pOnChart, 'CH4');
+    info.innerHTML = `عند P = <span>${pOnChart.toFixed(0)} atm</span> &nbsp;|&nbsp; H&#8322;: <span>${rH2.toFixed(2)}</span> &nbsp;&middot;&nbsp; N&#8322;: <span>${rN2.toFixed(2)}</span> &nbsp;&middot;&nbsp; CH&#8324;: <span>${rCH4.toFixed(2)}</span>`;
+  }
+}
+
+
+
+// ============================================================
+// مخطط تأثير الحرارة على الانحراف (ديناميكي)
+// ============================================================
+const TEMP_CHART = {
+  width: 400,
+  height: 350,
+  margin: { top: 30, right: 25, bottom: 50, left: 55 },
+  pMin: 0,
+  pMax: 600,
+  ratioMin: 0.3,
+  ratioMax: 1.8,
+};
+
+let currentTemp = 300; // K
+
+function tempXScale(p) {
+  const w = TEMP_CHART.width - TEMP_CHART.margin.left - TEMP_CHART.margin.right;
+  return TEMP_CHART.margin.left + ((p - TEMP_CHART.pMin) / (TEMP_CHART.pMax - TEMP_CHART.pMin)) * w;
+}
+function tempYScale(r) {
+  const h = TEMP_CHART.height - TEMP_CHART.margin.top - TEMP_CHART.margin.bottom;
+  return TEMP_CHART.margin.top + (1 - (r - TEMP_CHART.ratioMin) / (TEMP_CHART.ratioMax - TEMP_CHART.ratioMin)) * h;
+}
+
+// نموذج N2 مع تأثير الحرارة (van der Waals مبسّط)
+// PV/nRT = 1 + (b - a/RT) * P + correction
+// عند T عالي: a/RT صغير → سلوك مثالي
+// عند T منخفض: a/RT كبير → انحراف للأسفل (التجاذب يطغى)
+function n2RatioWithTemp(p, T) {
+  const a = 1.39;  // قوى التجاذب لـ N2
+  const b = 0.0391; // حجم N2
+  const R = 0.0821;
+  // تقريب أول:
+  const term1 = (b - a / (R * T)) * p / (R * T) * 0.05;
+  // تصحيح للضغوط العالية (الحجم يطغى)
+  const term2 = (b * p / (R * T)) * (p / 800) * 0.1;
+  return 1 + term1 + term2;
+}
+
+// لون المنحنى حسب الحرارة
+function tempToColor(T) {
+  if (T < 150) return '#2C5282';      // أزرق داكن (بارد جداً)
+  if (T < 250) return '#3182CE';      // أزرق (بارد)
+  if (T < 400) return '#F9C746';      // ذهبي (متوسط)
+  if (T < 600) return '#DD6B20';      // برتقالي (دافئ)
+  return '#C0392B';                    // أحمر (حار)
+}
+
+function drawTempChart() {
+  const svg = document.getElementById('temp-chart');
+  if (!svg) return;
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  
+  const ns = 'http://www.w3.org/2000/svg';
+  const w = TEMP_CHART.width, h = TEMP_CHART.height;
+  const m = TEMP_CHART.margin;
+  
+  // مناطق ملوّنة خلفية
+  const yIdeal = tempYScale(1);
+  const bgBelow = document.createElementNS(ns, 'rect');
+  bgBelow.setAttribute('x', m.left);
+  bgBelow.setAttribute('y', yIdeal);
+  bgBelow.setAttribute('width', w - m.left - m.right);
+  bgBelow.setAttribute('height', h - m.bottom - yIdeal);
+  bgBelow.setAttribute('fill', 'rgba(2, 128, 144, 0.05)');
+  svg.appendChild(bgBelow);
+  
+  const bgAbove = document.createElementNS(ns, 'rect');
+  bgAbove.setAttribute('x', m.left);
+  bgAbove.setAttribute('y', m.top);
+  bgAbove.setAttribute('width', w - m.left - m.right);
+  bgAbove.setAttribute('height', yIdeal - m.top);
+  bgAbove.setAttribute('fill', 'rgba(192, 57, 43, 0.04)');
+  svg.appendChild(bgAbove);
+  
+  // شبكة Y
+  const yTicks = [0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6];
+  yTicks.forEach(yt => {
+    const y = tempYScale(yt);
+    const line = document.createElementNS(ns, 'line');
+    line.setAttribute('x1', m.left);
+    line.setAttribute('y1', y);
+    line.setAttribute('x2', w - m.right);
+    line.setAttribute('y2', y);
+    line.setAttribute('stroke', '#E8EBF0');
+    line.setAttribute('stroke-width', '1');
+    svg.appendChild(line);
+    
+    const txt = document.createElementNS(ns, 'text');
+    txt.setAttribute('x', m.left - 6);
+    txt.setAttribute('y', y + 4);
+    txt.setAttribute('text-anchor', 'end');
+    txt.setAttribute('font-size', '10');
+    txt.setAttribute('font-family', "'JetBrains Mono', monospace");
+    txt.setAttribute('fill', '#5A6B7D');
+    txt.textContent = yt.toFixed(1);
+    svg.appendChild(txt);
+  });
+  
+  // شبكة X
+  const xTicks = [0, 100, 200, 300, 400, 500, 600];
+  xTicks.forEach(xt => {
+    const x = tempXScale(xt);
+    const line = document.createElementNS(ns, 'line');
+    line.setAttribute('x1', x);
+    line.setAttribute('y1', m.top);
+    line.setAttribute('x2', x);
+    line.setAttribute('y2', h - m.bottom);
+    line.setAttribute('stroke', '#E8EBF0');
+    line.setAttribute('stroke-width', '1');
+    svg.appendChild(line);
+    
+    const txt = document.createElementNS(ns, 'text');
+    txt.setAttribute('x', x);
+    txt.setAttribute('y', h - m.bottom + 16);
+    txt.setAttribute('text-anchor', 'middle');
+    txt.setAttribute('font-size', '10');
+    txt.setAttribute('font-family', "'JetBrains Mono', monospace");
+    txt.setAttribute('fill', '#5A6B7D');
+    txt.textContent = xt;
+    svg.appendChild(txt);
+  });
+  
+  // محاور
+  const xAxis = document.createElementNS(ns, 'line');
+  xAxis.setAttribute('x1', m.left);
+  xAxis.setAttribute('y1', h - m.bottom);
+  xAxis.setAttribute('x2', w - m.right);
+  xAxis.setAttribute('y2', h - m.bottom);
+  xAxis.setAttribute('stroke', '#1A1A2E');
+  xAxis.setAttribute('stroke-width', '1.5');
+  svg.appendChild(xAxis);
+  
+  const yAxis = document.createElementNS(ns, 'line');
+  yAxis.setAttribute('x1', m.left);
+  yAxis.setAttribute('y1', m.top);
+  yAxis.setAttribute('x2', m.left);
+  yAxis.setAttribute('y2', h - m.bottom);
+  yAxis.setAttribute('stroke', '#1A1A2E');
+  yAxis.setAttribute('stroke-width', '1.5');
+  svg.appendChild(yAxis);
+  
+  // عناوين
+  const xLabel = document.createElementNS(ns, 'text');
+  xLabel.setAttribute('x', m.left + (w - m.left - m.right) / 2);
+  xLabel.setAttribute('y', h - 8);
+  xLabel.setAttribute('text-anchor', 'middle');
+  xLabel.setAttribute('font-size', '12');
+  xLabel.setAttribute('font-family', "'JetBrains Mono', monospace");
+  xLabel.setAttribute('font-weight', '700');
+  xLabel.setAttribute('fill', '#1E2761');
+  xLabel.textContent = 'P (atm)';
+  svg.appendChild(xLabel);
+  
+  const yLabel = document.createElementNS(ns, 'text');
+  yLabel.setAttribute('x', 14);
+  yLabel.setAttribute('y', m.top + (h - m.top - m.bottom) / 2);
+  yLabel.setAttribute('text-anchor', 'middle');
+  yLabel.setAttribute('font-size', '12');
+  yLabel.setAttribute('font-family', "'JetBrains Mono', monospace");
+  yLabel.setAttribute('font-weight', '700');
+  yLabel.setAttribute('fill', '#1E2761');
+  yLabel.setAttribute('transform', `rotate(-90, 14, ${m.top + (h - m.top - m.bottom) / 2})`);
+  yLabel.textContent = 'PV / nRT';
+  svg.appendChild(yLabel);
+  
+  // خط المثالي (متقطع كحلي)
+  const idealLine = document.createElementNS(ns, 'line');
+  idealLine.setAttribute('x1', m.left);
+  idealLine.setAttribute('y1', yIdeal);
+  idealLine.setAttribute('x2', w - m.right);
+  idealLine.setAttribute('y2', yIdeal);
+  idealLine.setAttribute('stroke', '#1E2761');
+  idealLine.setAttribute('stroke-width', '2.5');
+  idealLine.setAttribute('stroke-dasharray', '8,5');
+  svg.appendChild(idealLine);
+  
+  // تسمية Ideal
+  const idealLbl = document.createElementNS(ns, 'text');
+  idealLbl.setAttribute('x', w - m.right - 6);
+  idealLbl.setAttribute('y', yIdeal - 6);
+  idealLbl.setAttribute('text-anchor', 'end');
+  idealLbl.setAttribute('font-size', '11');
+  idealLbl.setAttribute('font-family', "'JetBrains Mono', monospace");
+  idealLbl.setAttribute('font-weight', '700');
+  idealLbl.setAttribute('fill', '#1E2761');
+  idealLbl.textContent = 'Ideal Gas';
+  svg.appendChild(idealLbl);
+  
+  // ===== منحنى N2 الديناميكي =====
+  const color = tempToColor(currentTemp);
+  let pathD = '';
+  let maxDeviation = 0;
+  let pAtMax = 0;
+  const steps = 80;
+  for (let i = 0; i <= steps; i++) {
+    const p = (i / steps) * TEMP_CHART.pMax;
+    let r = n2RatioWithTemp(p, currentTemp);
+    r = Math.max(TEMP_CHART.ratioMin + 0.02, Math.min(TEMP_CHART.ratioMax - 0.02, r));
+    const x = tempXScale(p);
+    const y = tempYScale(r);
+    pathD += (i === 0 ? 'M' : 'L') + x + ',' + y + ' ';
+    
+    // نسجل أقصى انحراف
+    const dev = Math.abs(r - 1);
+    if (dev > maxDeviation) {
+      maxDeviation = dev;
+      pAtMax = p;
+    }
+  }
+  
+  // المنحنى الفعلي
+  const path = document.createElementNS(ns, 'path');
+  path.setAttribute('d', pathD);
+  path.setAttribute('stroke', color);
+  path.setAttribute('stroke-width', '3.5');
+  path.setAttribute('fill', 'none');
+  path.setAttribute('stroke-linecap', 'round');
+  path.setAttribute('stroke-linejoin', 'round');
+  svg.appendChild(path);
+  
+  // تظليل المنطقة بين المنحنى وخط المثالي
+  let fillD = pathD + ' L' + (w - m.right) + ',' + yIdeal + ' L' + m.left + ',' + yIdeal + ' Z';
+  const fillPath = document.createElementNS(ns, 'path');
+  fillPath.setAttribute('d', fillD);
+  fillPath.setAttribute('fill', color);
+  fillPath.setAttribute('opacity', '0.12');
+  svg.insertBefore(fillPath, path);
+  
+  // تسمية N2 على المنحنى
+  const labelP = 320;
+  let labelR = n2RatioWithTemp(labelP, currentTemp);
+  labelR = Math.max(TEMP_CHART.ratioMin + 0.05, Math.min(TEMP_CHART.ratioMax - 0.05, labelR));
+  const labelX = tempXScale(labelP);
+  const labelY = tempYScale(labelR);
+  
+  // وضع التسمية: لو المنحنى فوق Ideal → التسمية فوق المنحنى، ولو تحت → التسمية تحت
+  const labelOffset = labelR > 1 ? -22 : 8;  // مسافة من نقطة المنحنى
+  
+  const lblBg = document.createElementNS(ns, 'rect');
+  lblBg.setAttribute('x', labelX - 28);
+  lblBg.setAttribute('y', labelY + labelOffset);
+  lblBg.setAttribute('width', 56);
+  lblBg.setAttribute('height', 18);
+  lblBg.setAttribute('rx', 4);
+  lblBg.setAttribute('fill', 'white');
+  lblBg.setAttribute('stroke', color);
+  lblBg.setAttribute('stroke-width', '2');
+  svg.appendChild(lblBg);
+  
+  const lbl = document.createElementNS(ns, 'text');
+  lbl.setAttribute('x', labelX);
+  lbl.setAttribute('y', labelY + labelOffset + 13);
+  lbl.setAttribute('text-anchor', 'middle');
+  lbl.setAttribute('font-size', '11');
+  lbl.setAttribute('font-family', "'JetBrains Mono', monospace");
+  lbl.setAttribute('font-weight', '700');
+  lbl.setAttribute('fill', color);
+  lbl.textContent = 'N\u2082 (' + currentTemp + 'K)';
+  svg.appendChild(lbl);
+  
+  // شارة درجة الحرارة في الأعلى
+  const tBgW = 90, tBgH = 22;
+  const tBg = document.createElementNS(ns, 'rect');
+  tBg.setAttribute('x', m.left + 4);
+  tBg.setAttribute('y', 4);
+  tBg.setAttribute('width', tBgW);
+  tBg.setAttribute('height', tBgH);
+  tBg.setAttribute('rx', 4);
+  tBg.setAttribute('fill', color);
+  svg.appendChild(tBg);
+  
+  const tTxt = document.createElementNS(ns, 'text');
+  tTxt.setAttribute('x', m.left + 4 + tBgW/2);
+  tTxt.setAttribute('y', 19);
+  tTxt.setAttribute('text-anchor', 'middle');
+  tTxt.setAttribute('font-size', '12');
+  tTxt.setAttribute('font-family', "'JetBrains Mono', monospace");
+  tTxt.setAttribute('font-weight', '700');
+  tTxt.setAttribute('fill', currentTemp < 400 && currentTemp >= 250 ? '#1E2761' : 'white');
+  tTxt.textContent = 'T = ' + currentTemp + ' K';
+  svg.appendChild(tTxt);
+  
+  // تحديث مؤشّر الانحراف
+  const devPercent = (maxDeviation * 100);
+  const fillEl = document.getElementById('gap-fill');
+  const markerEl = document.getElementById('gap-marker');
+  const currentEl = document.getElementById('gap-current');
+  if (fillEl) {
+    const pct = Math.min(100, devPercent * 2);  // ×2 للوضوح البصري
+    fillEl.style.width = pct + '%';
+    markerEl.style.left = pct + '%';
+    currentEl.textContent = 'أقصى انحراف: ' + devPercent.toFixed(1) + '% عند P ≈ ' + pAtMax.toFixed(0) + ' atm';
+  }
+  
+  // تحديث صندوق الاكتشاف
+  updateDiscovery(currentTemp, devPercent);
+}
+
+function updateDiscovery(T, devPct) {
+  const disc = document.getElementById('discovery');
+  const icon = document.getElementById('disc-icon');
+  const title = document.getElementById('disc-title');
+  const body = document.getElementById('disc-body');
+  if (!disc) return;
+  
+  // إزالة كل classes
+  disc.classList.remove('cold', 'cool', 'moderate', 'warm', 'hot');
+  
+  if (T < 150) {
+    disc.classList.add('cold');
+    icon.textContent = '\u2744\uFE0F';
+    title.textContent = 'برودة شديدة جداً';
+    body.innerHTML = 'الطاقة الحركية منخفضة جداً، فتسود <strong>قوى التجاذب</strong> بين الجزيئات.<br>المنحنى يهبط بعيداً تحت خط المثالي → انحراف ضخم. الغاز قد يتكاثف!';
+  } else if (T < 250) {
+    disc.classList.add('cool');
+    icon.textContent = '\u2744\uFE0F';
+    title.textContent = 'حرارة منخفضة';
+    body.innerHTML = 'قوى التجاذب لا تزال ملحوظة. <strong>المنحنى ينحرف</strong> عن المثالي تحت الخط.<br><strong>كلما برد الغاز أكثر، زاد الانحراف.</strong>';
+  } else if (T < 450) {
+    disc.classList.add('moderate');
+    icon.textContent = '\u2696\uFE0F';
+    title.textContent = 'حرارة معتدلة';
+    body.innerHTML = 'الغاز يقترب من السلوك المثالي. <strong>الانحراف بسيط</strong> عند الضغوط العادية.<br>هذا النطاق هو الأكثر شيوعاً في التجارب.';
+  } else if (T < 600) {
+    disc.classList.add('warm');
+    icon.textContent = '\uD83D\uDD25';
+    title.textContent = 'حرارة عالية';
+    body.innerHTML = 'الطاقة الحركية تتغلب على قوى التجاذب. <strong>المنحنى يقترب أكثر من خط المثالي.</strong><br>الغاز الحقيقي يصبح <strong>أقرب للمثالي</strong>.';
+  } else {
+    disc.classList.add('hot');
+    icon.textContent = '\uD83D\uDD25';
+    title.textContent = 'حرارة شديدة الارتفاع';
+    body.innerHTML = '<strong>المنحنيان يقتربان من بعضهما تماماً!</strong> ✓<br>الغاز الحقيقي يسلك سلوك الغاز المثالي تقريباً — قوى التجاذب أصبحت مهملة.';
+  }
+}
+
+function setTemp(T) {
+  const slider = document.getElementById('temp-slider');
+  if (slider) {
+    slider.value = T;
+    currentTemp = T;
+    document.getElementById('temp-badge').textContent = T + ' K';
+    document.getElementById('temp-badge').style.background = tempToColor(T);
+    document.getElementById('temp-badge').style.color = (T >= 250 && T < 400) ? '#1E2761' : 'white';
+    
+    // تحديث الأزرار
+    document.querySelectorAll('.temp-preset-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.temp-preset-btn').forEach(b => {
+      if (b.textContent.includes(T + ' K')) b.classList.add('active');
+    });
+    drawTempChart();
+  }
+}
+
+function initTempChart() {
+  const slider = document.getElementById('temp-slider');
+  if (!slider) return;
+  
+  slider.addEventListener('input', e => {
+    currentTemp = parseInt(e.target.value);
+    document.getElementById('temp-badge').textContent = currentTemp + ' K';
+    document.getElementById('temp-badge').style.background = tempToColor(currentTemp);
+    document.getElementById('temp-badge').style.color = (currentTemp >= 250 && currentTemp < 400) ? '#1E2761' : 'white';
+    drawTempChart();
+  });
+  
+  drawTempChart();
+}
+
+
+window.addEventListener('load', () => { init(); drawChart(); initTempChart(); });
+window.addEventListener('resize', () => {
+  if (idealSim) idealSim.resize();
+  if (realSim) realSim.resize();
+});
+</script>
+
+</body>
+</html>
