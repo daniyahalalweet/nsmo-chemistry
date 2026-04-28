@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>خواص السوائل | الفصل 6</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1E2761;
+  --teal: #028090;
+  --gold: #F9C746;
+  --bg: #f7f9fc;
+  --text: #1a2540;
+  --muted: #5a6580;
+  --border: #e2e8f0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans Arabic', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  padding: 16px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.eng { direction: ltr; font-family: 'JetBrains Mono', monospace; display: inline-block; }
+header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--teal) 100%);
+  color: white;
+  padding: 22px 18px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(30,39,97,0.15);
+}
+header .ch-num {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+header h1 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+header p { font-size: 13px; opacity: 0.9; }
+
+section {
+  background: white;
+  border-radius: 12px;
+  padding: 18px 16px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+h2 {
+  color: var(--navy);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid var(--gold);
+}
+h3 {
+  color: var(--teal);
+  font-size: 15px;
+  font-weight: 700;
+  margin: 14px 0 8px;
+}
+p { font-size: 14px; margin-bottom: 10px; }
+
+.intro-box {
+  background: linear-gradient(135deg, #f0f7ff 0%, #e8f5f7 100%);
+  border-right: 4px solid var(--teal);
+  padding: 14px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  font-size: 13.5px;
+}
+
+.property-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.property-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 6px; height: 100%;
+  background: var(--teal);
+}
+.property-card .num {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+  width: 28px; height: 28px;
+  line-height: 28px;
+  text-align: center;
+  border-radius: 50%;
+  font-weight: 800;
+  font-size: 14px;
+  margin-left: 8px;
+}
+.property-card .title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+  display: inline-block;
+}
+.property-card .eng-name {
+  font-size: 12px;
+  color: var(--muted);
+  margin-right: 6px;
+}
+.property-card .definition {
+  margin: 8px 0;
+  font-size: 13.5px;
+  background: #fafbfd;
+  padding: 10px;
+  border-radius: 8px;
+  border-right: 3px solid var(--teal);
+}
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 10px 0;
+}
+.compare-cell {
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 12.5px;
+}
+.compare-cell.water { background: #e3f2fd; border: 2px solid #1976d2; }
+.compare-cell.mercury { background: #f5f5f5; border: 2px solid #616161; }
+.compare-cell .name { font-weight: 700; margin-bottom: 4px; font-size: 14px; }
+.compare-cell .shape { font-size: 30px; margin: 6px 0; }
+.compare-cell .desc { font-size: 11.5px; color: var(--muted); }
+
+.factor-list {
+  background: #fff8e1;
+  border-right: 4px solid var(--gold);
+  padding: 12px;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+.factor-list .factor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+  font-size: 13px;
+}
+.factor-icon {
+  width: 24px; height: 24px;
+  background: var(--teal);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.water-special {
+  background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+  border: 2px solid #00acc1;
+  border-radius: 12px;
+  padding: 14px;
+  margin: 14px 0;
+}
+.water-special .star {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.water-special h4 {
+  color: var(--navy);
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-size: 13px;
+}
+th {
+  background: var(--navy);
+  color: white;
+  padding: 8px;
+  font-weight: 600;
+  font-size: 12.5px;
+}
+td {
+  padding: 8px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+tr:nth-child(even) td { background: #f8fafc; }
+
+.surface-tension-visual {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0;
+}
+.svg-box {
+  background: #fafbfd;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+details {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+summary {
+  padding: 12px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--navy);
+  background: linear-gradient(135deg, #f0f7ff 0%, #e8f5f7 100%);
+  font-size: 14px;
+}
+details[open] summary { border-bottom: 1px solid var(--border); }
+details .body { padding: 14px; font-size: 13px; }
+details .body p { margin-bottom: 6px; }
+
+.quiz-q {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.quiz-q .q-text { font-weight: 600; margin-bottom: 8px; font-size: 13.5px; }
+.quiz-options { display: flex; flex-direction: column; gap: 6px; }
+.quiz-options label {
+  display: block;
+  padding: 8px 10px;
+  background: #f7f9fc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.quiz-options input { display: none; }
+.quiz-options input:checked + .opt-text { font-weight: 600; }
+.quiz-q label:has(input:checked) { background: #e0f2fe; border-color: var(--teal); }
+.quiz-q label.correct:has(input:checked) {
+  background: #d4edda; border-color: #28a745;
+}
+.quiz-q label.wrong:has(input:checked) {
+  background: #f8d7da; border-color: #dc3545;
+}
+.quiz-feedback {
+  display: none;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12.5px;
+}
+.quiz-q:has(input:checked) .quiz-feedback { display: block; }
+.quiz-q:has(label.correct input:checked) .quiz-feedback {
+  background: #d4edda; color: #155724; border-right: 3px solid #28a745;
+}
+.quiz-q:has(label.wrong input:checked) .quiz-feedback {
+  background: #f8d7da; color: #721c24; border-right: 3px solid #dc3545;
+}
+
+footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: var(--muted);
+  border-top: 2px solid var(--gold);
+  margin-top: 20px;
+}
+footer .brand { font-weight: 700; color: var(--navy); }
+
+@media (max-width: 480px) {
+  .compare-grid { grid-template-columns: 1fr; }
+  header h1 { font-size: 19px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="ch-num">الفصل 6 — الصفحة 2</span>
+  <h1>خواص السوائل</h1>
+  <p>Properties of Liquids — كيف تتصرف السوائل؟</p>
+</header>
+
+<section>
+  <h2>🌊 لماذا للسوائل خواص خاصة؟</h2>
+  <div class="intro-box">
+    القوى بين الجزيئية في السوائل أقوى من الغازات وأضعف من الصلبة. هذا الوسط يمنح السوائل خواصاً فريدة: تتدفق، تتشكل بشكل وعائها، لكنها تحافظ على حجم ثابت.
+  </div>
+</section>
+
+<section>
+  <h2>📋 الخواص الخمس الرئيسية</h2>
+
+  <!-- 1. الكثافة -->
+  <div class="property-card">
+    <span class="num">1</span>
+    <span class="title">الكثافة</span>
+    <span class="eng-name eng">Density</span>
+    <div class="definition">
+      كثافة السوائل أعلى من كثافة أبخرتها، وكثافة المواد الصلبة أعلى من كثافة السوائل.
+    </div>
+
+    <div class="water-special">
+      <span class="star">⭐ استثناء فريد</span>
+      <h4>💧 الماء يكسر القاعدة</h4>
+      <p style="font-size:13px;">كثافة الجليد <strong>أقل</strong> من كثافة الماء السائل، ولذلك يطفو الثلج فوق الماء.</p>
+      <p style="font-size:12.5px;color:var(--muted);margin-top:6px;">
+        <strong>السبب:</strong> البناء الثلاثي الأبعاد المرتب للجليد (بسبب الروابط الهيدروجينية) يُبعد الجزيئات عن بعضها، فتقل الكثافة.
+      </p>
+    </div>
+  </div>
+
+  <!-- 2. التوتر السطحي -->
+  <div class="property-card">
+    <span class="num">2</span>
+    <span class="title">التوتر السطحي</span>
+    <span class="eng-name eng">Surface Tension</span>
+    <div class="definition">
+      محصلة قوى الجذب بين الجزيئات على سطح السائل تكون <strong>نحو الأسفل</strong>، فينضغط السطح وكأنه غشاء مرن.
+    </div>
+
+    <div class="surface-tension-visual">
+      <div class="svg-box">
+        <svg width="280" height="140" viewBox="0 0 280 140">
+          <!-- liquid body -->
+          <rect x="0" y="60" width="280" height="80" fill="#bbdefb" stroke="#1976d2" stroke-width="1"/>
+          <!-- surface line -->
+          <line x1="0" y1="60" x2="280" y2="60" stroke="#1976d2" stroke-width="2"/>
+          <!-- surface molecule with arrows down only -->
+          <circle cx="80" cy="60" r="12" fill="#1976d2"/>
+          <text x="80" y="64" text-anchor="middle" fill="white" font-size="11" font-weight="700">سطح</text>
+          <line x1="70" y1="60" x2="60" y2="78" stroke="#d32f2f" stroke-width="2" marker-end="url(#a1)"/>
+          <line x1="90" y1="60" x2="100" y2="78" stroke="#d32f2f" stroke-width="2" marker-end="url(#a1)"/>
+          <line x1="80" y1="65" x2="80" y2="85" stroke="#d32f2f" stroke-width="2" marker-end="url(#a1)"/>
+          <!-- inside molecule with arrows in all directions -->
+          <circle cx="200" cy="100" r="12" fill="#1976d2"/>
+          <text x="200" y="104" text-anchor="middle" fill="white" font-size="11" font-weight="700">داخل</text>
+          <line x1="200" y1="88" x2="200" y2="78" stroke="#388e3c" stroke-width="2" marker-end="url(#a2)"/>
+          <line x1="200" y1="112" x2="200" y2="125" stroke="#388e3c" stroke-width="2" marker-end="url(#a2)"/>
+          <line x1="188" y1="100" x2="178" y2="100" stroke="#388e3c" stroke-width="2" marker-end="url(#a2)"/>
+          <line x1="212" y1="100" x2="222" y2="100" stroke="#388e3c" stroke-width="2" marker-end="url(#a2)"/>
+          <defs>
+            <marker id="a1" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+              <polygon points="0 0, 6 3, 0 6" fill="#d32f2f"/>
+            </marker>
+            <marker id="a2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+              <polygon points="0 0, 6 3, 0 6" fill="#388e3c"/>
+            </marker>
+          </defs>
+          <text x="80" y="20" text-anchor="middle" font-size="10" fill="#1a2540">جزيء سطحي: شد للأسفل فقط</text>
+          <text x="200" y="20" text-anchor="middle" font-size="10" fill="#1a2540">جزيء داخلي: محصلة = صفر</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. التماسك والتلاصق -->
+  <div class="property-card">
+    <span class="num">3</span>
+    <span class="title">التماسك والتلاصق</span>
+    <span class="eng-name eng">Cohesion & Adhesion</span>
+    <div class="definition">
+      <p style="margin-bottom:6px;"><strong>التماسك:</strong> تجاذب بين جزيئات <em>متشابهة</em> (ماء–ماء)</p>
+      <p style="margin-bottom:0;"><strong>التلاصق:</strong> تجاذب بين جزيئات <em>غير متشابهة</em> (ماء–زجاج)</p>
+    </div>
+
+    <h3>الشكل الناتج في الأنبوب</h3>
+    <div class="compare-grid">
+      <div class="compare-cell water">
+        <div class="name">💧 الماء</div>
+        <div class="shape">⌣</div>
+        <div class="desc"><strong>تلاصق &gt; تماسك</strong></div>
+        <div class="desc">السطح <strong>مقعّر</strong></div>
+        <div class="desc">يرتفع في الأنبوب</div>
+      </div>
+      <div class="compare-cell mercury">
+        <div class="name">🪙 الزئبق</div>
+        <div class="shape">⌢</div>
+        <div class="desc"><strong>تماسك &gt; تلاصق</strong></div>
+        <div class="desc">السطح <strong>محدّب</strong></div>
+        <div class="desc">ينخفض في الأنبوب</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. اللزوجة -->
+  <div class="property-card">
+    <span class="num">4</span>
+    <span class="title">اللزوجة</span>
+    <span class="eng-name eng">Viscosity</span>
+    <div class="definition">
+      مقاومة المائع للجريان. كلما زادت اللزوجة → كلما صار الجريان أصعب.
+    </div>
+    <div class="factor-list">
+      <strong style="font-size:13.5px;color:var(--navy);display:block;margin-bottom:6px;">ما يؤثر على اللزوجة:</strong>
+      <div class="factor"><span class="factor-icon">↑</span><span>زيادة <strong>درجة الحرارة</strong> → تقل اللزوجة</span></div>
+      <div class="factor"><span class="factor-icon">⚡</span><span>القوى بين الجزيئية الأقوى → لزوجة أعلى</span></div>
+      <div class="factor"><span class="factor-icon">⚙</span><span>أشكال الجزيئات (الجزيئات المعقدة → لزوجة أعلى)</span></div>
+    </div>
+  </div>
+
+  <!-- 5. الميوعة -->
+  <div class="property-card">
+    <span class="num">5</span>
+    <span class="title">الميوعة</span>
+    <span class="eng-name eng">Fluidity</span>
+    <div class="definition">
+      قابلية المائع للانتشار والانسياب. الغازات والسوائل كلاهما يصنف كموائع.
+    </div>
+    <table>
+      <thead>
+        <tr><th>المائع</th><th>الميوعة</th><th>السبب</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>الغازات</td><td>أعلى</td><td>قوى بين جزيئية ضعيفة جداً</td></tr>
+        <tr><td>السوائل</td><td>أقل</td><td>القوى بين الجزيئية تعيق الانسياب</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>📊 ملخص العلاقات</h2>
+  <table>
+    <thead>
+      <tr><th>الخاصية</th><th>تأثير زيادة القوى بين الجزيئية</th><th>تأثير زيادة الحرارة</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>التوتر السطحي</td><td>⬆ يزداد</td><td>⬇ يقل</td></tr>
+      <tr><td>اللزوجة</td><td>⬆ تزداد</td><td>⬇ تقل</td></tr>
+      <tr><td>الضغط البخاري</td><td>⬇ يقل</td><td>⬆ يزداد</td></tr>
+      <tr><td>درجة الغليان</td><td>⬆ ترتفع</td><td>—</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>🧠 لمحات مفهومية</h2>
+
+  <details>
+    <summary>🔍 لماذا تتكور قطرة الماء على ورقة شجر؟</summary>
+    <div class="body">
+      <p>التوتر السطحي للماء عالٍ بسبب الروابط الهيدروجينية القوية بين جزيئاته.</p>
+      <p>الجزيئات على السطح تنجذب للداخل، فيتقلص السطح إلى أصغر مساحة ممكنة وهي <strong>الكرة</strong>.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔍 لماذا يصعد الماء في الأنبوب الشعري؟</summary>
+    <div class="body">
+      <p>قوى التلاصق بين الماء وجدار الأنبوب الزجاجي أقوى من قوى التماسك بين جزيئات الماء نفسها.</p>
+      <p>فيتسلق الماء على الجدار ويرتفع، وهذا ما يُعرف بـ <strong>الخاصية الشعرية</strong> (مهمة في انتقال الماء في النباتات).</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔍 لماذا تقل لزوجة العسل لما نسخنه؟</summary>
+    <div class="body">
+      <p>زيادة درجة الحرارة → زيادة الطاقة الحركية للجزيئات → قدرة أكبر على التغلب على القوى بين الجزيئية → انسياب أسرع → لزوجة أقل.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔍 لماذا يطفو الجليد على الماء؟</summary>
+    <div class="body">
+      <p>عند تجمد الماء، تترتب الجزيئات في شبكة بلورية سداسية ثلاثية الأبعاد بسبب الروابط الهيدروجينية.</p>
+      <p>هذا الترتيب يخلق <strong>فراغات</strong> بين الجزيئات أكبر من فراغاتها في الحالة السائلة، فتقل الكثافة.</p>
+      <p>💡 <strong>أهمية بيئية:</strong> هذه الخاصية تحمي الكائنات المائية في الشتاء — يتكون الجليد على السطح ويعزل الماء أسفله من البرودة.</p>
+    </div>
+  </details>
+</section>
+
+<section>
+  <h2>✏️ اختبري نفسك</h2>
+
+  <div class="quiz-q">
+    <div class="q-text">س1: ما الذي يفسر شكل سطح الماء المقعّر في الأنبوب الزجاجي؟</div>
+    <div class="quiz-options">
+      <label class="wrong"><input type="radio" name="q1"><span class="opt-text">قوى التماسك أقوى من قوى التلاصق</span></label>
+      <label class="correct"><input type="radio" name="q1"><span class="opt-text">قوى التلاصق أقوى من قوى التماسك</span></label>
+      <label class="wrong"><input type="radio" name="q1"><span class="opt-text">قوى الجاذبية الأرضية</span></label>
+      <label class="wrong"><input type="radio" name="q1"><span class="opt-text">الضغط الجوي</span></label>
+    </div>
+    <div class="quiz-feedback">
+      ✅ في الماء، التلاصق (ماء–زجاج) أقوى من التماسك (ماء–ماء)، فيرتفع الماء على الجدران ويتكوّن سطح مقعّر.
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">س2: عند تسخين سائل، ماذا يحدث للزوجته؟</div>
+    <div class="quiz-options">
+      <label class="wrong"><input type="radio" name="q2"><span class="opt-text">تزداد</span></label>
+      <label class="correct"><input type="radio" name="q2"><span class="opt-text">تقل</span></label>
+      <label class="wrong"><input type="radio" name="q2"><span class="opt-text">تبقى ثابتة</span></label>
+      <label class="wrong"><input type="radio" name="q2"><span class="opt-text">تتضاعف</span></label>
+    </div>
+    <div class="quiz-feedback">
+      ✅ زيادة الحرارة تزيد الطاقة الحركية للجزيئات، فتتغلب على القوى بين الجزيئية بسهولة أكبر، وينساب السائل أسرع.
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">س3: لماذا يطفو الجليد على الماء السائل؟</div>
+    <div class="quiz-options">
+      <label class="wrong"><input type="radio" name="q3"><span class="opt-text">كتلة الجليد أقل من كتلة الماء</span></label>
+      <label class="correct"><input type="radio" name="q3"><span class="opt-text">البناء البلوري الثلاثي الأبعاد للجليد يبعد الجزيئات</span></label>
+      <label class="wrong"><input type="radio" name="q3"><span class="opt-text">الجليد لا يحتوي على روابط هيدروجينية</span></label>
+      <label class="wrong"><input type="radio" name="q3"><span class="opt-text">الجليد أصلب من الماء</span></label>
+    </div>
+    <div class="quiz-feedback">
+      ✅ الترتيب البلوري المنتظم للجليد يخلق فراغات بين الجزيئات أكبر من حالتها السائلة، فتقل الكثافة ويطفو.
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">س4: أي السوائل توتره السطحي أعلى عند درجة حرارة الغرفة؟</div>
+    <div class="quiz-options">
+      <label class="correct"><input type="radio" name="q4"><span class="opt-text">الماء (روابط هيدروجينية قوية)</span></label>
+      <label class="wrong"><input type="radio" name="q4"><span class="opt-text">الإيثانول</span></label>
+      <label class="wrong"><input type="radio" name="q4"><span class="opt-text">الأسيتون</span></label>
+      <label class="wrong"><input type="radio" name="q4"><span class="opt-text">الهكسان</span></label>
+    </div>
+    <div class="quiz-feedback">
+      ✅ التوتر السطحي مرتبط مباشرة بقوة القوى بين الجزيئية. الماء يحتوي على روابط هيدروجينية قوية جداً → توتر سطحي عالٍ.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="brand">إعداد المدربة: دانية العلويط</span> | NSMO 2026
+</footer>
+
+</body>
+</html>

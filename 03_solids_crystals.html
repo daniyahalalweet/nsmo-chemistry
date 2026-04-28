@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المواد الصلبة والبنى البلورية | الفصل 6</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1E2761;
+  --teal: #028090;
+  --gold: #F9C746;
+  --bg: #f7f9fc;
+  --text: #1a2540;
+  --muted: #5a6580;
+  --border: #e2e8f0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans Arabic', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  padding: 16px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.eng { direction: ltr; font-family: 'JetBrains Mono', monospace; display: inline-block; }
+header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--teal) 100%);
+  color: white;
+  padding: 22px 18px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+header .ch-num {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+header h1 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+header p { font-size: 13px; opacity: 0.9; }
+
+section {
+  background: white;
+  border-radius: 12px;
+  padding: 18px 16px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+h2 {
+  color: var(--navy);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid var(--gold);
+}
+h3 {
+  color: var(--teal);
+  font-size: 15px;
+  font-weight: 700;
+  margin: 14px 0 8px;
+}
+p { font-size: 14px; margin-bottom: 10px; }
+
+.intro-box {
+  background: linear-gradient(135deg, #f0f7ff 0%, #e8f5f7 100%);
+  border-right: 4px solid var(--teal);
+  padding: 14px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  font-size: 13.5px;
+}
+
+.split-types {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 12px 0;
+}
+.type-box {
+  padding: 14px;
+  border-radius: 10px;
+  text-align: center;
+  border: 2px solid;
+}
+.type-box.crystal { background: #e3f2fd; border-color: #1976d2; }
+.type-box.amorphous { background: #f3e5f5; border-color: #7b1fa2; }
+.type-box .icon { font-size: 28px; margin-bottom: 4px; }
+.type-box .name { font-weight: 700; font-size: 14px; color: var(--navy); margin-bottom: 4px; }
+.type-box .ex { font-size: 12px; color: var(--muted); }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-size: 12.5px;
+}
+th {
+  background: var(--navy);
+  color: white;
+  padding: 8px 5px;
+  font-weight: 600;
+  font-size: 12px;
+}
+td {
+  padding: 8px 5px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  font-size: 12px;
+}
+tr:nth-child(even) td { background: #f8fafc; }
+
+.crystal-types {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 12px 0;
+}
+.crystal-card {
+  border-right: 5px solid;
+  background: #fafbfd;
+  padding: 12px;
+  border-radius: 0 10px 10px 0;
+}
+.crystal-card .head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.crystal-card .name {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--navy);
+}
+.crystal-card .badge {
+  font-size: 11px;
+  background: white;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+.crystal-card .props {
+  font-size: 12.5px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.crystal-card .examples {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Cubic cells visual */
+.cubic-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin: 14px 0;
+}
+.cubic-cell-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 6px;
+  text-align: center;
+}
+.cubic-cell-card .name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.cubic-cell-card .eng-name {
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.cubic-cell-card svg { display: block; margin: 0 auto; }
+.cubic-cell-card .calc {
+  font-size: 11px;
+  color: var(--text);
+  background: #f8fafc;
+  padding: 4px;
+  border-radius: 4px;
+  margin: 4px 0;
+}
+.cubic-cell-card .total {
+  background: var(--gold);
+  color: var(--navy);
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.calc-box {
+  background: #fff8e1;
+  border: 2px solid var(--gold);
+  border-radius: 10px;
+  padding: 12px;
+  margin: 10px 0;
+}
+.calc-box .title {
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+.calc-row {
+  background: white;
+  padding: 8px;
+  border-radius: 6px;
+  margin: 4px 0;
+  font-size: 12.5px;
+}
+
+.systems-table {
+  width: 100%;
+  font-size: 11.5px;
+}
+.systems-table th, .systems-table td {
+  padding: 6px 4px;
+}
+.systems-table .formula {
+  font-family: 'JetBrains Mono', monospace;
+  direction: ltr;
+  font-size: 11px;
+}
+
+details {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+summary {
+  padding: 12px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--navy);
+  background: linear-gradient(135deg, #f0f7ff 0%, #e8f5f7 100%);
+  font-size: 14px;
+}
+details[open] summary { border-bottom: 1px solid var(--border); }
+details .body { padding: 14px; font-size: 13px; }
+
+.quiz-q {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.quiz-q .q-text { font-weight: 600; margin-bottom: 8px; font-size: 13.5px; }
+.quiz-options { display: flex; flex-direction: column; gap: 6px; }
+.quiz-options label {
+  display: block;
+  padding: 8px 10px;
+  background: #f7f9fc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.quiz-options input { display: none; }
+.quiz-options input:checked + .opt-text { font-weight: 600; }
+.quiz-q label:has(input:checked) { background: #e0f2fe; border-color: var(--teal); }
+.quiz-q label.correct:has(input:checked) {
+  background: #d4edda; border-color: #28a745;
+}
+.quiz-q label.wrong:has(input:checked) {
+  background: #f8d7da; border-color: #dc3545;
+}
+.quiz-feedback {
+  display: none;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12.5px;
+}
+.quiz-q:has(input:checked) .quiz-feedback { display: block; }
+.quiz-q:has(label.correct input:checked) .quiz-feedback {
+  background: #d4edda; color: #155724; border-right: 3px solid #28a745;
+}
+.quiz-q:has(label.wrong input:checked) .quiz-feedback {
+  background: #f8d7da; color: #721c24; border-right: 3px solid #dc3545;
+}
+
+footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: var(--muted);
+  border-top: 2px solid var(--gold);
+  margin-top: 20px;
+}
+footer .brand { font-weight: 700; color: var(--navy); }
+
+@media (max-width: 480px) {
+  .split-types { grid-template-columns: 1fr; }
+  header h1 { font-size: 19px; }
+  .cubic-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="ch-num">الفصل 6 — الصفحة 3</span>
+  <h1>المواد الصلبة والبنى البلورية</h1>
+  <p>Solids & Crystalline Structure</p>
+</header>
+
+<section>
+  <h2>🧊 تصنيف المواد الصلبة</h2>
+  <p>تنقسم المواد الصلبة إلى نوعين رئيسيين بناء على ترتيب جسيماتها:</p>
+
+  <div class="split-types">
+    <div class="type-box crystal">
+      <div class="icon">💎</div>
+      <div class="name">بلورية</div>
+      <div style="font-size:12px;margin:4px 0;">جسيمات مرتبة هندسياً</div>
+      <div class="ex">الثلج، NaCl، الألماس</div>
+    </div>
+    <div class="type-box amorphous">
+      <div class="icon">🪟</div>
+      <div class="name">غير بلورية</div>
+      <div style="font-size:12px;margin:4px 0;">تفتقر للترتيب المنتظم</div>
+      <div class="ex">الزجاج، المطاط، البلاستيك</div>
+    </div>
+  </div>
+
+  <div class="intro-box">
+    💡 المواد الصلبة البلورية أكثر استقراراً، لكن إذا تم التبريد بسرعة فلا يكون للجزيئات الوقت الكافي لترتيب نفسها → تنتج مادة <strong>غير بلورية</strong>.
+  </div>
+</section>
+
+<section>
+  <h2>💎 الأنواع الخمسة للبلورات</h2>
+  <p>تُصنف البلورات الصلبة حسب نوع قوى التجاذب بين جسيماتها:</p>
+
+  <div class="crystal-types">
+    <div class="crystal-card" style="border-color:#9e9e9e;">
+      <div class="head">
+        <div class="name">1. ذرية (Atomic)</div>
+        <div class="badge">ذرات</div>
+      </div>
+      <div class="props">لينة جداً • توصيل ضعيف • انصهار منخفض</div>
+      <div class="examples">📌 عناصر المجموعة 18 (الغازات النبيلة المتجمدة)</div>
+    </div>
+
+    <div class="crystal-card" style="border-color:#3949ab;">
+      <div class="head">
+        <div class="name">2. أيونية (Ionic)</div>
+        <div class="badge">أيونات</div>
+      </div>
+      <div class="props">صلبة وهشة • انصهار مرتفع • توصيل ضعيف (إلا في المحلول)</div>
+      <div class="examples">📌 <span class="eng">NaCl, KBr, CaO</span></div>
+    </div>
+
+    <div class="crystal-card" style="border-color:#00897b;">
+      <div class="head">
+        <div class="name">3. جزيئية (Molecular)</div>
+        <div class="badge">جزيئات</div>
+      </div>
+      <div class="props">متوسطة اللين • انصهار متفاوت • توصيل ضعيف</div>
+      <div class="examples">📌 <span class="eng">I₂, H₂O (ثلج), CO₂ (ثلج جاف)</span></div>
+    </div>
+
+    <div class="crystal-card" style="border-color:#d84315;">
+      <div class="head">
+        <div class="name">4. تساهمية شبكية (Network Covalent)</div>
+        <div class="badge">روابط تساهمية</div>
+      </div>
+      <div class="props">صلبة جداً • انصهار مرتفع جداً • توصيل ضعيف</div>
+      <div class="examples">📌 الألماس <span class="eng">(C)</span>، الكوارتز <span class="eng">(SiO₂)</span></div>
+    </div>
+
+    <div class="crystal-card" style="border-color:#fbc02d;">
+      <div class="head">
+        <div class="name">5. فلزية (Metallic)</div>
+        <div class="badge">إلكترونات حرة</div>
+      </div>
+      <div class="props">قابلة للطرق والسحب • انصهار متفاوت • <strong>توصيل ممتاز</strong></div>
+      <div class="examples">📌 جميع العناصر الفلزية (Cu, Fe, Ag...)</div>
+    </div>
+  </div>
+
+  <h3>📊 جدول مقارنة سريع</h3>
+  <table>
+    <thead>
+      <tr><th>النوع</th><th>الانصهار</th><th>التوصيل</th><th>الصلابة</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>ذرية</td><td>منخفض جداً</td><td>ضعيف</td><td>لينة</td></tr>
+      <tr><td>أيونية</td><td>مرتفع</td><td>ضعيف*</td><td>صلبة هشة</td></tr>
+      <tr><td>جزيئية</td><td>متفاوت</td><td>ضعيف</td><td>متوسطة</td></tr>
+      <tr><td>تساهمية</td><td>مرتفع جداً</td><td>ضعيف</td><td>صلبة جداً</td></tr>
+      <tr><td>فلزية</td><td>متفاوت</td><td><strong>ممتاز</strong></td><td>متفاوتة</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:11.5px;color:var(--muted);margin-top:6px;">* الأيونية توصل في المحلول أو المنصهر فقط</p>
+</section>
+
+<section>
+  <h2>🔷 وحدة البناء (Unit Cell)</h2>
+  <div class="intro-box">
+    <strong>وحدة البناء:</strong> أصغر ترتيب للذرات في الشبكة البلورية يحمل التماثل نفسه للبلورة كاملة. هي نموذج مصغّر يحدد شكل البلورة.
+  </div>
+
+  <h3>🧊 الخلايا المكعبة الثلاث</h3>
+
+  <div class="cubic-grid">
+    <!-- Simple Cubic -->
+    <div class="cubic-cell-card">
+      <div class="name">مكعب بسيط</div>
+      <div class="eng-name eng">Simple Cubic</div>
+      <svg width="80" height="80" viewBox="0 0 100 100">
+        <polygon points="20,30 70,30 80,20 30,20" fill="none" stroke="#1E2761" stroke-width="1.5"/>
+        <polygon points="20,30 20,80 70,80 70,30" fill="none" stroke="#1E2761" stroke-width="1.5"/>
+        <polygon points="70,30 70,80 80,70 80,20" fill="none" stroke="#1E2761" stroke-width="1.5"/>
+        <line x1="30" y1="20" x2="30" y2="70" stroke="#1E2761" stroke-width="1" stroke-dasharray="2,2"/>
+        <line x1="30" y1="70" x2="80" y2="70" stroke="#1E2761" stroke-width="1" stroke-dasharray="2,2"/>
+        <line x1="20" y1="80" x2="30" y2="70" stroke="#1E2761" stroke-width="1" stroke-dasharray="2,2"/>
+        <circle cx="20" cy="30" r="6" fill="#F9C746"/>
+        <circle cx="70" cy="30" r="6" fill="#F9C746"/>
+        <circle cx="20" cy="80" r="6" fill="#F9C746"/>
+        <circle cx="70" cy="80" r="6" fill="#F9C746"/>
+        <circle cx="30" cy="20" r="6" fill="#F9C746"/>
+        <circle cx="80" cy="20" r="6" fill="#F9C746"/>
+        <circle cx="30" cy="70" r="6" fill="#F9C746"/>
+        <circle cx="80" cy="70" r="6" fill="#F9C746"/>
+      </svg>
+      <div class="calc">8 × ⅛</div>
+      <div class="total">= 1 ذرة</div>
+    </div>
+
+    <!-- Body Centered -->
+    <div class="cubic-cell-card">
+      <div class="name">مركزي الجسم</div>
+      <div class="eng-name eng">BCC</div>
+      <svg width="80" height="80" viewBox="0 0 100 100">
+        <polygon points="20,30 70,30 80,20 30,20" fill="none" stroke="#1E2761" stroke-width="1.5"/>
+        <polygon points="20,30 20,80 70,80 70,30" fill="none" stroke="#1E2761" stroke-width="1.5"/>
+        <polygon points="70,30 70,80 80,70 80,20" fill="none" stroke="#1E2761" stroke-width="1.5"/>
+        <line x1="30" y1="20" x2="30" y2="70" stroke="#1E2761" stroke-width="1" stroke-dasharray="2,2"/>
+        <line x1="30" y1="70" x2="80" y2="70" stroke="#1E2761" stroke-width="1" stroke-dasharray="2,2"/>
+        <line x1="20" y1="80" x2="30" y2="70" stroke="#1E2761" stroke-width="1" stroke-dasharray="2,2"/>
+        <circle cx="20" cy="30" r="5" fill="#F9C746"/>
+        <circle cx="70" cy="30" r="5" fill="#F9C746"/>
+        <circle cx="20" cy="80" r="5" fill="#F9C746"/>
+        <circle cx="70" cy="80" r="5" fill="#F9C746"/>
+        <circle cx="30" cy="20" r="5" fill="#F9C746"/>
+        <circle cx="80" cy="20" r="5" fill="#F9C746"/>
+        <circle cx="30" cy="70" r="5" fill="#F9C746"/>
+        <circle cx="80" cy="70" r="5" fill="#F9C746"/>
+        <!-- Center -->
+        <circle cx="50" cy="50" r="7" fill="#028090"/>
+      </svg>
+      <div class="calc">(8 × ⅛) + 1</div>
+      <div class="total">= 2 ذرة</div>
+    </div>
+
+    <!-- Face Centered -->
+    <div class="cubic-cell-card">
+      <div class="name">مركزي الوجه</div>
+      <div class="eng-name eng">FCC</div>
+      <svg width="80" height="80" viewBox="0 0 100 100">
+        <polygon points="20,30 70,30 80,20 30,20" fill="none" stroke="#1E2761" stroke-width="1.5"/>
+        <polygon points="20,30 20,80 70,80 70,30" fill="none" stroke="#1E2761" stroke-width="1.5"/>
+        <polygon points="70,30 70,80 80,70 80,20" fill="none" stroke="#1E2761" stroke-width="1.5"/>
+        <line x1="30" y1="20" x2="30" y2="70" stroke="#1E2761" stroke-width="1" stroke-dasharray="2,2"/>
+        <line x1="30" y1="70" x2="80" y2="70" stroke="#1E2761" stroke-width="1" stroke-dasharray="2,2"/>
+        <line x1="20" y1="80" x2="30" y2="70" stroke="#1E2761" stroke-width="1" stroke-dasharray="2,2"/>
+        <circle cx="20" cy="30" r="4" fill="#F9C746"/>
+        <circle cx="70" cy="30" r="4" fill="#F9C746"/>
+        <circle cx="20" cy="80" r="4" fill="#F9C746"/>
+        <circle cx="70" cy="80" r="4" fill="#F9C746"/>
+        <circle cx="30" cy="20" r="4" fill="#F9C746"/>
+        <circle cx="80" cy="20" r="4" fill="#F9C746"/>
+        <circle cx="30" cy="70" r="4" fill="#F9C746"/>
+        <circle cx="80" cy="70" r="4" fill="#F9C746"/>
+        <!-- face centers -->
+        <circle cx="45" cy="55" r="6" fill="#dc3545"/>
+        <circle cx="55" cy="25" r="6" fill="#dc3545"/>
+        <circle cx="75" cy="50" r="6" fill="#dc3545"/>
+      </svg>
+      <div class="calc">(8 × ⅛) + (6 × ½)</div>
+      <div class="total">= 4 ذرات</div>
+    </div>
+  </div>
+
+  <div class="calc-box">
+    <div class="title">📐 قاعدة الحساب</div>
+    <div class="calc-row">⚪ ذرة في <strong>الزاوية</strong> = <span class="eng">⅛</span> (مشاركة بين 8 خلايا)</div>
+    <div class="calc-row">🔴 ذرة في <strong>الوجه</strong> = <span class="eng">½</span> (مشاركة بين خليتين)</div>
+    <div class="calc-row">🔵 ذرة في <strong>الحرف</strong> = <span class="eng">¼</span> (مشاركة بين 4 خلايا)</div>
+    <div class="calc-row">🟢 ذرة في <strong>المركز</strong> = <span class="eng">1</span> (مملوكة كلياً)</div>
+  </div>
+</section>
+
+<section>
+  <h2>📐 الأنظمة البلورية السبعة</h2>
+  <p>يمكن أن تتخذ البلورات سبعة أشكال هندسية تختلف في أطوال الأضلاع والزوايا:</p>
+
+  <table class="systems-table">
+    <thead>
+      <tr>
+        <th>النظام</th>
+        <th>طول الوحدة</th>
+        <th>الزوايا</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>المكعب<br><span style="font-size:10px;color:var(--muted)">Cubic</span></td>
+        <td class="formula">a = b = c</td>
+        <td class="formula">α = β = γ = 90°</td>
+      </tr>
+      <tr>
+        <td>رباعي الأوجه<br><span style="font-size:10px;color:var(--muted)">Tetragonal</span></td>
+        <td class="formula">a = b ≠ c</td>
+        <td class="formula">α = β = γ = 90°</td>
+      </tr>
+      <tr>
+        <td>متوازي المستطيلات<br><span style="font-size:10px;color:var(--muted)">Orthorhombic</span></td>
+        <td class="formula">a ≠ b ≠ c</td>
+        <td class="formula">α = β = γ = 90°</td>
+      </tr>
+      <tr>
+        <td>ثلاثي الميل<br><span style="font-size:10px;color:var(--muted)">Triclinic</span></td>
+        <td class="formula">a ≠ b ≠ c</td>
+        <td class="formula">α ≠ β ≠ γ ≠ 90°</td>
+      </tr>
+      <tr>
+        <td>سداسي الأوجه<br><span style="font-size:10px;color:var(--muted)">Hexagonal</span></td>
+        <td class="formula">a = b ≠ c</td>
+        <td class="formula">α = β = 90°<br>γ = 120°</td>
+      </tr>
+      <tr>
+        <td>معيني<br><span style="font-size:10px;color:var(--muted)">Rhombohedral</span></td>
+        <td class="formula">a = b = c</td>
+        <td class="formula">α = β = γ ≠ 90°</td>
+      </tr>
+      <tr>
+        <td>أحادي الميل<br><span style="font-size:10px;color:var(--muted)">Monoclinic</span></td>
+        <td class="formula">a ≠ b ≠ c</td>
+        <td class="formula">α = γ = 90° ≠ β</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="intro-box" style="margin-top:14px;">
+    💡 <strong>طريقة الحفظ:</strong> ابدئي بالأبسط (المكعب: كل شيء متساوٍ) ثم تدرجي بكسر التماثل واحداً تلو الآخر.
+  </div>
+</section>
+
+<section>
+  <h2>🧠 لمحات مفهومية</h2>
+
+  <details>
+    <summary>🔍 لماذا الألماس صلب جداً والكوارتز كذلك؟</summary>
+    <div class="body">
+      <p>كلاهما <strong>بلورة تساهمية شبكية</strong> — كل ذرة مرتبطة بذرات مجاورة بروابط تساهمية قوية تشكل شبكة ثلاثية الأبعاد ضخمة.</p>
+      <p>لكسر البلورة يجب كسر روابط تساهمية فعلية، وهذا يحتاج طاقة هائلة.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔍 لماذا الفلزات توصل الكهرباء بينما البلورات الأيونية لا توصل؟</summary>
+    <div class="body">
+      <p>في <strong>البلورات الفلزية</strong>: إلكترونات التكافؤ <em>حرة الحركة</em> داخل البلورة (نموذج بحر الإلكترونات) → توصل الكهرباء.</p>
+      <p>في <strong>البلورات الأيونية</strong>: الأيونات مثبتة في مواقعها ولا توجد إلكترونات حرة → لا توصل الكهرباء (إلا في المحلول أو المنصهر حيث تتحرر الأيونات).</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔍 ما الفرق بين الزجاج والكوارتز رغم أن كليهما <span class="eng">SiO₂</span>؟</summary>
+    <div class="body">
+      <p>التركيب الكيميائي واحد لكن الترتيب مختلف:</p>
+      <p>💎 <strong>الكوارتز:</strong> بلورة تساهمية شبكية مرتبة → نقطة انصهار محددة وعالية</p>
+      <p>🪟 <strong>الزجاج:</strong> غير بلوري (ترتيب عشوائي) → ينصهر تدريجياً على مدى من درجات الحرارة</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔍 كيف نحدد عدد الذرات في خلية مكعب مركزي الوجه FCC؟</summary>
+    <div class="body">
+      <p>📍 <strong>الزوايا الثمانية:</strong> 8 × ⅛ = 1 ذرة</p>
+      <p>📍 <strong>الأوجه الستة:</strong> 6 × ½ = 3 ذرات</p>
+      <p>📌 <strong>الإجمالي:</strong> 1 + 3 = <strong>4 ذرات</strong></p>
+      <p style="margin-top:6px;color:var(--muted);font-size:12px;">مثال: ذرات النحاس والذهب والألمنيوم تتبلور في نظام FCC.</p>
+    </div>
+  </details>
+</section>
+
+<section>
+  <h2>✏️ اختبري نفسك</h2>
+
+  <div class="quiz-q">
+    <div class="q-text">س1: كم عدد الذرات في وحدة بناء المكعب مركزي الجسم (BCC)؟</div>
+    <div class="quiz-options">
+      <label class="wrong"><input type="radio" name="q1"><span class="opt-text">1</span></label>
+      <label class="correct"><input type="radio" name="q1"><span class="opt-text">2</span></label>
+      <label class="wrong"><input type="radio" name="q1"><span class="opt-text">3</span></label>
+      <label class="wrong"><input type="radio" name="q1"><span class="opt-text">4</span></label>
+    </div>
+    <div class="quiz-feedback">
+      ✅ (8 × ⅛) من الزوايا + 1 ذرة كاملة في المركز = 2 ذرة.
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">س2: أي من التالي يصنف كبلورة تساهمية شبكية؟</div>
+    <div class="quiz-options">
+      <label class="wrong"><input type="radio" name="q2"><span class="opt-text"><span class="eng">NaCl</span></span></label>
+      <label class="wrong"><input type="radio" name="q2"><span class="opt-text"><span class="eng">I₂</span></span></label>
+      <label class="correct"><input type="radio" name="q2"><span class="opt-text">الألماس <span class="eng">(C)</span></span></label>
+      <label class="wrong"><input type="radio" name="q2"><span class="opt-text">النحاس <span class="eng">(Cu)</span></span></label>
+    </div>
+    <div class="quiz-feedback">
+      ✅ الألماس بلورة تساهمية شبكية، كل ذرة كربون مرتبطة بأربع ذرات بروابط تساهمية → صلابة وانصهار عاليان.
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">س3: في النظام البلوري المكعب، أي العلاقات صحيحة؟</div>
+    <div class="quiz-options">
+      <label class="correct"><input type="radio" name="q3"><span class="opt-text"><span class="eng">a = b = c</span> و <span class="eng">α = β = γ = 90°</span></span></label>
+      <label class="wrong"><input type="radio" name="q3"><span class="opt-text"><span class="eng">a ≠ b ≠ c</span> و <span class="eng">α = β = γ = 90°</span></span></label>
+      <label class="wrong"><input type="radio" name="q3"><span class="opt-text"><span class="eng">a = b ≠ c</span> و <span class="eng">γ = 120°</span></span></label>
+      <label class="wrong"><input type="radio" name="q3"><span class="opt-text"><span class="eng">a = b = c</span> و <span class="eng">α ≠ 90°</span></span></label>
+    </div>
+    <div class="quiz-feedback">
+      ✅ المكعب أبسط نظام بلوري — كل الأضلاع متساوية وكل الزوايا قائمة 90°.
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">س4: أي خاصية مشتركة بين البلورات الجزيئية؟</div>
+    <div class="quiz-options">
+      <label class="wrong"><input type="radio" name="q4"><span class="opt-text">انصهار مرتفع جداً</span></label>
+      <label class="wrong"><input type="radio" name="q4"><span class="opt-text">صلابة عالية</span></label>
+      <label class="correct"><input type="radio" name="q4"><span class="opt-text">توصيل ضعيف للكهرباء</span></label>
+      <label class="wrong"><input type="radio" name="q4"><span class="opt-text">قابلية الطرق والسحب</span></label>
+    </div>
+    <div class="quiz-feedback">
+      ✅ البلورات الجزيئية مثل الجليد و <span class="eng">CO₂</span> الصلب لا تحتوي على شحنات حرة الحركة، فلا توصل الكهرباء.
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">س5: المادة الصلبة غير البلورية تتميز بأنها:</div>
+    <div class="quiz-options">
+      <label class="wrong"><input type="radio" name="q5"><span class="opt-text">لها نقطة انصهار محددة</span></label>
+      <label class="wrong"><input type="radio" name="q5"><span class="opt-text">جسيماتها مرتبة هندسياً</span></label>
+      <label class="correct"><input type="radio" name="q5"><span class="opt-text">تنصهر تدريجياً على مدى حراري</span></label>
+      <label class="wrong"><input type="radio" name="q5"><span class="opt-text">دائماً بلورية</span></label>
+    </div>
+    <div class="quiz-feedback">
+      ✅ المواد غير البلورية (مثل الزجاج) تفتقر للترتيب المنتظم، فتنصهر تدريجياً على مدى من درجات الحرارة وليس عند نقطة محددة.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="brand">إعداد المدربة: دانية العلويط</span> | NSMO 2026
+</footer>
+
+</body>
+</html>

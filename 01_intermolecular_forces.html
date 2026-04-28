@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>القوى بين الجزيئية | الفصل 6</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1E2761;
+  --teal: #028090;
+  --gold: #F9C746;
+  --bg: #f7f9fc;
+  --text: #1a2540;
+  --muted: #5a6580;
+  --border: #e2e8f0;
+  --weak: #fde8c4;
+  --med: #b3dde2;
+  --strong: #c5cae9;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans Arabic', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  padding: 16px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.eng, .formula { direction: ltr; font-family: 'JetBrains Mono', monospace; display: inline-block; }
+header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--teal) 100%);
+  color: white;
+  padding: 22px 18px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(30,39,97,0.15);
+}
+header .ch-num {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+header h1 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+header p { font-size: 13px; opacity: 0.9; }
+
+section {
+  background: white;
+  border-radius: 12px;
+  padding: 18px 16px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+h2 {
+  color: var(--navy);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid var(--gold);
+}
+h3 {
+  color: var(--teal);
+  font-size: 15px;
+  font-weight: 700;
+  margin: 14px 0 8px;
+}
+p { font-size: 14px; margin-bottom: 10px; color: var(--text); }
+
+.intro-box {
+  background: linear-gradient(135deg, #f0f7ff 0%, #e8f5f7 100%);
+  border-right: 4px solid var(--teal);
+  padding: 14px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+}
+.intro-box p { font-size: 13.5px; margin-bottom: 6px; }
+.intro-box p:last-child { margin-bottom: 0; }
+
+.energy-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 14px 0;
+}
+.energy-card {
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+  border: 2px solid;
+}
+.energy-card.weak { background: #fff7e6; border-color: var(--gold); }
+.energy-card.strong { background: #ffe8e8; border-color: #d32f2f; }
+.energy-card .label { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+.energy-card .value { font-size: 22px; font-weight: 800; color: var(--navy); }
+.energy-card .desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.compare-arrow {
+  text-align: center;
+  font-size: 13px;
+  color: var(--teal);
+  font-weight: 600;
+  margin: 4px 0;
+}
+
+/* tabs without JS */
+.tabs { display: flex; gap: 4px; margin-bottom: 0; flex-wrap: wrap; }
+.tab-input { display: none; }
+.tab-label {
+  flex: 1;
+  text-align: center;
+  padding: 9px 6px;
+  background: #eef2f7;
+  border-radius: 10px 10px 0 0;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--muted);
+  transition: 0.2s;
+  min-width: 90px;
+}
+.tab-content {
+  display: none;
+  padding: 14px;
+  background: #fafbfd;
+  border-radius: 0 0 10px 10px;
+  border: 2px solid var(--teal);
+  border-top: none;
+}
+#tab1:checked ~ .tabs label[for="tab1"],
+#tab2:checked ~ .tabs label[for="tab2"],
+#tab3:checked ~ .tabs label[for="tab3"] {
+  background: var(--teal); color: white;
+}
+#tab1:checked ~ #c1, #tab2:checked ~ #c2, #tab3:checked ~ #c3 { display: block; }
+
+.force-card {
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+.force-card .name {
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 4px;
+  color: var(--navy);
+}
+.force-card .when { font-size: 12.5px; color: var(--muted); margin-bottom: 6px; }
+.force-card .desc { font-size: 13px; }
+
+.strength-bar {
+  display: flex;
+  background: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+  height: 8px;
+  margin-top: 6px;
+}
+.strength-fill {
+  background: linear-gradient(90deg, var(--teal), var(--navy));
+  height: 100%;
+}
+
+.example-box {
+  background: #fff8e1;
+  border-right: 4px solid var(--gold);
+  padding: 12px;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+.example-box .ex-title {
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.example-box ul { padding-right: 20px; font-size: 13px; }
+.example-box li { margin-bottom: 4px; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-size: 13px;
+}
+th {
+  background: var(--navy);
+  color: white;
+  padding: 8px 6px;
+  font-weight: 600;
+  font-size: 12.5px;
+}
+td {
+  padding: 8px 6px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+tr:nth-child(even) td { background: #f8fafc; }
+
+.h-bond-rule {
+  background: linear-gradient(135deg, #fff8e1 0%, #ffe5b4 100%);
+  border: 2px solid var(--gold);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  margin: 14px 0;
+}
+.h-bond-rule .title {
+  font-weight: 800;
+  color: var(--navy);
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+.h-bond-rule .formula-big {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  background: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: inline-block;
+  margin: 4px 0;
+}
+.h-bond-rule .note { font-size: 12px; color: var(--muted); margin-top: 8px; }
+
+details {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+summary {
+  padding: 12px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--navy);
+  background: linear-gradient(135deg, #f0f7ff 0%, #e8f5f7 100%);
+  font-size: 14px;
+  user-select: none;
+}
+summary::marker { color: var(--teal); }
+details[open] summary { border-bottom: 1px solid var(--border); }
+details .body { padding: 14px; font-size: 13px; }
+details .body p { margin-bottom: 6px; }
+
+.quiz-q {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.quiz-q .q-text { font-weight: 600; margin-bottom: 8px; font-size: 13.5px; }
+.quiz-options { display: flex; flex-direction: column; gap: 6px; }
+.quiz-options label {
+  display: block;
+  padding: 8px 10px;
+  background: #f7f9fc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.15s;
+}
+.quiz-options input { display: none; }
+.quiz-options input:checked + .opt-text { font-weight: 600; }
+.quiz-q label:has(input:checked) { background: #e0f2fe; border-color: var(--teal); }
+.quiz-q label.correct:has(input:checked) {
+  background: #d4edda; border-color: #28a745;
+}
+.quiz-q label.wrong:has(input:checked) {
+  background: #f8d7da; border-color: #dc3545;
+}
+.quiz-feedback {
+  display: none;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12.5px;
+}
+.quiz-q:has(input:checked) .quiz-feedback { display: block; }
+.quiz-q:has(label.correct input:checked) .quiz-feedback {
+  background: #d4edda; color: #155724; border-right: 3px solid #28a745;
+}
+.quiz-q:has(label.wrong input:checked) .quiz-feedback {
+  background: #f8d7da; color: #721c24; border-right: 3px solid #dc3545;
+}
+
+.dipole-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 10px;
+}
+.molecule-svg { width: 80px; height: 50px; }
+
+footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: var(--muted);
+  border-top: 2px solid var(--gold);
+  margin-top: 20px;
+}
+footer .brand { font-weight: 700; color: var(--navy); }
+
+@media (max-width: 480px) {
+  .energy-compare { grid-template-columns: 1fr; }
+  header h1 { font-size: 19px; }
+  .tab-label { font-size: 12px; padding: 8px 4px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="ch-num">الفصل 6 — الصفحة 1</span>
+  <h1>القوى بين الجزيئية</h1>
+  <p>Intermolecular Forces — أساس فهم خواص المواد</p>
+</header>
+
+<section>
+  <h2>🎯 لماذا ندرس هذه القوى؟</h2>
+  <div class="intro-box">
+    <p><strong>القوى بين الجزيئية</strong> هي قوى تجاذب <em>بين</em> الجزيئات (وليست داخلها)، وهي المسؤولة عن الخواص الفيزيائية للمادة كدرجتي الانصهار والغليان.</p>
+    <p>دون هذه القوى، لن يكون هناك سوائل ولا مواد صلبة — فقط غازات.</p>
+  </div>
+
+  <h3>قوى بين الجزيئية vs قوى الترابط الجزيئية</h3>
+  <table>
+    <thead>
+      <tr><th>الخاصية</th><th>بين الجزيئية</th><th>الترابط الجزيئية</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>الموقع</td><td>بين الجزيئات</td><td>داخل الجزيء</td></tr>
+      <tr><td>القوة</td><td>أضعف</td><td>أقوى بكثير</td></tr>
+      <tr><td>المسؤولية</td><td>عن الانصهار/الغليان</td><td>عن الروابط الكيميائية</td></tr>
+    </tbody>
+  </table>
+
+  <div class="energy-compare">
+    <div class="energy-card weak">
+      <div class="label">تبخير مول من الماء</div>
+      <div class="value"><span class="eng">41 kJ</span></div>
+      <div class="desc">كسر قوى بين جزيئية فقط</div>
+    </div>
+    <div class="energy-card strong">
+      <div class="label">كسر روابط <span class="eng">O–H</span> في مول ماء</div>
+      <div class="value"><span class="eng">930 kJ</span></div>
+      <div class="desc">كسر روابط تساهمية</div>
+    </div>
+  </div>
+  <div class="compare-arrow">⟵ الفرق ≈ 23 ضعف ⟶</div>
+</section>
+
+<section>
+  <h2>🔬 الأنواع الثلاثة للقوى</h2>
+  <p>اضغطي على كل تبويب للاستكشاف:</p>
+
+  <input type="radio" name="tabs" id="tab1" class="tab-input" checked>
+  <input type="radio" name="tabs" id="tab2" class="tab-input">
+  <input type="radio" name="tabs" id="tab3" class="tab-input">
+
+  <div class="tabs">
+    <label class="tab-label" for="tab1">قوى التشتت</label>
+    <label class="tab-label" for="tab2">ثنائي القطب</label>
+    <label class="tab-label" for="tab3">الهيدروجينية</label>
+  </div>
+
+  <div class="tab-content" id="c1">
+    <div class="force-card" style="background:var(--weak);">
+      <div class="name">قوى التشتت (لندن)</div>
+      <div class="when">⚙️ موجودة بين <strong>جميع</strong> الجسيمات (قطبية وغير قطبية)</div>
+      <div class="desc">
+        قوى تجاذب ضعيفة تنشأ من إزاحة مؤقتة للإلكترونات في السحابة الإلكترونية، فيتكوّن <strong>ثنائي قطب مؤقت</strong>.
+      </div>
+      <div class="strength-bar"><div class="strength-fill" style="width:25%"></div></div>
+    </div>
+    <h3>القاعدة الأساسية</h3>
+    <p>كلما زاد <strong>حجم الجسيم</strong> والكتلة المولية → زاد عدد الإلكترونات → زادت قوى التشتت.</p>
+    <div class="example-box">
+      <div class="ex-title">📌 مثال تطبيقي</div>
+      <p>قوى التشتت بين جزيئات <span class="eng">I₂</span> أقوى من قوى التشتت بين جزيئات <span class="eng">Br₂</span> — لأن اليود أكبر كتلة وعدد إلكتروناته أكبر.</p>
+    </div>
+  </div>
+
+  <div class="tab-content" id="c2">
+    <div class="force-card" style="background:var(--med);">
+      <div class="name">قوى ثنائي القطب</div>
+      <div class="when">⚙️ بين <strong>الجزيئات القطبية</strong> فقط (التي لها عزم قطبي)</div>
+      <div class="desc">
+        قوى تجاذب كهروستاتيكية بين الطرف الموجب لجزيء والطرف السالب لجزيء آخر.
+      </div>
+      <div class="strength-bar"><div class="strength-fill" style="width:55%"></div></div>
+    </div>
+    <h3>القاعدة الأساسية</h3>
+    <p>كلما زاد <strong>العزم القطبي</strong> → زادت قوة التجاذب.</p>
+    <div class="dipole-visual">
+      <div style="font-size:13px;">
+        <div style="background:white;padding:6px 10px;border-radius:6px;margin-bottom:4px;">
+          <span style="color:#dc3545;">δ⁺</span> ← <span class="eng">H — Br</span> → <span style="color:#0066cc;">δ⁻</span>
+        </div>
+        <div style="background:white;padding:6px 10px;border-radius:6px;">
+          <span style="color:#dc3545;">δ⁺</span> ← <span class="eng">H — Br</span> → <span style="color:#0066cc;">δ⁻</span>
+        </div>
+      </div>
+    </div>
+    <div class="example-box">
+      <div class="ex-title">📌 أمثلة جزيئات قطبية</div>
+      <ul>
+        <li><span class="eng">HBr</span>, <span class="eng">H₂S</span>, <span class="eng">SO₂</span></li>
+        <li>هذه يوجد فيها قوى تشتت <strong>+</strong> قوى ثنائي قطب</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tab-content" id="c3">
+    <div class="force-card" style="background:var(--strong);">
+      <div class="name">الرابطة الهيدروجينية</div>
+      <div class="when">⚙️ حالة خاصة من ثنائي القطب — <strong>الأقوى</strong> بين القوى</div>
+      <div class="desc">
+        تنشأ بين ذرة هيدروجين مرتبطة بذرة عالية الكهروسالبية (<span class="eng">N, O, F</span>) في جزيء، وذرة <span class="eng">N, O, F</span> أخرى في جزيء آخر.
+      </div>
+      <div class="strength-bar"><div class="strength-fill" style="width:90%"></div></div>
+    </div>
+
+    <div class="h-bond-rule">
+      <div class="title">⚠️ القاعدة الذهبية</div>
+      <div class="formula-big">
+        <span class="eng">H</span> — مرتبط بـ — <span class="eng">N</span> أو <span class="eng">O</span> أو <span class="eng">F</span>
+      </div>
+      <div class="note">يجب أن يكون الهيدروجين <strong>مرتبطاً مباشرة</strong> بأحد هذه الذرات الثلاث</div>
+    </div>
+
+    <h3>دليل وجود الرابطة الهيدروجينية</h3>
+    <p>في الشكل 6-3 من الحقيبة، نلاحظ شذوذ درجات غليان <span class="eng">HF</span>, <span class="eng">H₂O</span>, <span class="eng">NH₃</span> رغم خفتها — وهذا بسبب الرابطة الهيدروجينية القوية.</p>
+
+    <div class="example-box">
+      <div class="ex-title">📌 مثال 6-3 (من الحقيبة)</div>
+      <p>أي من المركبات يكوّن رابطة هيدروجينية مع الماء؟</p>
+      <ul>
+        <li>✅ <span class="eng">CH₃OCH₃</span> — يحتوي على <span class="eng">O</span></li>
+        <li>✅ <span class="eng">F⁻</span> — أيون عالي الكهروسالبية</li>
+        <li>✅ <span class="eng">HCOOH</span> — يحتوي على <span class="eng">O–H</span></li>
+        <li>❌ <span class="eng">CH₄</span> — لا يحتوي على <span class="eng">N/O/F</span></li>
+        <li>❌ <span class="eng">Na⁺</span> — أيون فلزي بسيط</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>📊 ترتيب القوى وأثرها على درجة الغليان</h2>
+  <table>
+    <thead>
+      <tr><th>القوة</th><th>القوة النسبية</th><th>متى توجد</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>الرابطة الهيدروجينية</td><td>🔴 الأقوى</td><td><span class="eng">N–H, O–H, F–H</span></td></tr>
+      <tr><td>ثنائي القطب</td><td>🟡 متوسطة</td><td>جزيئات قطبية</td></tr>
+      <tr><td>قوى التشتت</td><td>🟢 الأضعف</td><td>كل الجزيئات</td></tr>
+    </tbody>
+  </table>
+  <div class="intro-box" style="margin-top:14px;">
+    <p>📈 <strong>القاعدة العامة:</strong> كلما زادت القوى بين الجزيئية → زادت درجة الغليان والانصهار، لأننا نحتاج طاقة أكبر لفصل الجزيئات.</p>
+  </div>
+</section>
+
+<section>
+  <h2>🧠 تطبيقات سريعة</h2>
+
+  <details>
+    <summary>🔍 ما القوى في <span class="eng">HBr</span> و <span class="eng">H₂S</span>؟</summary>
+    <div class="body">
+      <p>كلاهما <strong>قطبي</strong> → القوى الموجودة:</p>
+      <p>✅ قوى تشتت (موجودة دائماً)</p>
+      <p>✅ قوى ثنائي قطب</p>
+      <p>❌ ليست رابطة هيدروجينية (لأن <span class="eng">H</span> ليس مرتبطاً بـ <span class="eng">N/O/F</span>)</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔍 ما القوى في <span class="eng">Cl₂</span> و <span class="eng">CBr₄</span>؟</summary>
+    <div class="body">
+      <p>كلاهما <strong>غير قطبي</strong> → القوى الموجودة:</p>
+      <p>✅ قوى تشتت فقط</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔍 لماذا <span class="eng">H₂O</span> سائل عند درجة حرارة الغرفة بينما <span class="eng">H₂S</span> غاز؟</summary>
+    <div class="body">
+      <p>رغم أن <span class="eng">H₂S</span> أثقل من <span class="eng">H₂O</span>، إلا أن:</p>
+      <p>💧 <span class="eng">H₂O</span> فيه <strong>روابط هيدروجينية</strong> (لأن <span class="eng">H</span> مرتبط بـ <span class="eng">O</span>)</p>
+      <p>💨 <span class="eng">H₂S</span> فيه فقط <strong>قوى ثنائي قطب + تشتت</strong> (لأن <span class="eng">S</span> ليس من ذرات الرابطة الهيدروجينية)</p>
+      <p>لذلك درجة غليان الماء أعلى بكثير.</p>
+    </div>
+  </details>
+</section>
+
+<section>
+  <h2>✏️ اختبري نفسك</h2>
+
+  <div class="quiz-q">
+    <div class="q-text">س1: أي مركب لا يكوّن رابطة هيدروجينية مع نفسه؟</div>
+    <div class="quiz-options">
+      <label class="wrong"><input type="radio" name="q1"><span class="opt-text"><span class="eng">CH₃OH</span></span></label>
+      <label class="correct"><input type="radio" name="q1"><span class="opt-text"><span class="eng">C₆H₆</span></span></label>
+      <label class="wrong"><input type="radio" name="q1"><span class="opt-text"><span class="eng">HF</span></span></label>
+      <label class="wrong"><input type="radio" name="q1"><span class="opt-text"><span class="eng">NH₃</span></span></label>
+    </div>
+    <div class="quiz-feedback">
+      ✅ الإجابة: <span class="eng">C₆H₆</span> (البنزين) — جزيء غير قطبي تماماً، الهيدروجين فيه مرتبط بكربون فقط، فلا تتكون رابطة هيدروجينية.
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">س2: أي زوج من جزيئات <span class="eng">H₂S</span> يحتوي على القوى التالية: تشتت + ثنائي قطب؟</div>
+    <div class="quiz-options">
+      <label class="correct"><input type="radio" name="q2"><span class="opt-text">صحيح — <span class="eng">H₂S</span> قطبي وله قوى تشتت</span></label>
+      <label class="wrong"><input type="radio" name="q2"><span class="opt-text">خطأ — <span class="eng">H₂S</span> غير قطبي</span></label>
+      <label class="wrong"><input type="radio" name="q2"><span class="opt-text">يحتاج رابطة هيدروجينية أيضاً</span></label>
+    </div>
+    <div class="quiz-feedback">
+      ✅ <span class="eng">H₂S</span> قطبي (شكله غير متماثل، الكبريت أكثر كهروسالبية)، فتوجد قوى تشتت <strong>+</strong> ثنائي قطب. لكن لا توجد رابطة هيدروجينية لأن <span class="eng">S</span> ليس من <span class="eng">N/O/F</span>.
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">س3: أي العبارات صحيحة عن قوى التشتت؟</div>
+    <div class="quiz-options">
+      <label class="wrong"><input type="radio" name="q3"><span class="opt-text">توجد فقط في الجزيئات غير القطبية</span></label>
+      <label class="correct"><input type="radio" name="q3"><span class="opt-text">تزداد قوتها مع زيادة الكتلة المولية</span></label>
+      <label class="wrong"><input type="radio" name="q3"><span class="opt-text">أقوى من الرابطة الهيدروجينية</span></label>
+      <label class="wrong"><input type="radio" name="q3"><span class="opt-text">لا تتأثر بحجم الجسيم</span></label>
+    </div>
+    <div class="quiz-feedback">
+      ✅ قوى التشتت موجودة في كل الجزيئات (قطبية وغير قطبية)، وتزداد مع زيادة عدد الإلكترونات والكتلة المولية. وهي الأضعف بين القوى الثلاث.
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">س4: أيهما درجة غليانه أعلى: <span class="eng">HF</span> أم <span class="eng">HCl</span>؟</div>
+    <div class="quiz-options">
+      <label class="correct"><input type="radio" name="q4"><span class="opt-text"><span class="eng">HF</span> أعلى</span></label>
+      <label class="wrong"><input type="radio" name="q4"><span class="opt-text"><span class="eng">HCl</span> أعلى</span></label>
+      <label class="wrong"><input type="radio" name="q4"><span class="opt-text">متساويان</span></label>
+    </div>
+    <div class="quiz-feedback">
+      ✅ <span class="eng">HF</span> له رابطة هيدروجينية (<span class="eng">F</span> من ذرات <span class="eng">N/O/F</span>)، أما <span class="eng">HCl</span> فلا. رغم أن <span class="eng">HCl</span> أثقل، إلا أن الرابطة الهيدروجينية في <span class="eng">HF</span> ترفع درجة غليانه بشكل ملحوظ.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="brand">إعداد المدربة: دانية العلويط</span> | NSMO 2026
+</footer>
+
+</body>
+</html>

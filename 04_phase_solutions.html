@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مخطط الطور والمحاليل | الفصل 6</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1E2761;
+  --teal: #028090;
+  --gold: #F9C746;
+  --bg: #f7f9fc;
+  --text: #1a2540;
+  --muted: #5a6580;
+  --border: #e2e8f0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans Arabic', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  padding: 16px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.eng { direction: ltr; font-family: 'JetBrains Mono', monospace; display: inline-block; }
+.formula {
+  direction: ltr;
+  font-family: 'JetBrains Mono', monospace;
+  display: inline-block;
+  background: white;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  font-weight: 600;
+}
+header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--teal) 100%);
+  color: white;
+  padding: 22px 18px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+header .ch-num {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+header h1 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+header p { font-size: 13px; opacity: 0.9; }
+
+section {
+  background: white;
+  border-radius: 12px;
+  padding: 18px 16px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+h2 {
+  color: var(--navy);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid var(--gold);
+}
+h3 {
+  color: var(--teal);
+  font-size: 15px;
+  font-weight: 700;
+  margin: 14px 0 8px;
+}
+p { font-size: 14px; margin-bottom: 10px; }
+
+.intro-box {
+  background: linear-gradient(135deg, #f0f7ff 0%, #e8f5f7 100%);
+  border-right: 4px solid var(--teal);
+  padding: 14px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  font-size: 13.5px;
+}
+
+/* Phase Diagram SVG container */
+.phase-diagram-container {
+  background: #fafbfd;
+  border-radius: 12px;
+  padding: 12px;
+  margin: 14px 0;
+}
+.phase-legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 12px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: white;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+.legend-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Special points */
+.point-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 12px 0;
+}
+.point-card {
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+  border: 2px solid;
+}
+.point-card.triple { background: #fff8e1; border-color: var(--gold); }
+.point-card.critical { background: #ffe5e5; border-color: #d32f2f; }
+.point-card .label {
+  display: inline-block;
+  background: white;
+  width: 26px; height: 26px;
+  line-height: 26px;
+  border-radius: 50%;
+  font-weight: 800;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+.point-card .name { font-weight: 700; font-size: 14px; color: var(--navy); margin-bottom: 4px; }
+.point-card .desc { font-size: 12px; color: var(--text); }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-size: 13px;
+}
+th {
+  background: var(--navy);
+  color: white;
+  padding: 8px;
+  font-weight: 600;
+  font-size: 12.5px;
+}
+td {
+  padding: 8px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  font-size: 12.5px;
+}
+tr:nth-child(even) td { background: #f8fafc; }
+
+.mixture-tree {
+  background: linear-gradient(135deg, #f0f7ff 0%, #e8f5f7 100%);
+  padding: 14px;
+  border-radius: 10px;
+  margin: 12px 0;
+}
+.tree-node {
+  background: white;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin: 6px 0;
+  border-right: 4px solid var(--teal);
+  font-size: 13px;
+}
+.tree-node strong { color: var(--navy); }
+.tree-sub {
+  margin-right: 20px;
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.henry-box {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border: 2px solid #1976d2;
+  border-radius: 12px;
+  padding: 14px;
+  margin: 12px 0;
+  text-align: center;
+}
+.henry-box .title {
+  font-weight: 800;
+  color: var(--navy);
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.henry-formula {
+  font-size: 22px;
+  font-weight: 700;
+  background: white;
+  padding: 12px 16px;
+  border-radius: 10px;
+  display: inline-block;
+  color: var(--navy);
+  margin: 6px 0;
+}
+.henry-box .desc {
+  font-size: 12.5px;
+  color: var(--text);
+  margin-top: 6px;
+}
+
+.concentration-grid {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0;
+}
+.conc-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+.conc-card .name {
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 13.5px;
+}
+.conc-card .symbol {
+  font-size: 11px;
+  color: var(--muted);
+}
+.conc-card .formula-mini {
+  background: #fafbfd;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  direction: ltr;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.solubility-trio {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 10px 0;
+}
+.sol-type {
+  padding: 10px 6px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 12px;
+}
+.sol-type.under { background: #e3f2fd; border: 2px solid #1976d2; }
+.sol-type.sat { background: #d4edda; border: 2px solid #28a745; }
+.sol-type.over { background: #fff3cd; border: 2px solid var(--gold); }
+.sol-type .lbl { font-weight: 700; font-size: 12.5px; color: var(--navy); margin-bottom: 4px; }
+.sol-type .desc { font-size: 11px; color: var(--muted); }
+
+.dissolution-process {
+  background: #fff8e1;
+  border: 2px solid var(--gold);
+  border-radius: 10px;
+  padding: 12px;
+  margin: 10px 0;
+}
+.process-step {
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 6px 0;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.step-num {
+  background: var(--navy);
+  color: white;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+  font-size: 13px;
+}
+.step-content { font-size: 12.5px; }
+.step-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-right: 4px;
+}
+.step-tag.endo { background: #ffe0b2; color: #e65100; }
+.step-tag.exo { background: #c8e6c9; color: #1b5e20; }
+
+details {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+summary {
+  padding: 12px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--navy);
+  background: linear-gradient(135deg, #f0f7ff 0%, #e8f5f7 100%);
+  font-size: 14px;
+}
+details[open] summary { border-bottom: 1px solid var(--border); }
+details .body { padding: 14px; font-size: 13px; }
+.solution-step {
+  background: white;
+  padding: 8px 10px;
+  border-radius: 6px;
+  margin: 4px 0;
+  border-right: 3px solid var(--teal);
+  font-size: 12.5px;
+  direction: ltr;
+  font-family: 'JetBrains Mono', monospace;
+  text-align: left;
+}
+
+.quiz-q {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.quiz-q .q-text { font-weight: 600; margin-bottom: 8px; font-size: 13.5px; }
+.quiz-options { display: flex; flex-direction: column; gap: 6px; }
+.quiz-options label {
+  display: block;
+  padding: 8px 10px;
+  background: #f7f9fc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.quiz-options input { display: none; }
+.quiz-options input:checked + .opt-text { font-weight: 600; }
+.quiz-q label:has(input:checked) { background: #e0f2fe; border-color: var(--teal); }
+.quiz-q label.correct:has(input:checked) {
+  background: #d4edda; border-color: #28a745;
+}
+.quiz-q label.wrong:has(input:checked) {
+  background: #f8d7da; border-color: #dc3545;
+}
+.quiz-feedback {
+  display: none;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12.5px;
+}
+.quiz-q:has(input:checked) .quiz-feedback { display: block; }
+.quiz-q:has(label.correct input:checked) .quiz-feedback {
+  background: #d4edda; color: #155724; border-right: 3px solid #28a745;
+}
+.quiz-q:has(label.wrong input:checked) .quiz-feedback {
+  background: #f8d7da; color: #721c24; border-right: 3px solid #dc3545;
+}
+
+footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: var(--muted);
+  border-top: 2px solid var(--gold);
+  margin-top: 20px;
+}
+footer .brand { font-weight: 700; color: var(--navy); }
+
+@media (max-width: 480px) {
+  .point-cards, .solubility-trio { grid-template-columns: 1fr; }
+  header h1 { font-size: 19px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="ch-num">الفصل 6 — الصفحة 4</span>
+  <h1>مخطط الطور والمحاليل</h1>
+  <p>Phase Diagram, Mixtures & Solutions</p>
+</header>
+
+<section>
+  <h2>📊 مخطط الحالة الفيزيائية (الطور)</h2>
+  <div class="intro-box">
+    رسم بياني للضغط مقابل درجة الحرارة، يوضح حالة المادة (صلب/سائل/غاز) عند ظروف مختلفة.
+  </div>
+
+  <h3>🌡️ مخطط الطور للماء</h3>
+  <div class="phase-diagram-container">
+    <svg viewBox="0 0 360 280" width="100%" style="max-width:400px;display:block;margin:0 auto;">
+      <!-- Background regions -->
+      <path d="M 50 50 L 50 240 L 105 240 L 105 130 L 80 50 Z" fill="#e3f2fd" opacity="0.7"/>
+      <path d="M 105 240 L 105 130 L 80 50 L 320 50 L 320 240 Z" fill="#fff8e1" opacity="0.5"/>
+      <path d="M 105 240 L 320 240 L 320 50 L 320 250 L 105 250 Z" fill="#ffebee" opacity="0.5"/>
+
+      <!-- Axes -->
+      <line x1="50" y1="50" x2="50" y2="250" stroke="#1E2761" stroke-width="2"/>
+      <line x1="50" y1="250" x2="340" y2="250" stroke="#1E2761" stroke-width="2"/>
+
+      <!-- Y axis label -->
+      <text x="20" y="150" font-size="13" fill="#1E2761" font-weight="700" transform="rotate(-90 20 150)">الضغط (atm)</text>
+      <!-- X axis label -->
+      <text x="180" y="275" text-anchor="middle" font-size="13" fill="#1E2761" font-weight="700">درجة الحرارة (°C)</text>
+
+      <!-- Axis values -->
+      <text x="48" y="55" text-anchor="end" font-size="10" fill="#1E2761">217.75</text>
+      <text x="48" y="155" text-anchor="end" font-size="10" fill="#1E2761">1.00</text>
+      <text x="105" y="265" text-anchor="middle" font-size="10" fill="#1E2761">0.00</text>
+      <text x="190" y="265" text-anchor="middle" font-size="10" fill="#1E2761">100</text>
+      <text x="320" y="265" text-anchor="middle" font-size="10" fill="#1E2761">373.99</text>
+
+      <!-- Curves -->
+      <!-- Solid-Liquid (red, slightly leaning left for water - special property) -->
+      <path d="M 105 240 Q 100 145 80 50" stroke="#d32f2f" stroke-width="2.5" fill="none"/>
+      <!-- Solid-Gas (yellow short) -->
+      <path d="M 50 245 Q 80 244 105 240" stroke="#f9a825" stroke-width="2.5" fill="none"/>
+      <!-- Liquid-Gas (blue long) -->
+      <path d="M 105 240 Q 200 200 320 50" stroke="#1976d2" stroke-width="2.5" fill="none"/>
+
+      <!-- Region labels -->
+      <text x="78" y="160" text-anchor="middle" font-size="13" fill="#1E2761" font-weight="700">صلب</text>
+      <text x="200" y="120" text-anchor="middle" font-size="13" fill="#1E2761" font-weight="700">سائل</text>
+      <text x="280" y="220" text-anchor="middle" font-size="13" fill="#1E2761" font-weight="700">بخار / غاز</text>
+
+      <!-- Triple point -->
+      <circle cx="105" cy="240" r="6" fill="#F9C746" stroke="#1E2761" stroke-width="2"/>
+      <text x="115" y="245" font-size="11" fill="#1E2761" font-weight="700">A</text>
+
+      <!-- Critical point -->
+      <circle cx="320" cy="50" r="6" fill="#d32f2f" stroke="#1E2761" stroke-width="2"/>
+      <text x="305" y="45" font-size="11" fill="#1E2761" font-weight="700">B</text>
+    </svg>
+  </div>
+
+  <div class="phase-legend">
+    <div class="legend-item">
+      <span class="legend-dot" style="background:#d32f2f;"></span>
+      <span>منحنى أحمر: صلب ⇌ سائل</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-dot" style="background:#1976d2;"></span>
+      <span>منحنى أزرق: سائل ⇌ بخار</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-dot" style="background:#f9a825;"></span>
+      <span>منحنى أصفر: صلب ⇌ بخار</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-dot" style="background:#F9C746;border:1px solid #1E2761;"></span>
+      <span>عند المنحنى: حالتان معاً</span>
+    </div>
+  </div>
+
+  <div class="point-cards">
+    <div class="point-card triple">
+      <div class="label">A</div>
+      <div class="name">النقطة الثلاثية</div>
+      <div class="desc">تتعايش <strong>الحالات الثلاث</strong> معاً<br>(صلب + سائل + غاز)</div>
+      <div class="desc" style="margin-top:6px;font-size:11.5px;">يمكن حدوث <strong>التغيرات الست</strong>: انصهار، تجمد، تبخر، تكاثف، تسامي، ترسب</div>
+    </div>
+    <div class="point-card critical">
+      <div class="label">B</div>
+      <div class="name">النقطة الحرجة</div>
+      <div class="desc">بعدها <strong>لا يمكن</strong> للماء أن يكون سائلاً</div>
+      <div class="desc" style="margin-top:6px;font-size:11.5px;">حتى لو زدنا الضغط فوق <span class="eng">217.75 atm</span>!</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>🧪 المخاليط والمحاليل</h2>
+
+  <div class="mixture-tree">
+    <div class="tree-node">
+      <strong>المخلوط:</strong> مزيج من مادتين أو أكثر، تحتفظ كل مادة بخصائصها الكيميائية.
+    </div>
+
+    <div class="tree-node" style="border-color:#28a745;">
+      <strong>1️⃣ متجانس (محلول):</strong> امتزاج تام، لا يمكن تمييز المكونات.
+      <div class="tree-sub">📌 مذيب + مذاب • أنواع: صلبة، سائلة، غازية</div>
+    </div>
+
+    <div class="tree-node" style="border-color:#dc3545;">
+      <strong>2️⃣ غير متجانس:</strong> مكونات مميزة، ينقسم لنوعين:
+      <div class="tree-sub">
+        🔸 <strong>معلق:</strong> جسيمات كبيرة، تترسب (الوحل)<br>
+        🔸 <strong>غروي:</strong> جسيمات متوسطة، لا تترسب
+      </div>
+    </div>
+  </div>
+
+  <h3>🌟 ميزة المخاليط الغروية</h3>
+  <table>
+    <thead>
+      <tr><th>الظاهرة</th><th>المعنى</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>تأثير تندال</strong></td><td>تشتت الضوء عند مروره في المخلوط (يظهر شعاع الضوء)</td></tr>
+      <tr><td><strong>الحركة البراونية</strong></td><td>حركة عشوائية للجسيمات تمنع ترسبها</td></tr>
+    </tbody>
+  </table>
+
+  <p style="margin-top:8px;font-size:12.5px;color:var(--muted);">💡 المحاليل (المتجانسة) <strong>لا تظهر</strong> تأثير تندال.</p>
+</section>
+
+<section>
+  <h2>💧 الذوبان والذائبية</h2>
+  <div class="intro-box">
+    <strong>الذوبان:</strong> إحاطة جسيمات المذاب بجسيمات المذيب.<br>
+    <strong>القاعدة الأساسية:</strong> "المذيبات تذيب أشباهها" (القطبي يذيب القطبي، وغير القطبي يذيب غير القطبي).
+  </div>
+
+  <h3>⚡ ثلاث عمليات للطاقة في الذوبان</h3>
+  <div class="dissolution-process">
+    <div class="process-step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <span class="step-tag endo">ماصة</span>
+        كسر الروابط بين <strong>جسيمات المذاب</strong>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <span class="step-tag endo">ماصة</span>
+        توسيع المسافات بين <strong>جسيمات المذيب</strong>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <span class="step-tag exo">طاردة</span>
+        تداخل المذاب مع المذيب → <strong>طاقة التميه</strong> <span class="eng">H_hyd</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:12.5px;background:#e8f5f7;padding:10px;border-radius:8px;">
+    💡 العمليتان (1+2) معاً = <strong>طاقة الشبكة البلورية</strong> <span class="eng">U₀</span>
+  </p>
+
+  <table style="margin-top:10px;">
+    <thead>
+      <tr><th>المقارنة</th><th>الإشارة</th><th>درجة حرارة المحلول</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="eng">U₀ &gt; H_hyd</span></td><td>ماصة كلياً</td><td>⬇ تنخفض</td></tr>
+      <tr><td><span class="eng">U₀ &lt; H_hyd</span></td><td>طاردة كلياً</td><td>⬆ ترتفع</td></tr>
+    </tbody>
+  </table>
+
+  <h3>⚙️ العوامل المؤثرة في الذوبان</h3>
+  <table>
+    <thead>
+      <tr><th>العامل</th><th>الأثر</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>التحريك</td><td>يسرّع الذوبان</td></tr>
+      <tr><td>مساحة السطح</td><td>الزيادة → ذوبان أسرع</td></tr>
+      <tr><td>درجة الحرارة (مواد صلبة)</td><td>الزيادة → ذوبان أسرع</td></tr>
+      <tr><td>درجة الحرارة (غازات)</td><td><strong>الزيادة → ذوبان أقل</strong> ⚠️</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>📈 منحنى الذائبية وأنواع المحاليل</h2>
+  <div class="solubility-trio">
+    <div class="sol-type under">
+      <div class="lbl">غير مشبع</div>
+      <div class="desc">كمية مذاب أقل من الحد الأقصى</div>
+    </div>
+    <div class="sol-type sat">
+      <div class="lbl">مشبع</div>
+      <div class="desc">أقصى ذوبان عند الحرارة المعطاة</div>
+    </div>
+    <div class="sol-type over">
+      <div class="lbl">فوق المشبع</div>
+      <div class="desc">أكثر من المشبع — غير ثابت</div>
+    </div>
+  </div>
+  <p style="font-size:12.5px;color:var(--muted);">💡 يُحضر فوق المشبع بتسخين مذيب لإذابة كمية أكبر، ثم تبريده ببطء. عند إضافة <strong>نواة تبلور</strong> أو خدش الإناء → تترسب الزيادة فوراً.</p>
+</section>
+
+<section>
+  <h2>🔬 قانون هنري — ذائبية الغازات</h2>
+  <div class="henry-box">
+    <div class="title">📐 قانون هنري</div>
+    <div class="henry-formula">
+      <span class="eng">S₁ / P₁ = S₂ / P₂</span>
+    </div>
+    <div class="desc">
+      <strong>ذائبية الغاز (S)</strong> تتناسب طردياً مع <strong>ضغط الغاز (P)</strong> فوق السائل، عند ثبوت الحرارة.
+    </div>
+  </div>
+  <p style="font-size:13px;background:#fff8e1;padding:10px;border-radius:8px;">
+    🥤 <strong>تطبيق عملي:</strong> المشروبات الغازية تحت ضغط عالٍ → ذوبان <span class="eng">CO₂</span> أكبر. عند الفتح، الضغط ينخفض → الغاز يهرب → فقاعات.
+  </p>
+</section>
+
+<section>
+  <h2>🧮 طرق التعبير عن التركيز</h2>
+  <div class="concentration-grid">
+    <div class="conc-card">
+      <div>
+        <div class="name">النسبة المئوية الكتلية</div>
+        <div class="symbol">m/m %</div>
+      </div>
+      <div class="formula-mini">(m_solute / m_solution) × 100</div>
+    </div>
+
+    <div class="conc-card">
+      <div>
+        <div class="name">النسبة المئوية الحجمية</div>
+        <div class="symbol">v/v %</div>
+      </div>
+      <div class="formula-mini">(V_solute / V_solution) × 100</div>
+    </div>
+
+    <div class="conc-card">
+      <div>
+        <div class="name">الموالرية</div>
+        <div class="symbol">M (mol/L)</div>
+      </div>
+      <div class="formula-mini">n_solute / V_solution(L)</div>
+    </div>
+
+    <div class="conc-card">
+      <div>
+        <div class="name">المواللية</div>
+        <div class="symbol">m (mol/kg)</div>
+      </div>
+      <div class="formula-mini">n_solute / m_solvent(kg)</div>
+    </div>
+
+    <div class="conc-card">
+      <div>
+        <div class="name">الكسر المولي</div>
+        <div class="symbol">X_A</div>
+      </div>
+      <div class="formula-mini">n_A / (n_A + n_B)</div>
+    </div>
+  </div>
+  <p style="font-size:12px;color:var(--muted);margin-top:8px;">
+    ⚠️ <strong>تنبيه:</strong> الموالرية تستخدم حجم <strong>المحلول</strong>، أما المواللية فتستخدم كتلة <strong>المذيب</strong> فقط.
+  </p>
+</section>
+
+<section>
+  <h2>🧠 لمحات مفهومية</h2>
+
+  <details>
+    <summary>🔍 لماذا الزيت لا يذوب في الماء؟</summary>
+    <div class="body">
+      <p>الماء جزيء <strong>قطبي</strong> له روابط هيدروجينية قوية. الزيت <strong>غير قطبي</strong>.</p>
+      <p>"المذيبات تذيب أشباهها" → القطبي لا يذيب غير القطبي.</p>
+      <p>قوى التجاذب بين جزيئات الماء أقوى من جذبها للزيت → ينفصلان لطبقتين.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔍 لماذا تقل ذائبية الغازات بزيادة الحرارة على عكس الصلبة؟</summary>
+    <div class="body">
+      <p>زيادة الحرارة تزيد الطاقة الحركية للجسيمات.</p>
+      <p>📌 <strong>للمواد الصلبة:</strong> تساعد الجسيمات على التغلب على قوى الشبكة → ذوبان أكبر.</p>
+      <p>📌 <strong>للغازات:</strong> تساعد الجزيئات على <em>الهروب</em> من المحلول إلى الجو → ذوبان أقل.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔍 ما الفرق بين النقطة الثلاثية والنقطة الحرجة؟</summary>
+    <div class="body">
+      <p><strong>النقطة الثلاثية (A):</strong> الحرارة والضغط الوحيدان اللذان تتعايش عندهما الحالات الثلاث للمادة. للماء: 0.01°C و 0.006 atm.</p>
+      <p><strong>النقطة الحرجة (B):</strong> أعلى حرارة وضغط يمكن للسائل أن يوجد عندها. بعدها → لا تمييز بين السائل والغاز (مائع فوق حرج). للماء: 373.99°C و 217.75 atm.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>📝 مسألة محلولة: حساب موالرية <span class="eng">H₂O₂</span> (تدريب 6-1)</summary>
+    <div class="body">
+      <p><strong>المعطيات:</strong> محلول <span class="eng">H₂O₂</span> بنسبة 30.0% بالكتلة، كثافته 1.11 g/cm³.</p>
+      <p><strong>الكتلة المولية لـ <span class="eng">H₂O₂</span></strong> = 34.01 g/mol</p>
+
+      <div class="solution-step">m_H₂O₂ per mL = 1.11 × 30/100 = 0.333 g/mL</div>
+      <div class="solution-step">M = 0.333 × (1/34.01) × (1000/1) = 9.79 M</div>
+
+      <p style="margin-top:8px;background:#d4edda;padding:8px;border-radius:6px;">✅ <strong>الجواب:</strong> 9.79 M (الخيار A)</p>
+    </div>
+  </details>
+</section>
+
+<section>
+  <h2>✏️ اختبري نفسك</h2>
+
+  <div class="quiz-q">
+    <div class="q-text">س1: عند النقطة الثلاثية للماء:</div>
+    <div class="quiz-options">
+      <label class="wrong"><input type="radio" name="q1"><span class="opt-text">يوجد الماء كسائل فقط</span></label>
+      <label class="correct"><input type="radio" name="q1"><span class="opt-text">تتعايش الحالات الثلاث (صلب + سائل + غاز)</span></label>
+      <label class="wrong"><input type="radio" name="q1"><span class="opt-text">يبدأ التحول لمائع فوق حرج</span></label>
+      <label class="wrong"><input type="radio" name="q1"><span class="opt-text">الضغط = 1 atm</span></label>
+    </div>
+    <div class="quiz-feedback">
+      ✅ النقطة الثلاثية (A) هي تقاطع المنحنيات الثلاث، حيث تتواجد الحالات الثلاث معاً ويمكن حدوث جميع التغيرات الست.
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">س2: عند فتح علبة مشروب غازي، تخرج فقاعات <span class="eng">CO₂</span>. لماذا؟</div>
+    <div class="quiz-options">
+      <label class="wrong"><input type="radio" name="q2"><span class="opt-text">ارتفاع درجة حرارة المحلول</span></label>
+      <label class="correct"><input type="radio" name="q2"><span class="opt-text">انخفاض الضغط فوق المحلول (قانون هنري)</span></label>
+      <label class="wrong"><input type="radio" name="q2"><span class="opt-text">تفاعل كيميائي مع الهواء</span></label>
+      <label class="wrong"><input type="radio" name="q2"><span class="opt-text">زيادة قابلية الذوبان</span></label>
+    </div>
+    <div class="quiz-feedback">
+      ✅ بانخفاض الضغط → تقل ذائبية الغاز (S ∝ P) → يهرب <span class="eng">CO₂</span> من المحلول على شكل فقاعات.
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">س3: أي خاصية تميز المخاليط الغروية فقط؟</div>
+    <div class="quiz-options">
+      <label class="wrong"><input type="radio" name="q3"><span class="opt-text">تترسب بسرعة</span></label>
+      <label class="wrong"><input type="radio" name="q3"><span class="opt-text">يمكن فصلها بالترشيح</span></label>
+      <label class="correct"><input type="radio" name="q3"><span class="opt-text">تظهر تأثير تندال والحركة البراونية</span></label>
+      <label class="wrong"><input type="radio" name="q3"><span class="opt-text">جسيماتها أصغر من جسيمات المحلول</span></label>
+    </div>
+    <div class="quiz-feedback">
+      ✅ المخاليط الغروية تظهر تأثير تندال (تشتت الضوء) والحركة البراونية، ولا تترسب بسهولة.
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">س4: محلول ذائبية الغاز فيه = 2.0 g/L عند ضغط 1 atm. ما الذائبية عند ضغط 3 atm؟</div>
+    <div class="quiz-options">
+      <label class="wrong"><input type="radio" name="q4"><span class="opt-text">2.0 g/L</span></label>
+      <label class="wrong"><input type="radio" name="q4"><span class="opt-text">4.0 g/L</span></label>
+      <label class="correct"><input type="radio" name="q4"><span class="opt-text">6.0 g/L</span></label>
+      <label class="wrong"><input type="radio" name="q4"><span class="opt-text">0.67 g/L</span></label>
+    </div>
+    <div class="quiz-feedback">
+      ✅ بقانون هنري: <span class="eng">S₂ = S₁ × (P₂/P₁) = 2.0 × (3/1) = 6.0 g/L</span>
+    </div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">س5: ما الفرق الجوهري بين الموالرية والمواللية؟</div>
+    <div class="quiz-options">
+      <label class="wrong"><input type="radio" name="q5"><span class="opt-text">لا يوجد فرق، نفس المعنى</span></label>
+      <label class="correct"><input type="radio" name="q5"><span class="opt-text">الموالرية بحجم المحلول، المواللية بكتلة المذيب</span></label>
+      <label class="wrong"><input type="radio" name="q5"><span class="opt-text">الموالرية للسوائل والمواللية للغازات</span></label>
+      <label class="wrong"><input type="radio" name="q5"><span class="opt-text">المواللية تقاس باللتر</span></label>
+    </div>
+    <div class="quiz-feedback">
+      ✅ الموالرية = mol/L (لتر <strong>محلول</strong>)، المواللية = mol/kg (كيلوجرام <strong>مذيب</strong> فقط). المواللية لا تتأثر بالحرارة لأن الكتلة لا تتغير.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="brand">إعداد المدربة: دانية العلويط</span> | NSMO 2026
+</footer>
+
+</body>
+</html>
